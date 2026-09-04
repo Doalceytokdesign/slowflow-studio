@@ -2,10 +2,16 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="description" content="Slow Flow Studio — Premium Web & Branding Portfolio">
-  <!-- ANTI-DARK MODE: Força o navegador a renderizar apenas no modo claro -->
+  
+  <!-- PWA & WEB APP TAGS -->
+  <meta name="theme-color" content="#ffffff">
   <meta name="color-scheme" content="light only">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="mobile-web-app-capable" content="yes">
+  
   <title>Slow Flow — Digital Ecosystems</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,20 +31,26 @@
   </script>
 
   <style>
-    /* Forçando Branco Absoluto contra o Dark Mode automático de celulares */
     :root { color-scheme: light; }
     html, body { 
       background-color: #ffffff !important; 
       color: #111111 !important; 
       margin: 0; overflow-x: hidden; scroll-behavior: smooth; 
+      -webkit-font-smoothing: antialiased;
     }
     ::selection { background: #111; color: #fff; }
+
+    /* ── PERMANENT WHITE BACKGROUND FIX FOR MOBILE DARK MODE ── */
+    .force-white-bg {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background-color: #ffffff !important; z-index: -9999; pointer-events: none;
+    }
 
     /* ── HERO CONTAINER ── */
     .hero-container {
       position: relative; width: 100vw; height: 100vh;
       display: flex; align-items: center; justify-content: center;
-      overflow: hidden; background-color: #ffffff !important;
+      overflow: hidden; background-color: transparent;
     }
 
     /* ── DOTTED BACKGROUND TEXT (SLOW FLOW FLUID ANIMATION) ── */
@@ -48,21 +60,30 @@
       animation: fluidText 6s infinite alternate ease-in-out;
     }
     
-    .dotted-text {
-      font-size: 16vw; font-weight: 900; line-height: 0.85; 
-      /* Fallback text color just in case clip fails */
-      color: #e5e7eb;
-      background-image: radial-gradient(#d1d5db 45%, transparent 45%);
-      background-size: 18px 18px;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin: 0; padding: 0; text-align: center;
+    @keyframes fluidText {
+      0% { transform: scale(0.96); opacity: 0.8; }
+      100% { transform: scale(1.04); opacity: 1; }
     }
 
-    @keyframes fluidText {
-      0% { transform: scale(0.96); opacity: 0.6; }
-      100% { transform: scale(1.04); opacity: 1; }
+    /* Mobile Text: Solid color to prevent disappearing bug */
+    .dotted-text {
+      font-size: 24vw; font-weight: 900; line-height: 0.85; 
+      color: #f3f4f6; /* Light gray */
+      margin: 0; padding: 0; text-align: center;
+      text-transform: uppercase;
+    }
+
+    /* Desktop Text: The luxury dotted gradient effect */
+    @media (min-width: 1025px) {
+      .dotted-text {
+        font-size: 16vw;
+        color: transparent;
+        background-image: radial-gradient(#d1d5db 45%, transparent 45%);
+        background-size: 18px 18px;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
     }
 
     /* ── MICRO-TYPOGRAPHY CORNERS ── */
@@ -94,6 +115,7 @@
     
     @keyframes spin { 100% { transform: rotateZ(360deg); } }
 
+    /* Base Positioning (Desktop) */
     .halo-card-anchor {
       position: absolute; width: 0; height: 0;
       transform: rotateZ(calc(var(--i) * 24deg)) translateY(-34vh); 
@@ -110,7 +132,6 @@
       background: #000; overflow: hidden; border-radius: 4px;
       cursor: pointer;
       
-      /* HARDWARE ACCELERATION FIX FOR MOBILE LAG */
       will-change: transform, opacity;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
@@ -139,15 +160,15 @@
       box-shadow: 0 35px 70px rgba(0,0,0,0.4) !important;
     }
 
-    /* ── MOBILE OPTIMIZATIONS (9:16 ASPECT RATIO) ── */
+    /* ── MOBILE OPTIMIZATIONS (9:16 ASPECT RATIO & VW SIZING) ── */
     @media (max-width: 1024px) {
-      .dotted-text { font-size: 24vw; }
-      .halo-card-anchor { transform: rotateZ(calc(var(--i) * 24deg)) translateY(-32vh); }
+      /* Radius uses Viewport Width (vw) so it perfectly fits the phone screen */
+      .halo-card-anchor { transform: rotateZ(calc(var(--i) * 24deg)) translateY(-38vw); }
       
-      /* MOBILE 9:16 DIMENSIONS */
+      /* MOBILE 9:16 DIMENSIONS - perfectly scaled to the screen width */
       .halo-card { 
-        width: 12vh; height: 21.3vh; 
-        margin-top: -10.65vh; margin-left: -6vh; 
+        width: 22vw; height: 39.1vw; 
+        margin-top: -19.55vw; margin-left: -11vw; 
       }
       
       .corner-text { font-size: 7px; }
@@ -178,6 +199,9 @@
 </head>
 <body>
 
+  <!-- Forcing absolute white background for mobile bug fixes -->
+  <div class="force-white-bg"></div>
+
   <!-- LIGHTBOX OVERLAY -->
   <div id="lightbox" class="fixed inset-0 bg-white/95 z-[9999] opacity-0 pointer-events-none transition-opacity duration-200 flex items-center justify-center cursor-pointer backdrop-blur-md" onclick="closeLightbox()">
     <img id="lightbox-img" src="" class="object-cover transition-transform duration-300 scale-95" />
@@ -199,6 +223,7 @@
       FULLY RESPONSIVE<br>DATA-DRIVEN<br>OPTIMIZED PERFORMANCE
     </div>
 
+    <!-- Center Typography -->
     <div class="center-text-loop">
       <h1 class="dotted-text">SLOW</h1>
       <h1 class="dotted-text">FLOW</h1>
@@ -207,6 +232,7 @@
     <div class="halo-wrapper">
       <div class="halo-tilt">
         <div class="halo-spin">
+          <!-- Curated Portfolio Imagery (Solo Urbi, Nadine, Vivara, Cafe) -->
           <div class="halo-card-anchor" style="--i:0"><div class="halo-card" style="--i:0" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop" alt="Architecture"></div></div>
           <div class="halo-card-anchor" style="--i:1"><div class="halo-card" style="--i:1" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1629909613654-a62ebcc5e656?q=80&w=1200&auto=format&fit=crop" alt="Clinic"></div></div>
           <div class="halo-card-anchor" style="--i:2"><div class="halo-card" style="--i:2" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1599643478514-4a7b5387d896?q=80&w=1200&auto=format&fit=crop" alt="Jewelry"></div></div>
