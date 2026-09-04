@@ -28,16 +28,14 @@
   </script>
 
   <style>
-    /* ── BULLETPROOF WHITE BACKGROUND (BEATS ANY DARK MODE) ── */
+    /* ── BULLETPROOF WHITE BACKGROUND ── */
     :root { color-scheme: light; }
     html, body { 
       background-color: #fefefe !important; 
-      /* A 1x1 white pixel SVG as background - impossible for dark mode engines to invert */
       background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"><rect width="1" height="1" fill="%23ffffff"/></svg>') !important;
       color: #111111 !important; 
       margin: 0; overflow-x: hidden; scroll-behavior: smooth; 
       -webkit-font-smoothing: antialiased;
-      /* Remove mobile tap delay */
       touch-action: manipulation;
     }
     ::selection { background: #111; color: #fff; }
@@ -49,7 +47,7 @@
       background-color: transparent !important;
     }
 
-    /* ── SVG DOTTED TEXT (100% RELIABLE ON MOBILE) ── */
+    /* ── SVG DOTTED TEXT ── */
     .center-text-loop {
       position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
       pointer-events: none; z-index: 1;
@@ -85,7 +83,7 @@
 
     .halo-spin {
       transform-style: preserve-3d;
-      animation: spin 9s linear infinite; 
+      animation: spin 10s linear infinite; 
     }
     
     @keyframes spin { 100% { transform: rotateZ(360deg); } }
@@ -97,30 +95,30 @@
       transform-style: preserve-3d;
     }
 
-    /* ── GPU OPTIMIZED MILLISECOND POP ANIMATION ── */
+    /* ── ULTRA-FLUID HARDWARE ACCELERATED WAVE (NO LAG) ── */
     .halo-card {
       position: absolute;
-      /* DESKTOP 16:9 DIMENSIONS */
       width: 24vh; height: 13.5vh; 
       margin-top: -6.75vh; margin-left: -12vh;
       
-      background: #000; overflow: hidden; border-radius: 4px;
+      background: #111; overflow: hidden; border-radius: 4px;
       cursor: pointer;
       
+      /* Strict hardware rendering */
       will-change: transform, opacity;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
       transform: translateZ(0);
       
-      animation: millisecondFlash 1.8s infinite;
-      animation-delay: calc(var(--i) * -0.15s);
+      /* Smooth overlapping wave instead of violent flash */
+      animation: fluidOverlap 2.4s infinite cubic-bezier(0.4, 0, 0.2, 1);
+      animation-delay: calc(var(--i) * -0.16s);
     }
     
-    @keyframes millisecondFlash {
-      0%, 100% { opacity: 0; transform: translate3d(0, 0, 0px) scale(0.3); }
-      15% { opacity: 1; transform: translate3d(0, 0, 100px) scale(1.5); }
-      40% { opacity: 1; transform: translate3d(0, 0, 20px) scale(1); }
-      85% { opacity: 0; transform: translate3d(0, 0, -20px) scale(0.5); }
+    /* Pure translate3d for 0 CPU layout thrashing = 60fps on mobile */
+    @keyframes fluidOverlap {
+      0%, 100% { opacity: 0.05; transform: translate3d(0, 0, -80px) scale(0.6); }
+      50% { opacity: 1; transform: translate3d(0, 0, 100px) scale(1.3); }
     }
 
     .halo-card img {
@@ -133,14 +131,13 @@
       opacity: 1 !important;
       transform: translate3d(0, 0, 120px) scale(1.8) !important;
       z-index: 100 !important;
-      box-shadow: 0 35px 70px rgba(0,0,0,0.4) !important;
+      box-shadow: 0 35px 70px rgba(0,0,0,0.5) !important;
     }
 
     /* ── MOBILE OPTIMIZATIONS (16:9 UNIFIED REPLICA) ── */
     @media (max-width: 1024px) {
       .halo-card-anchor { transform: rotateZ(calc(var(--i) * 24deg)) translateY(-45vw); }
       
-      /* MOBILE 16:9 EXACT REPLICA OF DESKTOP */
       .halo-card { 
         width: 32vw; height: 18vw; 
         margin-top: -9vw; margin-left: -16vw; 
@@ -150,7 +147,6 @@
       .top-left { top: 1.5rem; left: 1.5rem; } .top-right { top: 1.5rem; right: 1.5rem; }
       .bottom-left { bottom: 1.5rem; left: 1.5rem; } .bottom-right { bottom: 1.5rem; right: 1.5rem; }
       
-      /* Scale down the SVG on mobile */
       .center-text-loop svg {
         width: 90vw !important;
       }
@@ -158,7 +154,7 @@
 
     /* ── 0ms INSTANT LIGHTBOX (Performance extreme) ── */
     #lightbox {
-      display: none; /* Uses display none/flex for instant toggle, 0ms lag */
+      display: none; 
     }
     #lightbox-img {
       width: 100%; height: auto; border-radius: 6px;
@@ -201,11 +197,10 @@
       FULLY RESPONSIVE<br>DATA-DRIVEN<br>OPTIMIZED PERFORMANCE
     </div>
 
-    <!-- BULLETPROOF SVG DOTTED TEXT (Works on 100% of mobiles and dark modes) -->
+    <!-- BULLETPROOF SVG DOTTED TEXT -->
     <div class="center-text-loop">
       <svg width="60vw" height="40vh" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <!-- The exact dotted pattern recreated in SVG vector -->
           <pattern id="dots" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
             <circle fill="#d1d5db" cx="4" cy="4" r="3.5"></circle>
           </pattern>
@@ -218,7 +213,9 @@
     <div class="halo-wrapper">
       <div class="halo-tilt">
         <div class="halo-spin">
-          <div class="halo-card-anchor" style="--i:0"><div class="halo-card" style="--i:0" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop" alt="Architecture"></div></div>
+          <!-- CARD 0 INJECTED WITH USER ASSET -->
+          <div class="halo-card-anchor" style="--i:0"><div class="halo-card" style="--i:0" onclick="openImage(this)"><img src="assets/casa-concreto.png" alt="Architecture Concrete House"></div></div>
+          
           <div class="halo-card-anchor" style="--i:1"><div class="halo-card" style="--i:1" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1629909613654-a62ebcc5e656?q=80&w=1200&auto=format&fit=crop" alt="Clinic"></div></div>
           <div class="halo-card-anchor" style="--i:2"><div class="halo-card" style="--i:2" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1599643478514-4a7b5387d896?q=80&w=1200&auto=format&fit=crop" alt="Jewelry"></div></div>
           <div class="halo-card-anchor" style="--i:3"><div class="halo-card" style="--i:3" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=1200&auto=format&fit=crop" alt="Coffee"></div></div>
@@ -283,14 +280,12 @@
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
     
-    // Instant 0ms Open
     function openImage(element) {
       const imgUrl = element.querySelector('img').src;
       lightboxImg.src = imgUrl;
       lightbox.style.display = 'flex';
     }
     
-    // Instant 0ms Close
     function closeLightbox() {
       lightbox.style.display = 'none';
       lightboxImg.src = '';
