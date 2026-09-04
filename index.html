@@ -33,11 +33,10 @@
       overflow: hidden; background-color: #ffffff;
     }
 
-    /* ── DOTTED BACKGROUND TEXT (SLOW FLOW FLUID ANIMATION) - RESTORED FROM V33 ── */
+    /* ── DOTTED BACKGROUND TEXT (SLOW FLOW FLUID ANIMATION) ── */
     .center-text-loop {
       position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
       pointer-events: none; z-index: 1;
-      /* The FLUID breathing loop */
       animation: fluidText 6s infinite alternate ease-in-out;
     }
     
@@ -75,7 +74,6 @@
     
     .halo-tilt {
       transform-style: preserve-3d;
-      /* Restored softer tilt from V33 */
       transform: rotateX(25deg) rotateY(-10deg);
     }
 
@@ -86,54 +84,82 @@
     
     @keyframes spin { 100% { transform: rotateZ(360deg); } }
 
-    /* Base Positioning */
     .halo-card-anchor {
       position: absolute; width: 0; height: 0;
-      /* Radius optimized for slightly larger cards */
       transform: rotateZ(calc(var(--i) * 24deg)) translateY(-34vh); 
       transform-style: preserve-3d;
     }
 
-    /* ── MILLISECOND SQUARE POP ANIMATION ── */
+    /* ── GPU OPTIMIZED MILLISECOND POP ANIMATION ── */
     .halo-card {
       position: absolute;
-      /* BIGGER SQUARES */
-      width: 18vh; height: 18vh; 
-      margin-top: -9vh; margin-left: -9vh;
+      /* DESKTOP 16:9 DIMENSIONS */
+      width: 24vh; height: 13.5vh; 
+      margin-top: -6.75vh; margin-left: -12vh;
+      
       background: #000; overflow: hidden; border-radius: 4px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      cursor: pointer;
+      
+      /* HARDWARE ACCELERATION FIX FOR MOBILE LAG */
+      will-change: transform, opacity;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
       
       animation: millisecondFlash 1.8s infinite;
       animation-delay: calc(var(--i) * -0.15s);
-      cursor: pointer;
     }
     
+    /* Removed heavy box-shadow and filters from keyframes for pure 60FPS fluidness */
     @keyframes millisecondFlash {
-      0%, 100% { opacity: 0; transform: translateZ(0px) scale(0.3); }
-      15% { opacity: 1; transform: translateZ(100px) scale(1.5); box-shadow: 0 25px 50px rgba(0,0,0,0.25); filter: brightness(1.1); }
-      40% { opacity: 1; transform: translateZ(20px) scale(1); filter: brightness(1); }
-      85% { opacity: 0; transform: translateZ(-20px) scale(0.5); }
+      0%, 100% { opacity: 0; transform: translate3d(0, 0, 0px) scale(0.3); }
+      15% { opacity: 1; transform: translate3d(0, 0, 100px) scale(1.5); }
+      40% { opacity: 1; transform: translate3d(0, 0, 20px) scale(1); }
+      85% { opacity: 0; transform: translate3d(0, 0, -20px) scale(0.5); }
     }
 
     .halo-card img {
       width: 100%; height: 100%; object-fit: cover; background: #111;
+      pointer-events: none; /* Prevents ghost drag issues */
     }
     
     .halo-card:hover {
       animation-play-state: paused !important;
       opacity: 1 !important;
-      transform: translateZ(120px) scale(1.8) !important;
+      transform: translate3d(0, 0, 120px) scale(1.8) !important;
       z-index: 100 !important;
       box-shadow: 0 35px 70px rgba(0,0,0,0.4) !important;
     }
 
+    /* ── MOBILE OPTIMIZATIONS (9:16 ASPECT RATIO) ── */
     @media (max-width: 1024px) {
       .dotted-text { font-size: 24vw; }
-      .halo-card-anchor { transform: rotateZ(calc(var(--i) * 24deg)) translateY(-28vh); }
-      .halo-card { width: 14vh; height: 14vh; margin-top: -7vh; margin-left: -7vh; }
+      .halo-card-anchor { transform: rotateZ(calc(var(--i) * 24deg)) translateY(-32vh); }
+      
+      /* MOBILE 9:16 DIMENSIONS */
+      .halo-card { 
+        width: 12vh; height: 21.3vh; 
+        margin-top: -10.65vh; margin-left: -6vh; 
+      }
+      
       .corner-text { font-size: 7px; }
       .top-left { top: 1.5rem; left: 1.5rem; } .top-right { top: 1.5rem; right: 1.5rem; }
       .bottom-left { bottom: 1.5rem; left: 1.5rem; } .bottom-right { bottom: 1.5rem; right: 1.5rem; }
+    }
+
+    /* ── LIGHTBOX (CLICK TO EXPAND) ── */
+    #lightbox-img {
+      width: 100%; height: auto; border-radius: 6px;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+    }
+
+    @media (max-width: 1024px) {
+      /* Mobile Lightbox Image is 9:16 */
+      #lightbox-img { aspect-ratio: 9/16; max-height: 80vh; width: auto; max-width: 100%; }
+    }
+    
+    @media (min-width: 1025px) {
+      /* Desktop Lightbox Image is 16:9 */
+      #lightbox-img { aspect-ratio: 16/9; max-height: 80vh; width: auto; }
     }
 
     /* ── EDITORIAL CONTENT SECTIONS ── */
@@ -145,10 +171,14 @@
 </head>
 <body>
 
+  <!-- LIGHTBOX OVERLAY -->
+  <div id="lightbox" class="fixed inset-0 bg-white/95 z-[9999] opacity-0 pointer-events-none transition-opacity duration-200 flex items-center justify-center cursor-pointer backdrop-blur-md" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" class="object-cover transition-transform duration-300 scale-95" />
+  </div>
+
   <!-- ── 1. HERO ORBITAL SECTION ── -->
   <section class="hero-container">
     
-    <!-- Micro Typography (Corners) -->
     <div class="corner-text top-left hidden md:block">
       SLOW FLOW STUDIO<br>PREMIUM DESIGN & WEB
     </div>
@@ -162,7 +192,6 @@
       FULLY RESPONSIVE<br>DATA-DRIVEN<br>OPTIMIZED PERFORMANCE
     </div>
 
-    <!-- Center Dotted Typography (Fluid Animation V33) -->
     <div class="center-text-loop">
       <h1 class="dotted-text">SLOW</h1>
       <h1 class="dotted-text">FLOW</h1>
@@ -172,36 +201,21 @@
     <div class="halo-wrapper">
       <div class="halo-tilt">
         <div class="halo-spin">
-          <!-- 1. Luxury Architecture (Solo Urbi vibe) -->
-          <div class="halo-card-anchor" style="--i:0"><div class="halo-card" style="--i:0"><img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=400&auto=format&fit=crop" alt="Architecture"></div></div>
-          <!-- 2. Aesthetic Clinic (Nadine vibe) -->
-          <div class="halo-card-anchor" style="--i:1"><div class="halo-card" style="--i:1"><img src="https://images.unsplash.com/photo-1629909613654-a62ebcc5e656?q=80&w=400&auto=format&fit=crop" alt="Clinic"></div></div>
-          <!-- 3. Fine Jewelry (Vivara vibe) -->
-          <div class="halo-card-anchor" style="--i:2"><div class="halo-card" style="--i:2"><img src="https://images.unsplash.com/photo-1599643478514-4a7b5387d896?q=80&w=400&auto=format&fit=crop" alt="Jewelry"></div></div>
-          <!-- 4. Coffee/Cafe (Café Cremoso vibe) -->
-          <div class="halo-card-anchor" style="--i:3"><div class="halo-card" style="--i:3"><img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=400&auto=format&fit=crop" alt="Coffee"></div></div>
-          <!-- 5. Branding / Stationery -->
-          <div class="halo-card-anchor" style="--i:4"><div class="halo-card" style="--i:4"><img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=400&auto=format&fit=crop" alt="Branding"></div></div>
-          <!-- 6. Architecture Interior -->
-          <div class="halo-card-anchor" style="--i:5"><div class="halo-card" style="--i:5"><img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=400&auto=format&fit=crop" alt="Interior"></div></div>
-          <!-- 7. Spa / Skincare -->
-          <div class="halo-card-anchor" style="--i:6"><div class="halo-card" style="--i:6"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=400&auto=format&fit=crop" alt="Spa"></div></div>
-          <!-- 8. Gold Jewelry -->
-          <div class="halo-card-anchor" style="--i:7"><div class="halo-card" style="--i:7"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=400&auto=format&fit=crop" alt="Gold"></div></div>
-          <!-- 9. Bakery Breads -->
-          <div class="halo-card-anchor" style="--i:8"><div class="halo-card" style="--i:8"><img src="https://images.unsplash.com/photo-1505253716362-afcd180486c0?q=80&w=400&auto=format&fit=crop" alt="Bakery"></div></div>
-          <!-- 10. Beauty Products / Cosmetics -->
-          <div class="halo-card-anchor" style="--i:9"><div class="halo-card" style="--i:9"><img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=400&auto=format&fit=crop" alt="Cosmetics"></div></div>
-          <!-- 11. Print / Magazine Brand -->
-          <div class="halo-card-anchor" style="--i:10"><div class="halo-card" style="--i:10"><img src="https://images.unsplash.com/photo-1583847268964-b28ce7f415e6?q=80&w=400&auto=format&fit=crop" alt="Editorial"></div></div>
-          <!-- 12. Modern Facade -->
-          <div class="halo-card-anchor" style="--i:11"><div class="halo-card" style="--i:11"><img src="https://images.unsplash.com/photo-1487958449940-244586588b14?q=80&w=400&auto=format&fit=crop" alt="Facade"></div></div>
-          <!-- 13. Creamy Latte Art -->
-          <div class="halo-card-anchor" style="--i:12"><div class="halo-card" style="--i:12"><img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=400&auto=format&fit=crop" alt="Latte"></div></div>
-          <!-- 14. Diamonds / Jewelry Store -->
-          <div class="halo-card-anchor" style="--i:13"><div class="halo-card" style="--i:13"><img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=400&auto=format&fit=crop" alt="Diamonds"></div></div>
-          <!-- 15. Skincare Textures -->
-          <div class="halo-card-anchor" style="--i:14"><div class="halo-card" style="--i:14"><img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=400&auto=format&fit=crop" alt="Skincare"></div></div>
+          <div class="halo-card-anchor" style="--i:0"><div class="halo-card" style="--i:0" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop" alt="Architecture"></div></div>
+          <div class="halo-card-anchor" style="--i:1"><div class="halo-card" style="--i:1" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1629909613654-a62ebcc5e656?q=80&w=1200&auto=format&fit=crop" alt="Clinic"></div></div>
+          <div class="halo-card-anchor" style="--i:2"><div class="halo-card" style="--i:2" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1599643478514-4a7b5387d896?q=80&w=1200&auto=format&fit=crop" alt="Jewelry"></div></div>
+          <div class="halo-card-anchor" style="--i:3"><div class="halo-card" style="--i:3" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=1200&auto=format&fit=crop" alt="Coffee"></div></div>
+          <div class="halo-card-anchor" style="--i:4"><div class="halo-card" style="--i:4" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop" alt="Branding"></div></div>
+          <div class="halo-card-anchor" style="--i:5"><div class="halo-card" style="--i:5" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1200&auto=format&fit=crop" alt="Interior"></div></div>
+          <div class="halo-card-anchor" style="--i:6"><div class="halo-card" style="--i:6" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1200&auto=format&fit=crop" alt="Spa"></div></div>
+          <div class="halo-card-anchor" style="--i:7"><div class="halo-card" style="--i:7" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=1200&auto=format&fit=crop" alt="Gold"></div></div>
+          <div class="halo-card-anchor" style="--i:8"><div class="halo-card" style="--i:8" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1505253716362-afcd180486c0?q=80&w=1200&auto=format&fit=crop" alt="Bakery"></div></div>
+          <div class="halo-card-anchor" style="--i:9"><div class="halo-card" style="--i:9" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1200&auto=format&fit=crop" alt="Cosmetics"></div></div>
+          <div class="halo-card-anchor" style="--i:10"><div class="halo-card" style="--i:10" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1583847268964-b28ce7f415e6?q=80&w=1200&auto=format&fit=crop" alt="Editorial"></div></div>
+          <div class="halo-card-anchor" style="--i:11"><div class="halo-card" style="--i:11" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1487958449940-244586588b14?q=80&w=1200&auto=format&fit=crop" alt="Facade"></div></div>
+          <div class="halo-card-anchor" style="--i:12"><div class="halo-card" style="--i:12" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1200&auto=format&fit=crop" alt="Latte"></div></div>
+          <div class="halo-card-anchor" style="--i:13"><div class="halo-card" style="--i:13" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1200&auto=format&fit=crop" alt="Diamonds"></div></div>
+          <div class="halo-card-anchor" style="--i:14"><div class="halo-card" style="--i:14" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=1200&auto=format&fit=crop" alt="Skincare"></div></div>
         </div>
       </div>
     </div>
@@ -223,7 +237,6 @@
         </a>
       </div>
       <div class="w-full aspect-[4/3] bg-gray-100 overflow-hidden relative group">
-        <!-- Replaced with a beautiful Minimalist Architecture/Web vibe -->
         <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="Websites" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105">
       </div>
     </div>
@@ -232,7 +245,6 @@
   <section class="editorial-section bg-gray-50">
     <div class="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center px-4 md:px-0">
       <div class="order-2 md:order-1 w-full aspect-[4/3] bg-gray-200 overflow-hidden relative group">
-        <!-- Replaced with high-end luxury branding vibe -->
         <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop" alt="Branding" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105">
       </div>
       <div class="order-1 md:order-2">
@@ -264,5 +276,31 @@
     </div>
   </section>
 
+  <script>
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    
+    function openImage(element) {
+      const imgUrl = element.querySelector('img').src;
+      lightboxImg.src = imgUrl;
+      
+      // Mostrar overlay
+      lightbox.classList.remove('opacity-0', 'pointer-events-none');
+      lightbox.classList.add('opacity-100', 'pointer-events-auto');
+      
+      // Animação da imagem em milissegundos
+      setTimeout(() => {
+        lightboxImg.classList.remove('scale-95');
+        lightboxImg.classList.add('scale-100');
+      }, 10);
+    }
+    
+    function closeLightbox() {
+      lightbox.classList.remove('opacity-100', 'pointer-events-auto');
+      lightbox.classList.add('opacity-0', 'pointer-events-none');
+      lightboxImg.classList.remove('scale-100');
+      lightboxImg.classList.add('scale-95');
+    }
+  </script>
 </body>
 </html>
