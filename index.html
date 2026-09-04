@@ -5,12 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="description" content="Slow Flow Studio — Premium Web & Branding Portfolio">
   
-  <!-- PWA & WEB APP TAGS -->
   <meta name="theme-color" content="#ffffff">
   <meta name="color-scheme" content="light only">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="mobile-web-app-capable" content="yes">
   
   <title>Slow Flow — Digital Ecosystems</title>
   
@@ -31,31 +28,30 @@
   </script>
 
   <style>
+    /* ── BULLETPROOF WHITE BACKGROUND (BEATS ANY DARK MODE) ── */
     :root { color-scheme: light; }
     html, body { 
-      background-color: #ffffff !important; 
+      background-color: #fefefe !important; 
+      /* A 1x1 white pixel SVG as background - impossible for dark mode engines to invert */
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"><rect width="1" height="1" fill="%23ffffff"/></svg>') !important;
       color: #111111 !important; 
       margin: 0; overflow-x: hidden; scroll-behavior: smooth; 
       -webkit-font-smoothing: antialiased;
+      /* Remove mobile tap delay */
+      touch-action: manipulation;
     }
     ::selection { background: #111; color: #fff; }
 
-    /* ── PERMANENT WHITE BACKGROUND FIX FOR MOBILE DARK MODE ── */
-    .force-white-bg {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background-color: #ffffff !important; z-index: -9999; pointer-events: none;
-    }
-
-    /* ── HERO CONTAINER ── */
     .hero-container {
       position: relative; width: 100vw; height: 100vh;
       display: flex; align-items: center; justify-content: center;
-      overflow: hidden; background-color: transparent;
+      overflow: hidden; 
+      background-color: transparent !important;
     }
 
-    /* ── DOTTED BACKGROUND TEXT (SLOW FLOW FLUID ANIMATION) ── */
+    /* ── SVG DOTTED TEXT (100% RELIABLE ON MOBILE) ── */
     .center-text-loop {
-      position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
       pointer-events: none; z-index: 1;
       animation: fluidText 6s infinite alternate ease-in-out;
     }
@@ -63,27 +59,6 @@
     @keyframes fluidText {
       0% { transform: scale(0.96); opacity: 0.8; }
       100% { transform: scale(1.04); opacity: 1; }
-    }
-
-    /* Mobile Text: Solid color to prevent disappearing bug */
-    .dotted-text {
-      font-size: 24vw; font-weight: 900; line-height: 0.85; 
-      color: #f3f4f6; /* Light gray */
-      margin: 0; padding: 0; text-align: center;
-      text-transform: uppercase;
-    }
-
-    /* Desktop Text: The luxury dotted gradient effect */
-    @media (min-width: 1025px) {
-      .dotted-text {
-        font-size: 16vw;
-        color: transparent;
-        background-image: radial-gradient(#d1d5db 45%, transparent 45%);
-        background-size: 18px 18px;
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
     }
 
     /* ── MICRO-TYPOGRAPHY CORNERS ── */
@@ -135,6 +110,7 @@
       will-change: transform, opacity;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
+      transform: translateZ(0);
       
       animation: millisecondFlash 1.8s infinite;
       animation-delay: calc(var(--i) * -0.15s);
@@ -160,34 +136,39 @@
       box-shadow: 0 35px 70px rgba(0,0,0,0.4) !important;
     }
 
-    /* ── MOBILE OPTIMIZATIONS (9:16 ASPECT RATIO & VW SIZING) ── */
+    /* ── MOBILE OPTIMIZATIONS (16:9 UNIFIED REPLICA) ── */
     @media (max-width: 1024px) {
-      /* Radius uses Viewport Width (vw) so it perfectly fits the phone screen */
-      .halo-card-anchor { transform: rotateZ(calc(var(--i) * 24deg)) translateY(-38vw); }
+      .halo-card-anchor { transform: rotateZ(calc(var(--i) * 24deg)) translateY(-45vw); }
       
-      /* MOBILE 9:16 DIMENSIONS - perfectly scaled to the screen width */
+      /* MOBILE 16:9 EXACT REPLICA OF DESKTOP */
       .halo-card { 
-        width: 22vw; height: 39.1vw; 
-        margin-top: -19.55vw; margin-left: -11vw; 
+        width: 32vw; height: 18vw; 
+        margin-top: -9vw; margin-left: -16vw; 
       }
       
       .corner-text { font-size: 7px; }
       .top-left { top: 1.5rem; left: 1.5rem; } .top-right { top: 1.5rem; right: 1.5rem; }
       .bottom-left { bottom: 1.5rem; left: 1.5rem; } .bottom-right { bottom: 1.5rem; right: 1.5rem; }
+      
+      /* Scale down the SVG on mobile */
+      .center-text-loop svg {
+        width: 90vw !important;
+      }
     }
 
-    /* ── LIGHTBOX (CLICK TO EXPAND) ── */
+    /* ── 0ms INSTANT LIGHTBOX (Performance extreme) ── */
+    #lightbox {
+      display: none; /* Uses display none/flex for instant toggle, 0ms lag */
+    }
     #lightbox-img {
       width: 100%; height: auto; border-radius: 6px;
       box-shadow: 0 40px 100px rgba(0,0,0,0.5);
     }
-
     @media (max-width: 1024px) {
-      #lightbox-img { aspect-ratio: 9/16; max-height: 80vh; width: auto; max-width: 100%; }
+      #lightbox-img { aspect-ratio: 16/9; width: 95vw; height: auto; }
     }
-    
     @media (min-width: 1025px) {
-      #lightbox-img { aspect-ratio: 16/9; max-height: 80vh; width: auto; }
+      #lightbox-img { aspect-ratio: 16/9; max-height: 85vh; width: auto; }
     }
 
     /* ── EDITORIAL CONTENT SECTIONS ── */
@@ -199,12 +180,9 @@
 </head>
 <body>
 
-  <!-- Forcing absolute white background for mobile bug fixes -->
-  <div class="force-white-bg"></div>
-
-  <!-- LIGHTBOX OVERLAY -->
-  <div id="lightbox" class="fixed inset-0 bg-white/95 z-[9999] opacity-0 pointer-events-none transition-opacity duration-200 flex items-center justify-center cursor-pointer backdrop-blur-md" onclick="closeLightbox()">
-    <img id="lightbox-img" src="" class="object-cover transition-transform duration-300 scale-95" />
+  <!-- INSTANT 0ms LIGHTBOX OVERLAY -->
+  <div id="lightbox" class="fixed inset-0 bg-white/95 z-[9999] items-center justify-center cursor-pointer" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" class="object-cover" />
   </div>
 
   <!-- ── 1. HERO ORBITAL SECTION ── -->
@@ -223,16 +201,23 @@
       FULLY RESPONSIVE<br>DATA-DRIVEN<br>OPTIMIZED PERFORMANCE
     </div>
 
-    <!-- Center Typography -->
+    <!-- BULLETPROOF SVG DOTTED TEXT (Works on 100% of mobiles and dark modes) -->
     <div class="center-text-loop">
-      <h1 class="dotted-text">SLOW</h1>
-      <h1 class="dotted-text">FLOW</h1>
+      <svg width="60vw" height="40vh" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- The exact dotted pattern recreated in SVG vector -->
+          <pattern id="dots" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+            <circle fill="#d1d5db" cx="4" cy="4" r="3.5"></circle>
+          </pattern>
+        </defs>
+        <text x="50%" y="35%" text-anchor="middle" dominant-baseline="central" font-family="'Inter', sans-serif" font-weight="900" font-size="160" fill="url(#dots)">SLOW</text>
+        <text x="50%" y="85%" text-anchor="middle" dominant-baseline="central" font-family="'Inter', sans-serif" font-weight="900" font-size="160" fill="url(#dots)">FLOW</text>
+      </svg>
     </div>
 
     <div class="halo-wrapper">
       <div class="halo-tilt">
         <div class="halo-spin">
-          <!-- Curated Portfolio Imagery (Solo Urbi, Nadine, Vivara, Cafe) -->
           <div class="halo-card-anchor" style="--i:0"><div class="halo-card" style="--i:0" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop" alt="Architecture"></div></div>
           <div class="halo-card-anchor" style="--i:1"><div class="halo-card" style="--i:1" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1629909613654-a62ebcc5e656?q=80&w=1200&auto=format&fit=crop" alt="Clinic"></div></div>
           <div class="halo-card-anchor" style="--i:2"><div class="halo-card" style="--i:2" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1599643478514-4a7b5387d896?q=80&w=1200&auto=format&fit=crop" alt="Jewelry"></div></div>
@@ -294,42 +279,21 @@
     </div>
   </section>
 
-  <section class="py-40 px-6 text-center border-t border-gray-200" style="background-color: #ffffff !important;">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="font-sans font-bold text-6xl md:text-8xl uppercase tracking-tighter leading-none mb-10">
-        Start<br>Project.
-      </h2>
-      <p class="font-sans text-gray-500 text-lg font-light max-w-xl mx-auto mb-16">
-        A estética é a nossa engenharia. Operamos exclusivamente com empresas que buscam o padrão internacional de design em seus websites e marcas.
-      </p>
-      <a href="https://wa.me/5544991244282" class="inline-block bg-black text-white font-mono text-[11px] font-bold uppercase tracking-[0.2em] px-12 py-5 hover:bg-gray-800 transition-colors">
-        Entrar em Contato
-      </a>
-    </div>
-  </section>
-
   <script>
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
     
+    // Instant 0ms Open
     function openImage(element) {
       const imgUrl = element.querySelector('img').src;
       lightboxImg.src = imgUrl;
-      
-      lightbox.classList.remove('opacity-0', 'pointer-events-none');
-      lightbox.classList.add('opacity-100', 'pointer-events-auto');
-      
-      setTimeout(() => {
-        lightboxImg.classList.remove('scale-95');
-        lightboxImg.classList.add('scale-100');
-      }, 10);
+      lightbox.style.display = 'flex';
     }
     
+    // Instant 0ms Close
     function closeLightbox() {
-      lightbox.classList.remove('opacity-100', 'pointer-events-auto');
-      lightbox.classList.add('opacity-0', 'pointer-events-none');
-      lightboxImg.classList.remove('scale-100');
-      lightboxImg.classList.add('scale-95');
+      lightbox.style.display = 'none';
+      lightboxImg.src = '';
     }
   </script>
 </body>
