@@ -69,7 +69,7 @@
     .bottom-left { bottom: 2.5rem; left: 2.5rem; }
     .bottom-right { bottom: 2.5rem; right: 2.5rem; text-align: right; }
 
-    /* ── THE FAST ORBITAL RING ── */
+    /* ── THE FAST ORBITAL RING (WIDER & MORE SLANTED) ── */
     .halo-wrapper {
       position: absolute; top: 50%; left: 50%;
       transform: translate(-50%, -50%);
@@ -78,12 +78,13 @@
     
     .halo-tilt {
       transform-style: preserve-3d;
-      transform: rotateX(25deg) rotateY(-10deg);
+      /* Heavy tilt for a wider 'Saturn Ring' feel that avoids the center text */
+      transform: rotateX(55deg) rotateY(-10deg);
     }
 
     .halo-spin {
       transform-style: preserve-3d;
-      animation: spin 7s linear infinite; 
+      animation: spin 8s linear infinite; 
     }
     
     @keyframes spin { 100% { transform: rotateZ(360deg); } }
@@ -91,35 +92,40 @@
     /* Base Positioning (Desktop) */
     .halo-card-anchor {
       position: absolute; width: 0; height: 0;
-      transform: rotateZ(calc(var(--i) * 24deg)) translateY(-34vh); 
+      /* Wider radius (-38vh instead of -34vh) to spread them out */
+      transform: rotateZ(calc(var(--i) * 24deg)) translateY(-38vh); 
       transform-style: preserve-3d;
     }
 
-    /* ── HIGH-SPEED VORTEX SHUFFLE ANIMATION ── */
+    /* ── HIGH-SPEED VORTEX SHUFFLE ANIMATION (SMALLER CARDS) ── */
     .halo-card {
       position: absolute;
-      width: 24vh; height: 13.5vh; 
-      margin-top: -6.75vh; margin-left: -12vh;
+      /* Smaller 16:9 Cards */
+      width: 20vh; height: 11.25vh; 
+      margin-top: -5.625vh; margin-left: -10vh;
       
       background: #111; overflow: hidden; border-radius: 4px;
       cursor: pointer;
       
-      /* Strict hardware rendering */
       will-change: transform, opacity;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
       transform: translateZ(0);
       
-      /* The Vortex Deal/Shuffle: Lightning fast bezier snap */
-      animation: vortexShuffle 1.35s infinite cubic-bezier(0.1, 0.9, 0.2, 1);
-      animation-delay: calc(var(--i) * -0.09s);
+      /* Reduced speed slightly so they are readable */
+      animation: vortexShuffle 1.6s infinite cubic-bezier(0.1, 0.9, 0.2, 1);
+      animation-delay: calc(var(--i) * -0.1s);
     }
     
     @keyframes vortexShuffle {
-      0% { opacity: 0; transform: translate3d(0, 250%, -400px) scale(0.2) rotateZ(-60deg); }
-      40% { opacity: 1; transform: translate3d(0, 0%, 140px) scale(1.6) rotateZ(0deg); }
-      70% { opacity: 1; transform: translate3d(0, -20%, 40px) scale(1.1) rotateZ(10deg); }
-      100% { opacity: 0; transform: translate3d(0, -150%, -300px) scale(0.3) rotateZ(45deg); }
+      /* Origin: Closer to orbit ring, less chaotic scaling */
+      0% { opacity: 0; transform: translate3d(0, 150%, -200px) scale(0.4) rotateZ(-30deg); }
+      /* Peak: Snaps to normal scale, doesn't get huge and block text */
+      40% { opacity: 1; transform: translate3d(0, 0%, 50px) scale(1.1) rotateZ(0deg); }
+      /* Drift */
+      70% { opacity: 1; transform: translate3d(0, -10%, 20px) scale(1) rotateZ(5deg); }
+      /* Exit */
+      100% { opacity: 0; transform: translate3d(0, -80%, -100px) scale(0.5) rotateZ(20deg); }
     }
 
     .halo-card img {
@@ -130,17 +136,19 @@
     .halo-card:hover, .halo-card:active {
       animation-play-state: paused !important;
       opacity: 1 !important;
-      transform: translate3d(0, 0%, 160px) scale(1.8) rotateZ(0deg) !important;
+      transform: translate3d(0, 0%, 160px) scale(2) rotateZ(0deg) !important;
       z-index: 100 !important;
     }
 
-    /* ── MOBILE OPTIMIZATIONS ── */
+    /* ── MOBILE OPTIMIZATIONS (16:9 UNIFIED REPLICA, SMALLER) ── */
     @media (max-width: 1024px) {
-      .halo-card-anchor { transform: rotateZ(calc(var(--i) * 24deg)) translateY(-45vw); }
+      /* Wider radius for mobile screen */
+      .halo-card-anchor { transform: rotateZ(calc(var(--i) * 24deg)) translateY(-55vw); }
       
       .halo-card { 
-        width: 32vw; height: 18vw; 
-        margin-top: -9vw; margin-left: -16vw; 
+        /* Smaller 16:9 for mobile */
+        width: 26vw; height: 14.62vw; 
+        margin-top: -7.31vw; margin-left: -13vw; 
       }
       
       .corner-text { font-size: 7px; }
@@ -165,12 +173,10 @@
 </head>
 <body>
 
-  <!-- INSTANT 0ms LIGHTBOX OVERLAY -->
   <div id="lightbox" class="fixed inset-0 bg-white/95 z-[9999] items-center justify-center cursor-pointer" onclick="closeLightbox()">
     <img id="lightbox-img" src="" class="object-cover" />
   </div>
 
-  <!-- ── 1. HERO ORBITAL SECTION ── -->
   <section class="hero-container">
     
     <div class="corner-text top-left hidden md:block">
@@ -202,24 +208,24 @@
     <div class="halo-wrapper">
       <div class="halo-tilt">
         <div class="halo-spin">
-          <!-- THE SHUFFLING VORTEX DECK (LOCAL ASSETS FOR INSTANT LOAD) -->
+          <!-- 5 LOCAL ASSETS -->
           <div class="halo-card-anchor" style="--i:0"><div class="halo-card" style="--i:0" onclick="openImage(this)"><img src="assets/casa-concreto.png" alt="Architecture Concrete House"></div></div>
           <div class="halo-card-anchor" style="--i:1"><div class="halo-card" style="--i:1" onclick="openImage(this)"><img src="assets/cozinha-luxo.png" alt="Cozinha de Luxo Dark"></div></div>
           <div class="halo-card-anchor" style="--i:2"><div class="halo-card" style="--i:2" onclick="openImage(this)"><img src="assets/retrato-ceo.png" alt="Retrato CEO"></div></div>
           <div class="halo-card-anchor" style="--i:3"><div class="halo-card" style="--i:3" onclick="openImage(this)"><img src="assets/restaurante-madeira.png" alt="Restaurante Arquitetura Madeira"></div></div>
           <div class="halo-card-anchor" style="--i:4"><div class="halo-card" style="--i:4" onclick="openImage(this)"><img src="assets/tok-design-logo.png" alt="Tok Design Logo"></div></div>
           
-          <!-- FALLBACK UNSPLASH URLS (Will be replaced as user provides more) -->
-          <div class="halo-card-anchor" style="--i:5"><div class="halo-card" style="--i:5" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1200&auto=format&fit=crop" alt="Interior"></div></div>
-          <div class="halo-card-anchor" style="--i:6"><div class="halo-card" style="--i:6" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1200&auto=format&fit=crop" alt="Spa"></div></div>
-          <div class="halo-card-anchor" style="--i:7"><div class="halo-card" style="--i:7" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=1200&auto=format&fit=crop" alt="Gold"></div></div>
-          <div class="halo-card-anchor" style="--i:8"><div class="halo-card" style="--i:8" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1505253716362-afcd180486c0?q=80&w=1200&auto=format&fit=crop" alt="Bakery"></div></div>
-          <div class="halo-card-anchor" style="--i:9"><div class="halo-card" style="--i:9" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1200&auto=format&fit=crop" alt="Cosmetics"></div></div>
-          <div class="halo-card-anchor" style="--i:10"><div class="halo-card" style="--i:10" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1583847268964-b28ce7f415e6?q=80&w=1200&auto=format&fit=crop" alt="Editorial"></div></div>
-          <div class="halo-card-anchor" style="--i:11"><div class="halo-card" style="--i:11" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1487958449940-244586588b14?q=80&w=1200&auto=format&fit=crop" alt="Facade"></div></div>
-          <div class="halo-card-anchor" style="--i:12"><div class="halo-card" style="--i:12" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1200&auto=format&fit=crop" alt="Latte"></div></div>
-          <div class="halo-card-anchor" style="--i:13"><div class="halo-card" style="--i:13" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1200&auto=format&fit=crop" alt="Diamonds"></div></div>
-          <div class="halo-card-anchor" style="--i:14"><div class="halo-card" style="--i:14" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=1200&auto=format&fit=crop" alt="Skincare"></div></div>
+          <!-- 10 HIGH-END OPTIMIZED UNSPLASH URLS (Guaranteed Fast Load on Mobile) -->
+          <div class="halo-card-anchor" style="--i:5"><div class="halo-card" style="--i:5" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=70&w=800&auto=format,compress" alt="Minimalist Architecture"></div></div>
+          <div class="halo-card-anchor" style="--i:6"><div class="halo-card" style="--i:6" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=70&w=800&auto=format,compress" alt="Luxury Watch"></div></div>
+          <div class="halo-card-anchor" style="--i:7"><div class="halo-card" style="--i:7" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=70&w=800&auto=format,compress" alt="Fashion Editorial"></div></div>
+          <div class="halo-card-anchor" style="--i:8"><div class="halo-card" style="--i:8" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=70&w=800&auto=format,compress" alt="Abstract 3D Glass"></div></div>
+          <div class="halo-card-anchor" style="--i:9"><div class="halo-card" style="--i:9" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1503376760366-5a4d344515ee?q=70&w=800&auto=format,compress" alt="Luxury Sports Car"></div></div>
+          <div class="halo-card-anchor" style="--i:10"><div class="halo-card" style="--i:10" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=70&w=800&auto=format,compress" alt="Resort Lounge"></div></div>
+          <div class="halo-card-anchor" style="--i:11"><div class="halo-card" style="--i:11" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=70&w=800&auto=format,compress" alt="Cosmetic Bottle Minimalist"></div></div>
+          <div class="halo-card-anchor" style="--i:12"><div class="halo-card" style="--i:12" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=70&w=800&auto=format,compress" alt="Modern Art Gallery"></div></div>
+          <div class="halo-card-anchor" style="--i:13"><div class="halo-card" style="--i:13" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=70&w=800&auto=format,compress" alt="Coffee Pour"></div></div>
+          <div class="halo-card-anchor" style="--i:14"><div class="halo-card" style="--i:14" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=70&w=800&auto=format,compress" alt="Streetwear Studio"></div></div>
         </div>
       </div>
     </div>
