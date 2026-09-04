@@ -83,7 +83,7 @@
 
     .halo-spin {
       transform-style: preserve-3d;
-      animation: spin 7s linear infinite; /* Faster global spin */
+      animation: spin 7s linear infinite; 
     }
     
     @keyframes spin { 100% { transform: rotateZ(360deg); } }
@@ -115,22 +115,10 @@
       animation-delay: calc(var(--i) * -0.09s);
     }
     
-    /* 
-      Math: 250% of card height perfectly offsets the anchor's radius.
-      This makes the cards spawn from the absolute dead center of the screen,
-      spin like thrown playing cards, explode toward the camera, and fly outward.
-    */
     @keyframes vortexShuffle {
-      /* Origin: Dead center of the whirlpool, deep in Z-space, spun backwards */
       0% { opacity: 0; transform: translate3d(0, 250%, -400px) scale(0.2) rotateZ(-60deg); }
-      
-      /* Peak: Snaps into the orbital ring, huge, facing camera */
       40% { opacity: 1; transform: translate3d(0, 0%, 140px) scale(1.6) rotateZ(0deg); }
-      
-      /* Hover: Slight outward drift */
       70% { opacity: 1; transform: translate3d(0, -20%, 40px) scale(1.1) rotateZ(10deg); }
-      
-      /* End: Thrown outwards into the dark edge of the vortex */
       100% { opacity: 0; transform: translate3d(0, -150%, -300px) scale(0.3) rotateZ(45deg); }
     }
 
@@ -139,7 +127,6 @@
       pointer-events: none;
     }
     
-    /* Freeze the vortex instantly on touch/hover so the user can view it */
     .halo-card:hover, .halo-card:active {
       animation-play-state: paused !important;
       opacity: 1 !important;
@@ -147,7 +134,7 @@
       z-index: 100 !important;
     }
 
-    /* ── MOBILE OPTIMIZATIONS (16:9 UNIFIED REPLICA) ── */
+    /* ── MOBILE OPTIMIZATIONS ── */
     @media (max-width: 1024px) {
       .halo-card-anchor { transform: rotateZ(calc(var(--i) * 24deg)) translateY(-45vw); }
       
@@ -160,25 +147,14 @@
       .top-left { top: 1.5rem; left: 1.5rem; } .top-right { top: 1.5rem; right: 1.5rem; }
       .bottom-left { bottom: 1.5rem; left: 1.5rem; } .bottom-right { bottom: 1.5rem; right: 1.5rem; }
       
-      .center-text-loop svg {
-        width: 90vw !important;
-      }
+      .center-text-loop svg { width: 90vw !important; }
     }
 
-    /* ── 0ms INSTANT LIGHTBOX (Performance extreme) ── */
-    #lightbox {
-      display: none; 
-    }
-    #lightbox-img {
-      width: 100%; height: auto; border-radius: 6px;
-      box-shadow: 0 40px 100px rgba(0,0,0,0.5);
-    }
-    @media (max-width: 1024px) {
-      #lightbox-img { aspect-ratio: 16/9; width: 95vw; height: auto; }
-    }
-    @media (min-width: 1025px) {
-      #lightbox-img { aspect-ratio: 16/9; max-height: 85vh; width: auto; }
-    }
+    /* ── 0ms INSTANT LIGHTBOX ── */
+    #lightbox { display: none; }
+    #lightbox-img { width: 100%; height: auto; border-radius: 6px; box-shadow: 0 40px 100px rgba(0,0,0,0.5); }
+    @media (max-width: 1024px) { #lightbox-img { aspect-ratio: 16/9; width: 95vw; height: auto; } }
+    @media (min-width: 1025px) { #lightbox-img { aspect-ratio: 16/9; max-height: 85vh; width: auto; } }
 
     /* ── EDITORIAL CONTENT SECTIONS ── */
     .editorial-section {
@@ -226,12 +202,14 @@
     <div class="halo-wrapper">
       <div class="halo-tilt">
         <div class="halo-spin">
-          <!-- THE SHUFFLING VORTEX DECK -->
+          <!-- THE SHUFFLING VORTEX DECK (LOCAL ASSETS FOR INSTANT LOAD) -->
           <div class="halo-card-anchor" style="--i:0"><div class="halo-card" style="--i:0" onclick="openImage(this)"><img src="assets/casa-concreto.png" alt="Architecture Concrete House"></div></div>
-          <div class="halo-card-anchor" style="--i:1"><div class="halo-card" style="--i:1" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1629909613654-a62ebcc5e656?q=80&w=1200&auto=format&fit=crop" alt="Clinic"></div></div>
-          <div class="halo-card-anchor" style="--i:2"><div class="halo-card" style="--i:2" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1599643478514-4a7b5387d896?q=80&w=1200&auto=format&fit=crop" alt="Jewelry"></div></div>
-          <div class="halo-card-anchor" style="--i:3"><div class="halo-card" style="--i:3" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=1200&auto=format&fit=crop" alt="Coffee"></div></div>
-          <div class="halo-card-anchor" style="--i:4"><div class="halo-card" style="--i:4" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop" alt="Branding"></div></div>
+          <div class="halo-card-anchor" style="--i:1"><div class="halo-card" style="--i:1" onclick="openImage(this)"><img src="assets/cozinha-luxo.png" alt="Cozinha de Luxo Dark"></div></div>
+          <div class="halo-card-anchor" style="--i:2"><div class="halo-card" style="--i:2" onclick="openImage(this)"><img src="assets/retrato-ceo.png" alt="Retrato CEO"></div></div>
+          <div class="halo-card-anchor" style="--i:3"><div class="halo-card" style="--i:3" onclick="openImage(this)"><img src="assets/restaurante-madeira.png" alt="Restaurante Arquitetura Madeira"></div></div>
+          <div class="halo-card-anchor" style="--i:4"><div class="halo-card" style="--i:4" onclick="openImage(this)"><img src="assets/tok-design-logo.png" alt="Tok Design Logo"></div></div>
+          
+          <!-- FALLBACK UNSPLASH URLS (Will be replaced as user provides more) -->
           <div class="halo-card-anchor" style="--i:5"><div class="halo-card" style="--i:5" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1200&auto=format&fit=crop" alt="Interior"></div></div>
           <div class="halo-card-anchor" style="--i:6"><div class="halo-card" style="--i:6" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1200&auto=format&fit=crop" alt="Spa"></div></div>
           <div class="halo-card-anchor" style="--i:7"><div class="halo-card" style="--i:7" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=1200&auto=format&fit=crop" alt="Gold"></div></div>
