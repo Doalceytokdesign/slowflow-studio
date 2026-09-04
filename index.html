@@ -73,7 +73,7 @@
     .halo-wrapper {
       position: absolute; top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      perspective: 1500px; z-index: 20;
+      perspective: 1200px; z-index: 20;
     }
     
     .halo-tilt {
@@ -83,7 +83,7 @@
 
     .halo-spin {
       transform-style: preserve-3d;
-      animation: spin 10s linear infinite; 
+      animation: spin 7s linear infinite; /* Faster global spin */
     }
     
     @keyframes spin { 100% { transform: rotateZ(360deg); } }
@@ -95,7 +95,7 @@
       transform-style: preserve-3d;
     }
 
-    /* ── ULTRA-FLUID HARDWARE ACCELERATED WAVE (NO LAG) ── */
+    /* ── HIGH-SPEED VORTEX SHUFFLE ANIMATION ── */
     .halo-card {
       position: absolute;
       width: 24vh; height: 13.5vh; 
@@ -110,15 +110,28 @@
       backface-visibility: hidden;
       transform: translateZ(0);
       
-      /* Smooth overlapping wave instead of violent flash */
-      animation: fluidOverlap 2.4s infinite cubic-bezier(0.4, 0, 0.2, 1);
-      animation-delay: calc(var(--i) * -0.16s);
+      /* The Vortex Deal/Shuffle: Lightning fast bezier snap */
+      animation: vortexShuffle 1.35s infinite cubic-bezier(0.1, 0.9, 0.2, 1);
+      animation-delay: calc(var(--i) * -0.09s);
     }
     
-    /* Pure translate3d for 0 CPU layout thrashing = 60fps on mobile */
-    @keyframes fluidOverlap {
-      0%, 100% { opacity: 0.05; transform: translate3d(0, 0, -80px) scale(0.6); }
-      50% { opacity: 1; transform: translate3d(0, 0, 100px) scale(1.3); }
+    /* 
+      Math: 250% of card height perfectly offsets the anchor's radius.
+      This makes the cards spawn from the absolute dead center of the screen,
+      spin like thrown playing cards, explode toward the camera, and fly outward.
+    */
+    @keyframes vortexShuffle {
+      /* Origin: Dead center of the whirlpool, deep in Z-space, spun backwards */
+      0% { opacity: 0; transform: translate3d(0, 250%, -400px) scale(0.2) rotateZ(-60deg); }
+      
+      /* Peak: Snaps into the orbital ring, huge, facing camera */
+      40% { opacity: 1; transform: translate3d(0, 0%, 140px) scale(1.6) rotateZ(0deg); }
+      
+      /* Hover: Slight outward drift */
+      70% { opacity: 1; transform: translate3d(0, -20%, 40px) scale(1.1) rotateZ(10deg); }
+      
+      /* End: Thrown outwards into the dark edge of the vortex */
+      100% { opacity: 0; transform: translate3d(0, -150%, -300px) scale(0.3) rotateZ(45deg); }
     }
 
     .halo-card img {
@@ -126,12 +139,12 @@
       pointer-events: none;
     }
     
-    .halo-card:hover {
+    /* Freeze the vortex instantly on touch/hover so the user can view it */
+    .halo-card:hover, .halo-card:active {
       animation-play-state: paused !important;
       opacity: 1 !important;
-      transform: translate3d(0, 0, 120px) scale(1.8) !important;
+      transform: translate3d(0, 0%, 160px) scale(1.8) rotateZ(0deg) !important;
       z-index: 100 !important;
-      box-shadow: 0 35px 70px rgba(0,0,0,0.5) !important;
     }
 
     /* ── MOBILE OPTIMIZATIONS (16:9 UNIFIED REPLICA) ── */
@@ -213,9 +226,8 @@
     <div class="halo-wrapper">
       <div class="halo-tilt">
         <div class="halo-spin">
-          <!-- CARD 0 INJECTED WITH USER ASSET -->
+          <!-- THE SHUFFLING VORTEX DECK -->
           <div class="halo-card-anchor" style="--i:0"><div class="halo-card" style="--i:0" onclick="openImage(this)"><img src="assets/casa-concreto.png" alt="Architecture Concrete House"></div></div>
-          
           <div class="halo-card-anchor" style="--i:1"><div class="halo-card" style="--i:1" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1629909613654-a62ebcc5e656?q=80&w=1200&auto=format&fit=crop" alt="Clinic"></div></div>
           <div class="halo-card-anchor" style="--i:2"><div class="halo-card" style="--i:2" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1599643478514-4a7b5387d896?q=80&w=1200&auto=format&fit=crop" alt="Jewelry"></div></div>
           <div class="halo-card-anchor" style="--i:3"><div class="halo-card" style="--i:3" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=1200&auto=format&fit=crop" alt="Coffee"></div></div>
