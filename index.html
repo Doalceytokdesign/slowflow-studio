@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Slow Flow Studio — Premium Web & Branding Portfolio">
+  <!-- ANTI-DARK MODE: Força o navegador a renderizar apenas no modo claro -->
+  <meta name="color-scheme" content="light only">
   <title>Slow Flow — Digital Ecosystems</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,14 +25,20 @@
   </script>
 
   <style>
-    body { background-color: #ffffff; color: #111111; margin: 0; overflow-x: hidden; scroll-behavior: smooth; }
+    /* Forçando Branco Absoluto contra o Dark Mode automático de celulares */
+    :root { color-scheme: light; }
+    html, body { 
+      background-color: #ffffff !important; 
+      color: #111111 !important; 
+      margin: 0; overflow-x: hidden; scroll-behavior: smooth; 
+    }
     ::selection { background: #111; color: #fff; }
 
     /* ── HERO CONTAINER ── */
     .hero-container {
       position: relative; width: 100vw; height: 100vh;
       display: flex; align-items: center; justify-content: center;
-      overflow: hidden; background-color: #ffffff;
+      overflow: hidden; background-color: #ffffff !important;
     }
 
     /* ── DOTTED BACKGROUND TEXT (SLOW FLOW FLUID ANIMATION) ── */
@@ -42,11 +50,13 @@
     
     .dotted-text {
       font-size: 16vw; font-weight: 900; line-height: 0.85; 
-      color: transparent;
+      /* Fallback text color just in case clip fails */
+      color: #e5e7eb;
       background-image: radial-gradient(#d1d5db 45%, transparent 45%);
       background-size: 18px 18px;
       -webkit-background-clip: text;
       background-clip: text;
+      -webkit-text-fill-color: transparent;
       margin: 0; padding: 0; text-align: center;
     }
 
@@ -58,7 +68,7 @@
     /* ── MICRO-TYPOGRAPHY CORNERS ── */
     .corner-text { 
       position: absolute; font-family: 'JetBrains Mono', monospace; font-size: 9px; 
-      text-transform: uppercase; letter-spacing: 0.05em; color: #111; z-index: 30; line-height: 1.5;
+      text-transform: uppercase; letter-spacing: 0.05em; color: #111 !important; z-index: 30; line-height: 1.5;
     }
     .top-left { top: 2.5rem; left: 2.5rem; }
     .top-right { top: 2.5rem; right: 2.5rem; text-align: right; }
@@ -109,7 +119,6 @@
       animation-delay: calc(var(--i) * -0.15s);
     }
     
-    /* Removed heavy box-shadow and filters from keyframes for pure 60FPS fluidness */
     @keyframes millisecondFlash {
       0%, 100% { opacity: 0; transform: translate3d(0, 0, 0px) scale(0.3); }
       15% { opacity: 1; transform: translate3d(0, 0, 100px) scale(1.5); }
@@ -119,7 +128,7 @@
 
     .halo-card img {
       width: 100%; height: 100%; object-fit: cover; background: #111;
-      pointer-events: none; /* Prevents ghost drag issues */
+      pointer-events: none;
     }
     
     .halo-card:hover {
@@ -153,19 +162,17 @@
     }
 
     @media (max-width: 1024px) {
-      /* Mobile Lightbox Image is 9:16 */
       #lightbox-img { aspect-ratio: 9/16; max-height: 80vh; width: auto; max-width: 100%; }
     }
     
     @media (min-width: 1025px) {
-      /* Desktop Lightbox Image is 16:9 */
       #lightbox-img { aspect-ratio: 16/9; max-height: 80vh; width: auto; }
     }
 
     /* ── EDITORIAL CONTENT SECTIONS ── */
     .editorial-section {
       min-height: 100vh; display: flex; align-items: center;
-      padding: 8rem 2rem; border-top: 1px solid #f0f0f0;
+      padding: 8rem 2rem; border-top: 1px solid #f0f0f0; background-color: #ffffff !important;
     }
   </style>
 </head>
@@ -197,7 +204,6 @@
       <h1 class="dotted-text">FLOW</h1>
     </div>
 
-    <!-- The Fast Animated Wave Ring (Portfolio Curated Images) -->
     <div class="halo-wrapper">
       <div class="halo-tilt">
         <div class="halo-spin">
@@ -242,7 +248,7 @@
     </div>
   </section>
 
-  <section class="editorial-section bg-gray-50">
+  <section class="editorial-section" style="background-color: #f9fafb !important;">
     <div class="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center px-4 md:px-0">
       <div class="order-2 md:order-1 w-full aspect-[4/3] bg-gray-200 overflow-hidden relative group">
         <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop" alt="Branding" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105">
@@ -262,7 +268,7 @@
     </div>
   </section>
 
-  <section class="py-40 px-6 bg-white text-center border-t border-gray-200">
+  <section class="py-40 px-6 text-center border-t border-gray-200" style="background-color: #ffffff !important;">
     <div class="max-w-4xl mx-auto">
       <h2 class="font-sans font-bold text-6xl md:text-8xl uppercase tracking-tighter leading-none mb-10">
         Start<br>Project.
@@ -284,11 +290,9 @@
       const imgUrl = element.querySelector('img').src;
       lightboxImg.src = imgUrl;
       
-      // Mostrar overlay
       lightbox.classList.remove('opacity-0', 'pointer-events-none');
       lightbox.classList.add('opacity-100', 'pointer-events-auto');
       
-      // Animação da imagem em milissegundos
       setTimeout(() => {
         lightboxImg.classList.remove('scale-95');
         lightboxImg.classList.add('scale-100');
