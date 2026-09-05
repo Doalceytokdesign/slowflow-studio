@@ -50,54 +50,58 @@
     .bottom-left { bottom: 2.5rem; left: 2.5rem; }
     .bottom-right { bottom: 2.5rem; right: 2.5rem; text-align: right; }
 
-    /* ── V44: HIGH-SPEED 3D CYCLONE (CAROUSEL) ── */
-    .cyclone-wrapper {
+    /* ── V45: THE TILTED DECK DEAL WORLD ── */
+    .world-container {
       position: relative; width: 100vw; height: 100vh;
       display: flex; align-items: center; justify-content: center;
       overflow: hidden; 
       background-color: transparent !important;
-      perspective: 1200px;
+      perspective: 1000px;
     }
 
-    .cyclone-tilt {
-      position: absolute; width: 100vw; height: 100vh;
-      display: flex; align-items: center; justify-content: center;
+    /* The floor plane, tilted extremely back to create the deep deck deal perspective */
+    .tilt-plane {
+      position: absolute; width: 0; height: 0;
       transform-style: preserve-3d;
-      /* Slight tilt so we can see the depth of the cylinder */
-      transform: rotateX(-6deg); 
+      transform: rotateX(-75deg); 
     }
 
-    /* ── THE CENTER LOGO (IN THE 3D SPACE) ── */
-    .center-text-3d {
+    /* ── THE CENTER LOGO (Counter-tilted to stand straight) ── */
+    .center-logo-3d {
       position: absolute;
-      transform: translateZ(0); /* Anchor to the absolute center of the universe */
+      width: 60vw; height: 40vh;
+      left: -30vw; top: -20vh;
+      transform-style: preserve-3d;
+      /* Float up on Y and tilt back to face the camera perfectly */
+      transform: translateY(-8vh) rotateX(75deg);
       pointer-events: none;
       animation: fluidText 3s infinite alternate ease-in-out;
+      z-index: 10;
     }
 
     @keyframes fluidText {
-      0% { transform: translateZ(0) scale(0.96); opacity: 0.8; }
-      100% { transform: translateZ(0) scale(1.04); opacity: 1; }
+      0% { transform: translateY(-8vh) rotateX(75deg) scale(0.96); opacity: 0.8; }
+      100% { transform: translateY(-8vh) rotateX(75deg) scale(1.04); opacity: 1; }
     }
 
     /* ── THE FAST SPINNING RING ── */
-    .cyclone-spin {
-      position: absolute; width: 100vw; height: 100vh;
+    .spin-ring {
+      position: absolute; width: 0; height: 0;
       transform-style: preserve-3d;
-      /* Extreme speed: 6 seconds for a full 360 degree loop */
-      animation: hurricane 6s linear infinite; 
+      /* Extreme speed: 4.5 seconds for a full 360 degree loop */
+      animation: hyperSpin 4.5s linear infinite; 
     }
 
-    @keyframes hurricane {
+    @keyframes hyperSpin {
       0% { transform: rotateY(0deg); }
       100% { transform: rotateY(-360deg); }
     }
 
-    /* Anchor sets the radius of the cylinder */
-    .halo-card-anchor {
-      position: absolute; left: 50%; top: 50%;
+    /* Anchor pushes them out on the flat floor */
+    .card-anchor {
+      position: absolute; left: 0; top: 0;
       transform-style: preserve-3d;
-      transform: rotateY(calc(var(--i) * 24deg)) translateZ(42vw); 
+      transform: rotateY(calc(var(--i) * 24deg)) translateZ(40vw); 
     }
 
     .halo-card {
@@ -108,23 +112,30 @@
       background: #111; overflow: hidden; border-radius: 4px;
       cursor: pointer;
       
-      /* ALL IMAGES 100% VISIBLE ALL THE TIME */
+      /* ALL IMAGES 100% VISIBLE */
       opacity: 0.95; 
       
-      /* Floating effect up and down */
-      animation: floatCard 2.5s infinite ease-in-out alternate;
+      /* 
+         Counter-rotate to stand perfectly vertical like a billboard!
+         This ensures they don't lie flat on the floor, but stand up 
+         to face the camera, creating the 'deck deal' sweep effect at the bottom.
+      */
+      transform: rotateX(75deg); 
+      
+      /* Floating effect */
+      animation: billboardBob 2.5s infinite ease-in-out alternate;
       animation-delay: calc(var(--i) * -0.2s);
       
       transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
       
-      /* Keep images facing flat to the cylinder edge */
+      /* Prevent glitching */
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
     }
 
-    @keyframes floatCard {
-      0% { transform: translateY(-6vh); }
-      100% { transform: translateY(6vh); }
+    @keyframes billboardBob {
+      0% { transform: rotateX(75deg) translateY(-3vh); }
+      100% { transform: rotateX(75deg) translateY(3vh); }
     }
 
     .halo-card img {
@@ -132,24 +143,24 @@
       pointer-events: none;
     }
 
-    /* Pause the extreme speed loop on hover so the user can interact */
-    .cyclone-wrapper:hover .cyclone-spin {
+    /* Pause the extreme speed loop on hover */
+    .world-container:hover .spin-ring {
       animation-play-state: paused;
     }
 
     .halo-card:hover {
       opacity: 1;
-      /* Scale the card up when hovered */
-      transform: scale(1.5) !important;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      transform: rotateX(75deg) scale(1.6) translateY(-5vh) !important;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.8);
       z-index: 100;
     }
 
-    /* ── MOBILE OPTIMIZATIONS ── */
+    /* ── MOBILE OPTIMIZATIONS (9:16 Centering & Spread) ── */
     @media (max-width: 1024px) {
-      .halo-card-anchor { 
-        /* Tighter radius for mobile so it fits beautifully */
-        transform: rotateY(calc(var(--i) * 24deg)) translateZ(85vw); 
+      .tilt-plane { transform: rotateX(-75deg) scale(1.1); }
+      .card-anchor { 
+        /* Massive radius for mobile so the bottom cards deal hugely across the screen */
+        transform: rotateY(calc(var(--i) * 24deg)) translateZ(90vw); 
       }
       
       .halo-card { 
@@ -162,7 +173,8 @@
       .top-left { top: 1.5rem; left: 1.5rem; } .top-right { top: 1.5rem; right: 1.5rem; }
       .bottom-left { bottom: 1.5rem; left: 1.5rem; } .bottom-right { bottom: 1.5rem; right: 1.5rem; }
       
-      .center-text-3d svg { width: 90vw !important; }
+      .center-logo-3d svg { width: 90vw !important; height: auto; }
+      .center-logo-3d { left: -45vw; width: 90vw; }
     }
 
     /* ── 0ms INSTANT LIGHTBOX ── */
@@ -184,8 +196,8 @@
     <img id="lightbox-img" src="" class="object-cover" />
   </div>
 
-  <!-- V44: CYCLONE SECTION -->
-  <section class="cyclone-wrapper">
+  <!-- V45: THE TILTED DECK WORLD -->
+  <section class="world-container">
     
     <div class="corner-text top-left hidden md:block">
       SLOW FLOW STUDIO<br>PREMIUM DESIGN & WEB
@@ -200,12 +212,12 @@
       FULLY RESPONSIVE<br>DATA-DRIVEN<br>OPTIMIZED PERFORMANCE
     </div>
 
-    <!-- 3D WORLD -->
-    <div class="cyclone-tilt">
+    <!-- The Tilted Space -->
+    <div class="tilt-plane">
       
-      <!-- LOGO IN DEAD CENTER -->
-      <div class="center-text-3d">
-        <svg width="60vw" height="40vh" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+      <!-- LOGO STANDING STRAIGHT UP -->
+      <div class="center-logo-3d">
+        <svg width="100%" height="100%" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="dots" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
               <circle fill="#d1d5db" cx="4" cy="4" r="3.5"></circle>
@@ -216,26 +228,26 @@
         </svg>
       </div>
 
-      <!-- HIGHSPEED CYCLONE CAROUSEL AROUND THE LOGO -->
-      <div class="cyclone-spin">
-        <!-- 5 LOCAL ASSETS -->
-        <div class="halo-card-anchor" style="--i:0"><div class="halo-card" style="--i:0" onclick="openImage(this)"><img src="assets/casa-concreto.png" alt="Architecture Concrete House"></div></div>
-        <div class="halo-card-anchor" style="--i:1"><div class="halo-card" style="--i:1" onclick="openImage(this)"><img src="assets/cozinha-luxo.png" alt="Cozinha de Luxo Dark"></div></div>
-        <div class="halo-card-anchor" style="--i:2"><div class="halo-card" style="--i:2" onclick="openImage(this)"><img src="assets/retrato-ceo.png" alt="Retrato CEO"></div></div>
-        <div class="halo-card-anchor" style="--i:3"><div class="halo-card" style="--i:3" onclick="openImage(this)"><img src="assets/restaurante-madeira.png" alt="Restaurante Arquitetura Madeira"></div></div>
-        <div class="halo-card-anchor" style="--i:4"><div class="halo-card" style="--i:4" onclick="openImage(this)"><img src="assets/tok-design-logo.png" alt="Tok Design Logo"></div></div>
+      <!-- HIGHSPEED RING AROUND THE LOGO -->
+      <div class="spin-ring">
+        <!-- 5 LOCAL ASSETS (Instant Load) -->
+        <div class="card-anchor" style="--i:0"><div class="halo-card" style="--i:0" onclick="openImage(this)"><img src="assets/casa-concreto.png" alt="Architecture Concrete House"></div></div>
+        <div class="card-anchor" style="--i:1"><div class="halo-card" style="--i:1" onclick="openImage(this)"><img src="assets/cozinha-luxo.png" alt="Cozinha de Luxo Dark"></div></div>
+        <div class="card-anchor" style="--i:2"><div class="halo-card" style="--i:2" onclick="openImage(this)"><img src="assets/retrato-ceo.png" alt="Retrato CEO"></div></div>
+        <div class="card-anchor" style="--i:3"><div class="halo-card" style="--i:3" onclick="openImage(this)"><img src="assets/restaurante-madeira.png" alt="Restaurante Arquitetura Madeira"></div></div>
+        <div class="card-anchor" style="--i:4"><div class="halo-card" style="--i:4" onclick="openImage(this)"><img src="assets/tok-design-logo.png" alt="Tok Design Logo"></div></div>
         
-        <!-- 10 HIGH-END OPTIMIZED UNSPLASH URLS -->
-        <div class="halo-card-anchor" style="--i:5"><div class="halo-card" style="--i:5" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=70&w=800&auto=format,compress" alt="Minimalist Architecture"></div></div>
-        <div class="halo-card-anchor" style="--i:6"><div class="halo-card" style="--i:6" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=70&w=800&auto=format,compress" alt="Luxury Watch"></div></div>
-        <div class="halo-card-anchor" style="--i:7"><div class="halo-card" style="--i:7" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=70&w=800&auto=format,compress" alt="Fashion Editorial"></div></div>
-        <div class="halo-card-anchor" style="--i:8"><div class="halo-card" style="--i:8" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=70&w=800&auto=format,compress" alt="Abstract 3D Glass"></div></div>
-        <div class="halo-card-anchor" style="--i:9"><div class="halo-card" style="--i:9" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1503376760366-5a4d344515ee?q=70&w=800&auto=format,compress" alt="Luxury Sports Car"></div></div>
-        <div class="halo-card-anchor" style="--i:10"><div class="halo-card" style="--i:10" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=70&w=800&auto=format,compress" alt="Resort Lounge"></div></div>
-        <div class="halo-card-anchor" style="--i:11"><div class="halo-card" style="--i:11" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=70&w=800&auto=format,compress" alt="Cosmetic Bottle Minimalist"></div></div>
-        <div class="halo-card-anchor" style="--i:12"><div class="halo-card" style="--i:12" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=70&w=800&auto=format,compress" alt="Modern Art Gallery"></div></div>
-        <div class="halo-card-anchor" style="--i:13"><div class="halo-card" style="--i:13" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=70&w=800&auto=format,compress" alt="Coffee Pour"></div></div>
-        <div class="halo-card-anchor" style="--i:14"><div class="halo-card" style="--i:14" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=70&w=800&auto=format,compress" alt="Streetwear Studio"></div></div>
+        <!-- 10 HIGH-END PREMIUM ASSETS (Compressed specifically to load extremely fast) -->
+        <div class="card-anchor" style="--i:5"><div class="halo-card" style="--i:5" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=70&w=800&auto=format,compress" alt="Minimalist Architecture"></div></div>
+        <div class="card-anchor" style="--i:6"><div class="halo-card" style="--i:6" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=70&w=800&auto=format,compress" alt="Modern Interior"></div></div>
+        <div class="card-anchor" style="--i:7"><div class="halo-card" style="--i:7" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=70&w=800&auto=format,compress" alt="Abstract 3D Glass"></div></div>
+        <div class="card-anchor" style="--i:8"><div class="halo-card" style="--i:8" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=70&w=800&auto=format,compress" alt="Modern Art Gallery"></div></div>
+        <div class="card-anchor" style="--i:9"><div class="halo-card" style="--i:9" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1503376760366-5a4d344515ee?q=70&w=800&auto=format,compress" alt="Luxury Sports Car"></div></div>
+        <div class="card-anchor" style="--i:10"><div class="halo-card" style="--i:10" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=70&w=800&auto=format,compress" alt="Resort Lounge"></div></div>
+        <div class="card-anchor" style="--i:11"><div class="halo-card" style="--i:11" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=70&w=800&auto=format,compress" alt="Cosmetic Bottle Minimalist"></div></div>
+        <div class="card-anchor" style="--i:12"><div class="halo-card" style="--i:12" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=70&w=800&auto=format,compress" alt="Coffee Aesthetic"></div></div>
+        <div class="card-anchor" style="--i:13"><div class="halo-card" style="--i:13" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=70&w=800&auto=format,compress" alt="Streetwear Studio"></div></div>
+        <div class="card-anchor" style="--i:14"><div class="halo-card" style="--i:14" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=70&w=800&auto=format,compress" alt="Luxury Watch"></div></div>
       </div>
       
     </div>
