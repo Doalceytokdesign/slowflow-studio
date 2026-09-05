@@ -27,8 +27,8 @@ PORT        = 3000
 # ── ANIMACAO: EFEITO CINEMATOGRAFICO ────────────────────────────────────────
 # 60 cards x 0.007s de delay = 0.42s de loop total
 # Cada card passa pelo centro em ~7ms = efeito de pelicula em alta velocidade
-CARD_DURATION = "0.42s"   # duracao total do loop halfPipe
-CARD_DELAY    = "0.007s"  # intervalo entre cada card (7ms = pelicula rapida)
+CARD_DURATION = "0.14s"   # duracao total do loop halfPipe
+CARD_DELAY    = "0.0023s"  # intervalo entre cada card (7ms = pelicula rapida)
 
 # ── CARREGA BASE DE DADOS ────────────────────────────────────────────────────
 def load_images():
@@ -336,4 +336,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 

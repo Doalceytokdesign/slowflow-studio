@@ -119,9 +119,9 @@ body {
   will-change: transform, opacity;
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
-  /* ── EFEITO PELICULA CINEMATOGRAFICA: 7ms entre cada frame ── */
-  animation: 0.42s linear infinite halfPipe;
-  animation-delay: calc(var(--i) * -0.007s);
+  /* ── FLASH ENTRE FRAMES: 2.3ms por imagem ── */
+  animation: 0.14s linear infinite halfPipe;
+  animation-delay: calc(var(--i) * -0.0023s);
   transition: box-shadow 0.3s ease;
   transform-origin: center center;
   z-index: 5;
@@ -142,8 +142,8 @@ body {
     rgba(255,255,255,0) 100%
   );
   transform: skewX(-20deg);
-  animation: 0.42s linear infinite luxuryGlint;
-  animation-delay: calc(var(--i) * -0.007s);
+  animation: 0.14s linear infinite luxuryGlint;
+  animation-delay: calc(var(--i) * -0.0023s);
   pointer-events: none;
   z-index: 2;
   will-change: left, opacity;
