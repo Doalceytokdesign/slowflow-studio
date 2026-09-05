@@ -50,7 +50,7 @@
     .bottom-left { bottom: 2.5rem; left: 2.5rem; }
     .bottom-right { bottom: 2.5rem; right: 2.5rem; text-align: right; }
 
-    /* ── V50: BULLETPROOF 3D ARCHITECTURE ── */
+    /* ── V51: THE SKATE RAMP VORTEX ── */
     .world-container {
       position: relative; width: 100vw; height: 100vh;
       display: flex; align-items: center; justify-content: center;
@@ -59,18 +59,19 @@
       background: transparent;
     }
 
-    /* Stable world anchor - Subtle tilt for perspective, no extreme distortion */
+    /* Stable world anchor */
     .world-wrap {
       position: absolute; width: 0; height: 0;
       transform-style: preserve-3d;
-      transform: rotateX(-5deg) translateY(-2vh); 
+      transform: rotateX(-5deg); /* Slight camera tilt */
     }
 
-    /* ── THE CENTER LOGO ── */
+    /* ── THE MASSIVE CENTER LOGO ── */
     .center-logo-3d {
       position: absolute;
-      width: 60vw; height: 30vh;
-      left: -30vw; top: -15vh;
+      /* Enlarged by ~30% */
+      width: 80vw; height: 40vh;
+      left: -40vw; top: -20vh;
       transform-style: preserve-3d;
       pointer-events: none;
       /* Subliminal Heartbeat Pulse */
@@ -79,8 +80,9 @@
     }
 
     @keyframes fluidText {
-      0% { transform: scale(0.96); opacity: 0.85; filter: drop-shadow(0 0 0px rgba(0,0,0,0)); }
-      100% { transform: scale(1.04); opacity: 1; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.15)); }
+      /* Pushed slightly back on Z (-5vw) so the front cards pass safely over without clipping */
+      0% { transform: translateZ(-5vw) scale(0.96); opacity: 0.85; filter: drop-shadow(0 0 0px rgba(0,0,0,0)); }
+      100% { transform: translateZ(-5vw) scale(1.04); opacity: 1; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.15)); }
     }
 
     /* ── THE FAST SPINNING CYLINDER ── */
@@ -99,7 +101,6 @@
     .card-anchor {
       position: absolute; left: 0; top: 0;
       transform-style: preserve-3d;
-      /* Push cards outwards on the flat stable plane */
       transform: rotateY(calc(var(--i) * -24deg)) translateZ(45vw); 
     }
 
@@ -112,7 +113,7 @@
       background: #000; overflow: hidden; border-radius: 4px;
       cursor: pointer;
       
-      /* The S-Curve Throw mapped to the spin */
+      /* The Skate Ramp + S-Curve Throw */
       animation: deckThrow 4.5s linear infinite;
       animation-delay: calc(var(--i) * 0.3s);
       
@@ -128,7 +129,6 @@
       width: 60%; height: 100%;
       background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0) 100%);
       transform: skewX(-20deg);
-      /* Syncs perfectly with the throw window */
       animation: luxuryGlint 4.5s linear infinite;
       animation-delay: calc(var(--i) * 0.3s);
       pointer-events: none;
@@ -142,51 +142,69 @@
       5%, 100% { left: 200%; opacity: 0; }
     }
 
-    /* ── EXACT MATEMATICAL S-THROW & NEUROMARKETING OPTICS ── */
+    /* ── EXACT MATEMATICAL SKATE RAMP + S-THROW ── */
+    /* 
+       The U-Shape (Skate Ramp) logic:
+       Cards go DOWN (+18vh) at the front (0% & 100%) so they duck UNDER the big logo.
+       Cards go UP (-25vh) at the back (50%) so they rise BEHIND the big logo.
+    */
     @keyframes deckThrow {
-      /* Front Center (0deg) - Trigger the S-Curve throw */
+      /* Front Center (0deg) - Lowest point of the U-Shape. Trigger Throw */
       0% {
-        transform: translate3d(0, 0, 0) scale(1) rotateZ(0deg);
+        transform: translate3d(0, 18vh, 0) scale(1) rotateZ(0deg);
         filter: blur(0px) brightness(1.2) grayscale(0%);
         opacity: 1;
       }
       /* Swoop Right and Jump Towards Camera */
       2.5% {
-        transform: translate3d(15vw, 15vh, 20vw) scale(1.4) rotateZ(-12deg);
+        transform: translate3d(15vw, 35vh, 20vw) scale(1.4) rotateZ(-12deg);
         filter: blur(0px) brightness(1.4) grayscale(0%);
         opacity: 0.95;
       }
       /* Swoop Left, Down Off Screen */
       5% {
-        transform: translate3d(-15vw, 60vh, 40vw) scale(1.8) rotateZ(15deg);
+        transform: translate3d(-15vw, 75vh, 40vw) scale(1.8) rotateZ(15deg);
         filter: blur(0px) brightness(1.1) grayscale(0%);
         opacity: 0;
       }
-      /* Instant Reset */
+      /* Instant Reset back to the bottom of the ramp */
       5.1% {
-        transform: translate3d(0, 0, 0) scale(1) rotateZ(0deg);
+        transform: translate3d(0, 18vh, 0) scale(1) rotateZ(0deg);
         filter: blur(2px); opacity: 0;
       }
-      /* Background Orbit - Blurry and Desaturated */
+      /* Climbing the right side of the half-pipe */
       8% {
-        transform: translate3d(0, 0, 0) scale(1) rotateZ(0deg);
+        transform: translate3d(0, 12vh, 0) scale(1) rotateZ(0deg);
         filter: blur(3px) brightness(0.6) grayscale(30%);
         opacity: 1;
       }
-      /* Deepest Distance (Maximum mystery/focus loss) */
-      50% {
-        transform: translate3d(0, 0, 0) scale(1) rotateZ(0deg);
-        filter: blur(6px) brightness(0.3) grayscale(70%);
+      /* 25% - Mid height on the right side */
+      25% {
+        transform: translate3d(0, -5vh, 0) scale(0.95) rotateZ(0deg);
+        filter: blur(5px) brightness(0.4) grayscale(50%);
         opacity: 1;
       }
-      /* Approaching the Front - Waking up the desire */
+      /* 50% - Deepest Distance, Highest Peak of the ramp (Rising behind logo) */
+      50% {
+        transform: translate3d(0, -25vh, 0) scale(0.85) rotateZ(0deg);
+        filter: blur(8px) brightness(0.2) grayscale(80%);
+        opacity: 1;
+      }
+      /* 75% - Mid height on the left side */
+      75% {
+        transform: translate3d(0, -5vh, 0) scale(0.95) rotateZ(0deg);
+        filter: blur(4px) brightness(0.5) grayscale(40%);
+        opacity: 1;
+      }
+      /* 95% - Dropping down the ramp towards the front */
       95% {
-        transform: translate3d(0, 0, 0) scale(1) rotateZ(0deg);
+        transform: translate3d(0, 10vh, 0) scale(1) rotateZ(0deg);
         filter: blur(1px) brightness(0.9) grayscale(10%);
         opacity: 1;
       }
+      /* 100% - Front Center (Bottom of the ramp) */
       100% {
-        transform: translate3d(0, 0, 0) scale(1) rotateZ(0deg);
+        transform: translate3d(0, 18vh, 0) scale(1) rotateZ(0deg);
         filter: blur(0px) brightness(1.2) grayscale(0%);
         opacity: 1;
       }
@@ -212,8 +230,7 @@
     /* ── MOBILE OPTIMIZATIONS (Perfect 9:16 Centering) ── */
     @media (max-width: 1024px) {
       .card-anchor { 
-        /* Massive radius perfectly scaled on flat axis */
-        transform: rotateY(calc(var(--i) * -24deg)) translateZ(100vw); 
+        transform: rotateY(calc(var(--i) * -24deg)) translateZ(105vw); 
       }
       .halo-card { 
         width: 48vw; height: 27vw; 
@@ -223,8 +240,9 @@
       .top-left { top: 1.5rem; left: 1.5rem; } .top-right { top: 1.5rem; right: 1.5rem; }
       .bottom-left { bottom: 1.5rem; left: 1.5rem; } .bottom-right { bottom: 1.5rem; right: 1.5rem; }
       
-      .center-logo-3d svg { width: 90vw !important; height: auto; }
-      .center-logo-3d { left: -45vw; width: 90vw; }
+      /* Make Logo take up entire mobile screen safely */
+      .center-logo-3d svg { width: 95vw !important; height: auto; }
+      .center-logo-3d { left: -47.5vw; width: 95vw; }
     }
 
     /* ── LIGHTBOX ── */
@@ -246,7 +264,7 @@
     <img id="lightbox-img" src="" class="object-cover" />
   </div>
 
-  <!-- V50: THE BULLETPROOF VORTEX -->
+  <!-- V51: THE SKATE RAMP VORTEX -->
   <section class="world-container">
     
     <div class="corner-text top-left hidden md:block">
@@ -265,7 +283,7 @@
     <!-- The Stable World Axis -->
     <div class="world-wrap">
       
-      <!-- LOGO PERFECTLY CENTERED -->
+      <!-- MASSIVE CENTER LOGO -->
       <div class="center-logo-3d">
         <svg width="100%" height="100%" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
           <defs>
