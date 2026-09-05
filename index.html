@@ -66,15 +66,16 @@
     }
 
     /* ── THE MASSIVE ANCHORED LOGO ── */
+    /* ── THE MASSIVE ANCHORED LOGO ── */
     .center-logo-3d {
       position: absolute;
-      width: 90vw; height: 45vh;
-      /* Enlarged and shifted down slightly to balance negative space */
-      left: -45vw; top: -25vh;
+      /* Moved to the very top and scaled gracefully to avoid collision */
+      width: 75vw; height: 35vh;
+      left: -37.5vw; top: -42vh;
       transform-style: preserve-3d;
       pointer-events: none;
       animation: fluidText 3s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 10;
+      z-index: 1; /* Pushed behind the 3D cards */
     }
 
     @keyframes fluidText {
@@ -103,6 +104,7 @@
       
       transition: box-shadow 0.3s ease;
       transform-origin: center center;
+      z-index: 5; /* Cards render over the logo naturally */
     }
 
     /* ── SUBLIMINAL LUXURY GLINT ── */
@@ -128,7 +130,7 @@
       54%, 100% { left: 200%; opacity: 0; }
     }
 
-    /* ── EXACT CARTESIAN HALF-PIPE (Lifted and Widened) ── */
+    /* ── EXACT CARTESIAN HALF-PIPE (Separated from Logo) ── */
     @keyframes halfPipe {
       /* Spawn completely off-screen left, far back */
       0% {
@@ -145,9 +147,9 @@
         transform: translate3d(-30vw, 15vh, 0vw) rotateZ(-10deg) rotateY(25deg) rotateX(10deg) scale(1.1);
         opacity: 0.9; filter: brightness(0.9) grayscale(10%);
       }
-      /* APEX - Front Center (Lifted up to 20vh to stay 100% visible on screen) */
+      /* APEX - Front Center (Pushed down to 28vh so it sweeps cleanly UNDER the logo) */
       50% {
-        transform: translate3d(0vw, 20vh, 25vw) rotateZ(0deg) rotateY(0deg) rotateX(0deg) scale(1.5);
+        transform: translate3d(0vw, 28vh, 25vw) rotateZ(0deg) rotateY(0deg) rotateX(0deg) scale(1.35);
         opacity: 1; filter: brightness(1.2) grayscale(0%);
         box-shadow: 0 40px 100px rgba(0,0,0,0.8);
       }
@@ -196,7 +198,7 @@
       
       /* Scale the anchored logo for mobile width */
       .center-logo-3d svg { width: 100vw !important; height: auto; }
-      .center-logo-3d { left: -50vw; width: 100vw; top: -20vh; }
+      .center-logo-3d { left: -50vw; width: 100vw; top: -42vh; }
     }
 
     /* ── LIGHTBOX ── */
