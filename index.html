@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="description" content="Slow Flow Studio — Websites de Alta Conversao, Branding, Moodboard e Portfolio Premium">
+  <meta name="description" content="Slow Flow Studio — Websites de Alta Conversao, Branding, Moodboards e Portfolio Premium">
   <meta name="theme-color" content="#0a0a0a">
   <meta name="color-scheme" content="dark">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <!-- SEO -->
+
+  <!-- SEO & Social Meta -->
   <meta name="keywords" content="design studio, websites, landing pages, branding, identidade visual, moodboard, portfolio, Google Ads, Instagram, alta conversao">
   <meta property="og:title" content="Slow Flow Studio — Digital Ecosystems">
-  <meta property="og:description" content="Websites de alta conversao no Google e Instagram. Branding completo: moodboard, identidade visual e portfolio premium.">
+  <meta property="og:description" content="Websites de alta conversao no Google e Instagram. Branding completo: moodboards, identidade visual e portfolio premium.">
 
   <title>Slow Flow — Digital Ecosystems</title>
 
@@ -20,26 +21,34 @@
   <link rel="stylesheet" href="dist/output.css">
 
   <style>
-    html, body {
+    html, body {{
       background: #0a0a0a !important;
       background-color: #0a0a0a !important;
       background-image: none !important;
       color: #f0f0f0 !important;
       margin: 0;
-    }
-    .world-container { background: #0a0a0a !important; }
+    }}
+    .world-container {{ background: #0a0a0a !important; }}
   </style>
 </head>
 <body style="background:#0a0a0a !important; background-image:none !important;">
 
-  <!-- LIGHTBOX -->
-  <div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.96);z-index:9999;align-items:center;justify-content:center;cursor:pointer;" onclick="closeLightbox()">
-    <img id="lightbox-img" src="" style="max-height:85vh;max-width:95vw;border-radius:6px;box-shadow:0 40px 100px rgba(0,0,0,0.9);object-fit:contain;" />
+  <!-- ═══════════════════════════════════════════════════════════════
+       LIGHTBOX MODAL CINEMATOGRAFICO
+       ═══════════════════════════════════════════════════════════════ -->
+  <div id="lightbox" onclick="closeLightbox(event)">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <button class="lightbox-close" onclick="closeLightbox(event)" title="Fechar (Esc)">&times;</button>
+      <img id="lightbox-img" src="" alt="" onerror="this.onerror=null;this.src='assets/casa-concreto.png';" />
+      <div class="lightbox-caption">
+        <span id="lightbox-niche" class="lightbox-niche">Slow Flow Studio</span>
+        <span id="lightbox-alt" class="lightbox-alt">Visual Experience</span>
+      </div>
+    </div>
   </div>
 
   <!-- ═══════════════════════════════════════════════════════════════
-       HERO — CINEMATIC PENDULUM FLOW
-       60 cards | Loop: 0.42s | Delay: 0.007s/card
+       HERO — PENDULUM FLOW 3D
        ═══════════════════════════════════════════════════════════════ -->
   <section class="world-container">
 
@@ -58,7 +67,7 @@
 
     <div class="world-wrap">
 
-      <!-- LOGO — BOLINHAS BRANCAS ACETINADAS -->
+      <!-- LOGO — BOLINHAS BRANCAS ACETINADAS (3D PEARL) -->
       <div class="center-logo-3d">
         <svg width="100%" height="100%" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -91,67 +100,67 @@
         </svg>
       </div>
 
-      <!-- ===== 60 CARDS CINEMATOGRAFICOS — gerado por build.py ===== -->
-      <div class="halo-card" style="--i:0" onclick="openImage(this)" title="Branding"><img src="assets/tok-design-logo.png" alt="Tok Design Identidade Visual" loading="lazy"></div>
-      <div class="halo-card" style="--i:1" onclick="openImage(this)" title="Branding"><img src="assets/loja-tiradentes.png" alt="Satto Tiradentes Retail" loading="lazy"></div>
-      <div class="halo-card" style="--i:2" onclick="openImage(this)" title="Branding"><img src="assets/loja-solo.png" alt="Satto Solo Visual Identity" loading="lazy"></div>
-      <div class="halo-card" style="--i:3" onclick="openImage(this)" title="Gastronomia"><img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=800&auto=format&fit=crop" alt="Cafe Cremoso Artesanal" loading="lazy"></div>
-      <div class="halo-card" style="--i:4" onclick="openImage(this)" title="Gastronomia"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=800&auto=format&fit=crop" alt="Coffee Shop Premium" loading="lazy"></div>
-      <div class="halo-card" style="--i:5" onclick="openImage(this)" title="Gastronomia"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=800&auto=format&fit=crop" alt="Fine Dining Restaurant" loading="lazy"></div>
-      <div class="halo-card" style="--i:6" onclick="openImage(this)" title="Arquitetura"><img src="assets/casa-concreto.png" alt="Architecture Concrete House" loading="lazy"></div>
-      <div class="halo-card" style="--i:7" onclick="openImage(this)" title="Arquitetura"><img src="assets/cozinha-luxo.png" alt="Cozinha de Luxo Dark" loading="lazy"></div>
-      <div class="halo-card" style="--i:8" onclick="openImage(this)" title="Arquitetura"><img src="assets/restaurante-madeira.png" alt="Restaurante Arquitetura" loading="lazy"></div>
-      <div class="halo-card" style="--i:9" onclick="openImage(this)" title="Arquitetura"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800&auto=format&fit=crop" alt="Moody Interior Design" loading="lazy"></div>
-      <div class="halo-card" style="--i:10" onclick="openImage(this)" title="Arquitetura"><img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=800&auto=format&fit=crop" alt="Minimalist Dark Interior" loading="lazy"></div>
-      <div class="halo-card" style="--i:11" onclick="openImage(this)" title="Arquitetura"><img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?q=80&w=800&auto=format&fit=crop" alt="Modern Kitchen Design" loading="lazy"></div>
-      <div class="halo-card" style="--i:12" onclick="openImage(this)" title="Arquitetura"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=800&auto=format&fit=crop" alt="Outdoor Lounge Terrace" loading="lazy"></div>
-      <div class="halo-card" style="--i:13" onclick="openImage(this)" title="Saude"><img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=800&auto=format&fit=crop" alt="Clinica Moderna" loading="lazy"></div>
-      <div class="halo-card" style="--i:14" onclick="openImage(this)" title="Saude"><img src="https://images.unsplash.com/photo-1551076805-e1869033e561?q=80&w=800&auto=format&fit=crop" alt="Medical Spa Premium" loading="lazy"></div>
-      <div class="halo-card" style="--i:15" onclick="openImage(this)" title="Saude"><img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=800&auto=format&fit=crop" alt="Estetica e Saude" loading="lazy"></div>
-      <div class="halo-card" style="--i:16" onclick="openImage(this)" title="Saude"><img src="https://images.unsplash.com/photo-1588776814546-1ffbb172d0c8?q=80&w=800&auto=format&fit=crop" alt="Clinica Odontologica Premium" loading="lazy"></div>
-      <div class="halo-card" style="--i:17" onclick="openImage(this)" title="Saude"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=800&auto=format&fit=crop" alt="Dermatologia Skincare" loading="lazy"></div>
-      <div class="halo-card" style="--i:18" onclick="openImage(this)" title="Hotelaria"><img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=800&auto=format&fit=crop" alt="Resort Lounge" loading="lazy"></div>
-      <div class="halo-card" style="--i:19" onclick="openImage(this)" title="Hotelaria"><img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=800&auto=format&fit=crop" alt="Luxury Hotel Lobby" loading="lazy"></div>
-      <div class="halo-card" style="--i:20" onclick="openImage(this)" title="Hotelaria"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=800&auto=format&fit=crop" alt="Boutique Hotel Room" loading="lazy"></div>
-      <div class="halo-card" style="--i:21" onclick="openImage(this)" title="Hotelaria"><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop" alt="Infinity Pool Luxury" loading="lazy"></div>
-      <div class="halo-card" style="--i:22" onclick="openImage(this)" title="Moda"><img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=800&auto=format&fit=crop" alt="Vivara Relogio Luxo" loading="lazy"></div>
-      <div class="halo-card" style="--i:23" onclick="openImage(this)" title="Moda"><img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop" alt="Joalheria Premium" loading="lazy"></div>
-      <div class="halo-card" style="--i:24" onclick="openImage(this)" title="Moda"><img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=800&auto=format&fit=crop" alt="Luxury Timepiece Collection" loading="lazy"></div>
-      <div class="halo-card" style="--i:25" onclick="openImage(this)" title="Moda"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=800&auto=format&fit=crop" alt="Moda Fashion Brand" loading="lazy"></div>
-      <div class="halo-card" style="--i:26" onclick="openImage(this)" title="Moda"><img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?q=80&w=800&auto=format&fit=crop" alt="Eyewear Luxury Brand" loading="lazy"></div>
-      <div class="halo-card" style="--i:27" onclick="openImage(this)" title="Moda"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop" alt="Streetwear Sneaker Culture" loading="lazy"></div>
-      <div class="halo-card" style="--i:28" onclick="openImage(this)" title="Bebidas"><img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=800&auto=format&fit=crop" alt="Wine Bar Premium" loading="lazy"></div>
-      <div class="halo-card" style="--i:29" onclick="openImage(this)" title="Bebidas"><img src="https://images.unsplash.com/photo-1559526324-593bc073d938?q=80&w=800&auto=format&fit=crop" alt="Craft Brewery Branding" loading="lazy"></div>
-      <div class="halo-card" style="--i:30" onclick="openImage(this)" title="Bebidas"><img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=800&auto=format&fit=crop" alt="Cocktail Bar Luxury" loading="lazy"></div>
-      <div class="halo-card" style="--i:31" onclick="openImage(this)" title="Bebidas"><img src="https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?q=80&w=800&auto=format&fit=crop" alt="Nightlife Club Design" loading="lazy"></div>
-      <div class="halo-card" style="--i:32" onclick="openImage(this)" title="Culinaria"><img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=800&auto=format&fit=crop" alt="Sushi Restaurant Premium" loading="lazy"></div>
-      <div class="halo-card" style="--i:33" onclick="openImage(this)" title="Culinaria"><img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=800&auto=format&fit=crop" alt="Patisserie Confeitaria" loading="lazy"></div>
-      <div class="halo-card" style="--i:34" onclick="openImage(this)" title="Culinaria"><img src="https://images.unsplash.com/photo-1498654896293-37aaa39c8afc?q=80&w=800&auto=format&fit=crop" alt="Healthy Organic Food" loading="lazy"></div>
-      <div class="halo-card" style="--i:35" onclick="openImage(this)" title="Fitness"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop" alt="Fitness Studio Gym" loading="lazy"></div>
-      <div class="halo-card" style="--i:36" onclick="openImage(this)" title="Fitness"><img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=800&auto=format&fit=crop" alt="Yoga Wellness Studio" loading="lazy"></div>
-      <div class="halo-card" style="--i:37" onclick="openImage(this)" title="Beleza"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800&auto=format&fit=crop" alt="Premium Barbershop" loading="lazy"></div>
-      <div class="halo-card" style="--i:38" onclick="openImage(this)" title="Beleza"><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=800&auto=format&fit=crop" alt="Beauty Salon Nail Art" loading="lazy"></div>
-      <div class="halo-card" style="--i:39" onclick="openImage(this)" title="Automotivo"><img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?q=80&w=800&auto=format&fit=crop" alt="Luxury Car Automotive" loading="lazy"></div>
-      <div class="halo-card" style="--i:40" onclick="openImage(this)" title="Automotivo"><img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=800&auto=format&fit=crop" alt="Sports Car Performance" loading="lazy"></div>
-      <div class="halo-card" style="--i:41" onclick="openImage(this)" title="Arte"><img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?q=80&w=800&auto=format&fit=crop" alt="Photography Studio" loading="lazy"></div>
-      <div class="halo-card" style="--i:42" onclick="openImage(this)" title="Arte"><img src="https://images.unsplash.com/photo-1561839561-b13bcfe21fe1?q=80&w=800&auto=format&fit=crop" alt="Art Gallery Exposicao" loading="lazy"></div>
-      <div class="halo-card" style="--i:43" onclick="openImage(this)" title="Arte"><img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=800&auto=format&fit=crop" alt="Music Recording Studio" loading="lazy"></div>
-      <div class="halo-card" style="--i:44" onclick="openImage(this)" title="Arte"><img src="https://images.unsplash.com/photo-1510627489930-0c1b0bfb6785?q=80&w=800&auto=format&fit=crop" alt="Brutalist Architecture" loading="lazy"></div>
-      <div class="halo-card" style="--i:45" onclick="openImage(this)" title="Corporativo"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop" alt="Coworking Space Design" loading="lazy"></div>
-      <div class="halo-card" style="--i:46" onclick="openImage(this)" title="Corporativo"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=800&auto=format&fit=crop" alt="Tech Startup Office" loading="lazy"></div>
-      <div class="halo-card" style="--i:47" onclick="openImage(this)" title="Corporativo"><img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=800&auto=format&fit=crop" alt="Law Firm Advocacia Premium" loading="lazy"></div>
-      <div class="halo-card" style="--i:48" onclick="openImage(this)" title="Corporativo"><img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=800&auto=format&fit=crop" alt="Wealth Management Finance" loading="lazy"></div>
-      <div class="halo-card" style="--i:49" onclick="openImage(this)" title="Tecnologia"><img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=800&auto=format&fit=crop" alt="E-learning Platform" loading="lazy"></div>
-      <div class="halo-card" style="--i:50" onclick="openImage(this)" title="Tecnologia"><img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=800&auto=format&fit=crop" alt="Tech Product App UI" loading="lazy"></div>
-      <div class="halo-card" style="--i:51" onclick="openImage(this)" title="Tecnologia"><img src="https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=800&auto=format&fit=crop" alt="Smart Home Automation" loading="lazy"></div>
-      <div class="halo-card" style="--i:52" onclick="openImage(this)" title="Eventos"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=800&auto=format&fit=crop" alt="Wedding Casamento Luxo" loading="lazy"></div>
-      <div class="halo-card" style="--i:53" onclick="openImage(this)" title="Eventos"><img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop" alt="Event Planning Design" loading="lazy"></div>
-      <div class="halo-card" style="--i:54" onclick="openImage(this)" title="Pets"><img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?q=80&w=800&auto=format&fit=crop" alt="Pet Shop Clinica Vet" loading="lazy"></div>
-      <div class="halo-card" style="--i:55" onclick="openImage(this)" title="Esportes"><img src="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=800&auto=format&fit=crop" alt="Outdoor Adventure Sports" loading="lazy"></div>
-      <div class="halo-card" style="--i:56" onclick="openImage(this)" title="Esportes"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop" alt="Surf Beach Lifestyle" loading="lazy"></div>
-      <div class="halo-card" style="--i:57" onclick="openImage(this)" title="Imoveis"><img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=800&auto=format&fit=crop" alt="Luxury Penthouse Real Estate" loading="lazy"></div>
-      <div class="halo-card" style="--i:58" onclick="openImage(this)" title="Imoveis"><img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?q=80&w=800&auto=format&fit=crop" alt="Industrial Architecture Design" loading="lazy"></div>
-      <div class="halo-card" style="--i:59" onclick="openImage(this)" title="Nautico"><img src="https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?q=80&w=800&auto=format&fit=crop" alt="Luxury Yacht Marine Brand" loading="lazy"></div>
+      <!-- ===== 60 CARDS CINEMATOGRAFICOS (100% GPU COMPOSITED) ===== -->
+      <div class="halo-card" style="--i:0" onclick="openLightbox(this)" data-niche="Branding" data-alt="Tok Design Identidade Visual" title="Branding"><img src="assets/tok-design-logo.png" alt="Tok Design Identidade Visual" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:1" onclick="openLightbox(this)" data-niche="Branding" data-alt="Satto Tiradentes Retail" title="Branding"><img src="assets/loja-tiradentes.png" alt="Satto Tiradentes Retail" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:2" onclick="openLightbox(this)" data-niche="Branding" data-alt="Satto Solo Visual Identity" title="Branding"><img src="assets/loja-solo.png" alt="Satto Solo Visual Identity" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:3" onclick="openLightbox(this)" data-niche="Gastronomia" data-alt="Cafe Cremoso Artesanal" title="Gastronomia"><img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=800&auto=format&fit=crop" alt="Cafe Cremoso Artesanal" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:4" onclick="openLightbox(this)" data-niche="Gastronomia" data-alt="Coffee Shop Premium" title="Gastronomia"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=800&auto=format&fit=crop" alt="Coffee Shop Premium" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:5" onclick="openLightbox(this)" data-niche="Gastronomia" data-alt="Fine Dining Restaurant" title="Gastronomia"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=800&auto=format&fit=crop" alt="Fine Dining Restaurant" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:6" onclick="openLightbox(this)" data-niche="Arquitetura" data-alt="Architecture Concrete House" title="Arquitetura"><img src="assets/casa-concreto.png" alt="Architecture Concrete House" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:7" onclick="openLightbox(this)" data-niche="Arquitetura" data-alt="Cozinha de Luxo Dark" title="Arquitetura"><img src="assets/cozinha-luxo.png" alt="Cozinha de Luxo Dark" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:8" onclick="openLightbox(this)" data-niche="Arquitetura" data-alt="Restaurante Arquitetura" title="Arquitetura"><img src="assets/restaurante-madeira.png" alt="Restaurante Arquitetura" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:9" onclick="openLightbox(this)" data-niche="Arquitetura" data-alt="Moody Interior Design" title="Arquitetura"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800&auto=format&fit=crop" alt="Moody Interior Design" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:10" onclick="openLightbox(this)" data-niche="Arquitetura" data-alt="Minimalist Dark Interior" title="Arquitetura"><img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=800&auto=format&fit=crop" alt="Minimalist Dark Interior" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:11" onclick="openLightbox(this)" data-niche="Arquitetura" data-alt="Modern Kitchen Design" title="Arquitetura"><img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?q=80&w=800&auto=format&fit=crop" alt="Modern Kitchen Design" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:12" onclick="openLightbox(this)" data-niche="Arquitetura" data-alt="Outdoor Lounge Terrace" title="Arquitetura"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=800&auto=format&fit=crop" alt="Outdoor Lounge Terrace" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:13" onclick="openLightbox(this)" data-niche="Saude" data-alt="Clinica Moderna" title="Saude"><img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=800&auto=format&fit=crop" alt="Clinica Moderna" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:14" onclick="openLightbox(this)" data-niche="Saude" data-alt="Medical Spa Premium" title="Saude"><img src="https://images.unsplash.com/photo-1551076805-e1869033e561?q=80&w=800&auto=format&fit=crop" alt="Medical Spa Premium" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:15" onclick="openLightbox(this)" data-niche="Saude" data-alt="Estetica e Saude" title="Saude"><img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=800&auto=format&fit=crop" alt="Estetica e Saude" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:16" onclick="openLightbox(this)" data-niche="Saude" data-alt="Clinica Odontologica e Estetica Facial" title="Saude"><img src="https://images.unsplash.com/photo-1629909615184-74f495363b67?q=80&w=800&auto=format&fit=crop" alt="Clinica Odontologica e Estetica Facial" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:17" onclick="openLightbox(this)" data-niche="Saude" data-alt="Dermatologia Skincare" title="Saude"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=800&auto=format&fit=crop" alt="Dermatologia Skincare" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:18" onclick="openLightbox(this)" data-niche="Hotelaria" data-alt="Resort Lounge" title="Hotelaria"><img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=800&auto=format&fit=crop" alt="Resort Lounge" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:19" onclick="openLightbox(this)" data-niche="Hotelaria" data-alt="Luxury Hotel Lobby" title="Hotelaria"><img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=800&auto=format&fit=crop" alt="Luxury Hotel Lobby" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:20" onclick="openLightbox(this)" data-niche="Hotelaria" data-alt="Boutique Hotel Room" title="Hotelaria"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=800&auto=format&fit=crop" alt="Boutique Hotel Room" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:21" onclick="openLightbox(this)" data-niche="Hotelaria" data-alt="Infinity Pool Luxury" title="Hotelaria"><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop" alt="Infinity Pool Luxury" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:22" onclick="openLightbox(this)" data-niche="Moda" data-alt="Vivara Relogio Luxo" title="Moda"><img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=800&auto=format&fit=crop" alt="Vivara Relogio Luxo" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:23" onclick="openLightbox(this)" data-niche="Moda" data-alt="Joalheria Premium" title="Moda"><img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop" alt="Joalheria Premium" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:24" onclick="openLightbox(this)" data-niche="Moda" data-alt="Luxury Timepiece Collection" title="Moda"><img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=800&auto=format&fit=crop" alt="Luxury Timepiece Collection" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:25" onclick="openLightbox(this)" data-niche="Moda" data-alt="Moda Fashion Brand" title="Moda"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=800&auto=format&fit=crop" alt="Moda Fashion Brand" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:26" onclick="openLightbox(this)" data-niche="Moda" data-alt="Eyewear Luxury Brand" title="Moda"><img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?q=80&w=800&auto=format&fit=crop" alt="Eyewear Luxury Brand" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:27" onclick="openLightbox(this)" data-niche="Moda" data-alt="Streetwear Sneaker Culture" title="Moda"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop" alt="Streetwear Sneaker Culture" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:28" onclick="openLightbox(this)" data-niche="Bebidas" data-alt="Wine Bar Premium" title="Bebidas"><img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=800&auto=format&fit=crop" alt="Wine Bar Premium" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:29" onclick="openLightbox(this)" data-niche="Bebidas" data-alt="Craft Brewery Branding" title="Bebidas"><img src="https://images.unsplash.com/photo-1559526324-593bc073d938?q=80&w=800&auto=format&fit=crop" alt="Craft Brewery Branding" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:30" onclick="openLightbox(this)" data-niche="Bebidas" data-alt="Cocktail Bar Luxury" title="Bebidas"><img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=800&auto=format&fit=crop" alt="Cocktail Bar Luxury" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:31" onclick="openLightbox(this)" data-niche="Bebidas" data-alt="Nightlife Club Design" title="Bebidas"><img src="https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?q=80&w=800&auto=format&fit=crop" alt="Nightlife Club Design" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:32" onclick="openLightbox(this)" data-niche="Culinaria" data-alt="Sushi Restaurant Premium" title="Culinaria"><img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=800&auto=format&fit=crop" alt="Sushi Restaurant Premium" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:33" onclick="openLightbox(this)" data-niche="Culinaria" data-alt="Patisserie Confeitaria" title="Culinaria"><img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=800&auto=format&fit=crop" alt="Patisserie Confeitaria" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:34" onclick="openLightbox(this)" data-niche="Culinaria" data-alt="Healthy Organic Food e Gastronomia" title="Culinaria"><img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=800&auto=format&fit=crop" alt="Healthy Organic Food e Gastronomia" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:35" onclick="openLightbox(this)" data-niche="Fitness" data-alt="Fitness Studio Gym" title="Fitness"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop" alt="Fitness Studio Gym" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:36" onclick="openLightbox(this)" data-niche="Fitness" data-alt="Yoga Wellness Studio" title="Fitness"><img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=800&auto=format&fit=crop" alt="Yoga Wellness Studio" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:37" onclick="openLightbox(this)" data-niche="Beleza" data-alt="Premium Barbershop" title="Beleza"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800&auto=format&fit=crop" alt="Premium Barbershop" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:38" onclick="openLightbox(this)" data-niche="Beleza" data-alt="Beauty Salon Nail Art" title="Beleza"><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=800&auto=format&fit=crop" alt="Beauty Salon Nail Art" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:39" onclick="openLightbox(this)" data-niche="Automotivo" data-alt="Luxury Car Automotive" title="Automotivo"><img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?q=80&w=800&auto=format&fit=crop" alt="Luxury Car Automotive" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:40" onclick="openLightbox(this)" data-niche="Automotivo" data-alt="Sports Car Performance" title="Automotivo"><img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=800&auto=format&fit=crop" alt="Sports Car Performance" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:41" onclick="openLightbox(this)" data-niche="Arte" data-alt="Photography Studio" title="Arte"><img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?q=80&w=800&auto=format&fit=crop" alt="Photography Studio" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:42" onclick="openLightbox(this)" data-niche="Arte" data-alt="Art Gallery e Exposicao Visual" title="Arte"><img src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=800&auto=format&fit=crop" alt="Art Gallery e Exposicao Visual" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:43" onclick="openLightbox(this)" data-niche="Arte" data-alt="Music Recording Studio" title="Arte"><img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=800&auto=format&fit=crop" alt="Music Recording Studio" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:44" onclick="openLightbox(this)" data-niche="Arte" data-alt="Brutalist Architecture" title="Arte"><img src="https://images.unsplash.com/photo-1510627489930-0c1b0bfb6785?q=80&w=800&auto=format&fit=crop" alt="Brutalist Architecture" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:45" onclick="openLightbox(this)" data-niche="Corporativo" data-alt="Coworking Space Design" title="Corporativo"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop" alt="Coworking Space Design" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:46" onclick="openLightbox(this)" data-niche="Corporativo" data-alt="Tech Startup Office" title="Corporativo"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=800&auto=format&fit=crop" alt="Tech Startup Office" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:47" onclick="openLightbox(this)" data-niche="Corporativo" data-alt="Law Firm Advocacia Premium" title="Corporativo"><img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=800&auto=format&fit=crop" alt="Law Firm Advocacia Premium" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:48" onclick="openLightbox(this)" data-niche="Corporativo" data-alt="Wealth Management Finance" title="Corporativo"><img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=800&auto=format&fit=crop" alt="Wealth Management Finance" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:49" onclick="openLightbox(this)" data-niche="Tecnologia" data-alt="E-learning Platform" title="Tecnologia"><img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=800&auto=format&fit=crop" alt="E-learning Platform" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:50" onclick="openLightbox(this)" data-niche="Tecnologia" data-alt="Tech Product App UI" title="Tecnologia"><img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=800&auto=format&fit=crop" alt="Tech Product App UI" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:51" onclick="openLightbox(this)" data-niche="Tecnologia" data-alt="Smart Home Automation" title="Tecnologia"><img src="https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=800&auto=format&fit=crop" alt="Smart Home Automation" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:52" onclick="openLightbox(this)" data-niche="Eventos" data-alt="Wedding Casamento Luxo" title="Eventos"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=800&auto=format&fit=crop" alt="Wedding Casamento Luxo" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:53" onclick="openLightbox(this)" data-niche="Eventos" data-alt="Event Planning Design" title="Eventos"><img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop" alt="Event Planning Design" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:54" onclick="openLightbox(this)" data-niche="Pets" data-alt="Pet Shop Clinica Vet" title="Pets"><img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?q=80&w=800&auto=format&fit=crop" alt="Pet Shop Clinica Vet" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:55" onclick="openLightbox(this)" data-niche="Esportes" data-alt="Outdoor Adventure Sports" title="Esportes"><img src="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=800&auto=format&fit=crop" alt="Outdoor Adventure Sports" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:56" onclick="openLightbox(this)" data-niche="Esportes" data-alt="Surf Beach Lifestyle" title="Esportes"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop" alt="Surf Beach Lifestyle" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:57" onclick="openLightbox(this)" data-niche="Imoveis" data-alt="Luxury Penthouse Real Estate" title="Imoveis"><img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=800&auto=format&fit=crop" alt="Luxury Penthouse Real Estate" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:58" onclick="openLightbox(this)" data-niche="Imoveis" data-alt="Industrial Architecture Design" title="Imoveis"><img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?q=80&w=800&auto=format&fit=crop" alt="Industrial Architecture Design" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
+      <div class="halo-card" style="--i:59" onclick="openLightbox(this)" data-niche="Nautico" data-alt="Luxury Yacht Marine Brand" title="Nautico"><img src="https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?q=80&w=800&auto=format&fit=crop" alt="Luxury Yacht Marine Brand" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/casa-concreto.png';"></div>
 
     </div>
   </section>
@@ -177,12 +186,14 @@
           </p>
           <a href="https://wa.me/5544991244282" class="btn-light">Iniciar Projeto Web &rarr;</a>
         </div>
-        <div style="aspect-ratio:4/3;background:#111;overflow:hidden;position:relative;">
+        <div style="aspect-ratio:4/3;background:#111;overflow:hidden;position:relative;border-radius:6px;cursor:pointer;border:1px solid rgba(255,255,255,0.08);"
+             onclick="openEditorialLightbox(this)" data-niche="01 // WEBSITES & LANDING PAGES" data-alt="Alta Conversão no Google e Instagram">
           <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop"
             alt="Websites Alta Conversao"
             style="width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.7s,transform 0.7s;"
             onmouseover="this.style.filter='grayscale(0%)';this.style.transform='scale(1.05)';"
-            onmouseout="this.style.filter='grayscale(100%)';this.style.transform='scale(1)';">
+            onmouseout="this.style.filter='grayscale(100%)';this.style.transform='scale(1)';"
+            onerror="this.onerror=null;this.src='assets/casa-concreto.png';">
         </div>
       </div>
     </div>
@@ -194,12 +205,14 @@
   <section class="editorial-section alt">
     <div style="max-width:80rem;margin:0 auto;width:100%;padding:0 2rem;">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;">
-        <div style="aspect-ratio:4/3;background:#111;overflow:hidden;position:relative;">
+        <div style="aspect-ratio:4/3;background:#111;overflow:hidden;position:relative;border-radius:6px;cursor:pointer;border:1px solid rgba(255,255,255,0.08);"
+             onclick="openEditorialLightbox(this)" data-niche="02 // BRANDING & IDENTIDADE" data-alt="Moodboards, Identidade Visual e Portfolio Completo">
           <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop"
             alt="Branding Identidade Visual"
             style="width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.7s,transform 0.7s;"
             onmouseover="this.style.filter='grayscale(0%)';this.style.transform='scale(1.05)';"
-            onmouseout="this.style.filter='grayscale(100%)';this.style.transform='scale(1)';">
+            onmouseout="this.style.filter='grayscale(100%)';this.style.transform='scale(1)';"
+            onerror="this.onerror=null;this.src='assets/cozinha-luxo.png';">
         </div>
         <div>
           <span class="editorial-label" style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.12em;display:block;margin-bottom:1.2rem;">
@@ -221,7 +234,7 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════
-       EDITORIAL 03 — SERVICOS COMPLETOS
+       EDITORIAL 03 — FULL SERVICE STUDIO
        ═══════════════════════════════════════════════════════════════ -->
   <section class="editorial-section">
     <div style="max-width:80rem;margin:0 auto;width:100%;padding:0 2rem;">
@@ -231,7 +244,7 @@
         </span>
         <h2 class="editorial-title" style="font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(2rem,4vw,3.5rem);text-transform:uppercase;letter-spacing:-0.03em;line-height:1;margin-bottom:0;">
           Tudo que sua marca precisa.<br>
-          <span style="color:rgba(255,255,255,0.3);">Em um studio.</span>
+          <span style="color:rgba(255,255,255,0.3);">Em um studio de alta tecnologia.</span>
         </h2>
       </div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;">
@@ -242,7 +255,7 @@
         </div>
         <div style="background:#111;padding:2.5rem;border-left:1px solid rgba(255,255,255,0.06);">
           <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1rem;">02</div>
-          <h3 style="color:#f0f0f0;font-weight:700;font-size:1.1rem;margin-bottom:0.8rem;text-transform:uppercase;letter-spacing:-0.01em;">Branding Completo</h3>
+          <h3 style="color:#f0f0f0;font-weight:700;font-size:1.1rem;margin-bottom:0.8rem;text-transform:uppercase;letter-spacing:-0.01em;">Branding &amp; Moodboards</h3>
           <p style="color:rgba(255,255,255,0.5);font-size:0.875rem;line-height:1.7;margin:0;">Logo, moodboard, identidade visual, manual de marca, paleta e tipografia premium.</p>
         </div>
         <div style="background:#111;padding:2.5rem;border-left:1px solid rgba(255,255,255,0.06);">
@@ -262,7 +275,7 @@
         </div>
         <div style="background:#111;padding:2.5rem;border-left:1px solid rgba(255,255,255,0.06);">
           <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1rem;">06</div>
-          <h3 style="color:#f0f0f0;font-weight:700;font-size:1.1rem;margin-bottom:0.8rem;text-transform:uppercase;letter-spacing:-0.01em;">Estratégia Digital</h3>
+          <h3 style="color:#f0f0f0;font-weight:700;font-size:1.1rem;margin-bottom:0.8rem;text-transform:uppercase;letter-spacing:-0.01em;">Estratégia &amp; Tráfego</h3>
           <p style="color:rgba(255,255,255,0.5);font-size:0.875rem;line-height:1.7;margin:0;">SEO, Google Ads, Meta Ads e análise de dados. Tráfego qualificado que converte.</p>
         </div>
       </div>
@@ -274,18 +287,61 @@
     </div>
   </section>
 
+  <!-- ═══════════════════════════════════════════════════════════════
+       SCRIPTS LIGHTBOX & INTERATIVIDADE
+       ═══════════════════════════════════════════════════════════════ -->
   <script>
-    const lightbox    = document.getElementById("lightbox");
-    const lightboxImg = document.getElementById("lightbox-img");
-    function openImage(el) {
-      lightboxImg.src = el.querySelector("img").src;
-      lightbox.style.display = "flex";
+    const lightbox     = document.getElementById("lightbox");
+    const lightboxImg  = document.getElementById("lightbox-img");
+    const lightboxNiche= document.getElementById("lightbox-niche");
+    const lightboxAlt  = document.getElementById("lightbox-alt");
+
+    function openLightbox(cardEl) {
+      const img = cardEl.querySelector("img");
+      if (!img) return;
+
+      const src   = img.currentSrc || img.src;
+      const niche = cardEl.getAttribute("data-niche") || "Design Portfolio";
+      const alt   = cardEl.getAttribute("data-alt") || img.alt || "Slow Flow Studio";
+
+      lightboxImg.src = src;
+      lightboxNiche.textContent = niche;
+      lightboxAlt.textContent = alt;
+
+      lightbox.classList.add("show");
+      document.body.classList.add("lightbox-active");
     }
-    function closeLightbox() {
-      lightbox.style.display = "none";
-      lightboxImg.src = "";
+
+    function openEditorialLightbox(containerEl) {
+      const img = containerEl.querySelector("img");
+      if (!img) return;
+
+      const src   = img.currentSrc || img.src;
+      const niche = containerEl.getAttribute("data-niche") || "Slow Flow Studio";
+      const alt   = containerEl.getAttribute("data-alt") || img.alt || "Editorial";
+
+      lightboxImg.src = src;
+      lightboxNiche.textContent = niche;
+      lightboxAlt.textContent = alt;
+
+      lightbox.classList.add("show");
+      document.body.classList.add("lightbox-active");
     }
-    document.addEventListener("keydown", e => { if(e.key === "Escape") closeLightbox(); });
+
+    function closeLightbox(event) {
+      if (event) event.stopPropagation();
+      lightbox.classList.remove("show");
+      document.body.classList.remove("lightbox-active");
+      setTimeout(() => {
+        if (!lightbox.classList.contains("show")) {
+          lightboxImg.src = "";
+        }
+      }, 200);
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeLightbox();
+    });
   </script>
 </body>
 </html>

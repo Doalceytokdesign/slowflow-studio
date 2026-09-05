@@ -1,14 +1,9 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """
 =============================================================================
   SLOW FLOW STUDIO — Python Build System
   Gera index.html dinamicamente a partir de data/images.json
   Compila Tailwind CSS e sobe servidor local de preview
-
-  Uso:
-    python build.py          -> gera HTML + compila CSS
-    python build.py --serve  -> gera + compila + sobe servidor na porta 3000
-    python build.py --watch  -> modo dev com Tailwind em modo watch
 =============================================================================
 """
 
@@ -16,7 +11,6 @@ import json, os, sys, subprocess, shutil
 from pathlib import Path
 from datetime import datetime
 
-# ── CONFIG ──────────────────────────────────────────────────────────────────
 ROOT        = Path(__file__).parent
 DATA_FILE   = ROOT / "data" / "images.json"
 OUTPUT_HTML = ROOT / "index.html"
@@ -24,47 +18,47 @@ CSS_INPUT   = ROOT / "src" / "input.css"
 CSS_OUTPUT  = ROOT / "dist" / "output.css"
 PORT        = 3000
 
-# ── ANIMACAO: EFEITO CINEMATOGRAFICO ────────────────────────────────────────
-# 60 cards x 0.007s de delay = 0.42s de loop total
-# Cada card passa pelo centro em ~7ms = efeito de pelicula em alta velocidade
-CARD_DURATION = "0.14s"   # duracao total do loop halfPipe
-CARD_DELAY    = "0.0023s"  # intervalo entre cada card (7ms = pelicula rapida)
+# ── CALIBRACAO DE VELOCIDADE FLASH CINEMATOGRAFICA ─────────────────────────
+# 60 cards x 0.02s (20ms por imagem) = 1.2s por ciclo completo
+# 50 fps estroboscopicos estaveis e perfeitamente sincronizados com telas 60Hz/120Hz
+CARD_DURATION = "1.2s"
+CARD_DELAY    = "0.02s"
 
-# ── CARREGA BASE DE DADOS ────────────────────────────────────────────────────
 def load_images():
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
     return data["images"]
 
-# ── GERA BLOCO DE CARDS HTML ─────────────────────────────────────────────────
 def render_cards(images):
-    lines = ["      <!-- ===== 60 CARDS CINEMATOGRAFICOS — gerado por build.py ===== -->"]
+    lines = ["      <!-- ===== 60 CARDS CINEMATOGRAFICOS (100% GPU COMPOSITED) ===== -->"]
     for img in images:
         i, src, alt = img["i"], img["src"], img["alt"]
-        niche = img.get("niche", "")
+        niche = img.get("niche", "Design")
         lines.append(
-            f'      <div class="halo-card" style="--i:{i}" onclick="openImage(this)" title="{niche}">'
-            f'<img src="{src}" alt="{alt}" loading="lazy"></div>'
+            f'      <div class="halo-card" style="--i:{i}" onclick="openLightbox(this)" '
+            f'data-niche="{niche}" data-alt="{alt}" title="{niche}">'
+            f'<img src="{src}" alt="{alt}" loading="eager" decoding="async" '
+            f'onerror="this.onerror=null;this.src=\'assets/casa-concreto.png\';"></div>'
         )
     return "\n".join(lines)
 
-# ── GERA O HTML COMPLETO ─────────────────────────────────────────────────────
 def render_html(images):
     cards_html = render_cards(images)
     now = datetime.now().strftime("%Y")
-    return f"""<!DOCTYPE html>
+    template = """<!DOCTYPE html>
 <html lang="pt-BR" style="background:#0a0a0a;color-scheme:dark;">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="description" content="Slow Flow Studio — Websites de Alta Conversao, Branding, Moodboard e Portfolio Premium">
+  <meta name="description" content="Slow Flow Studio — Websites de Alta Conversao, Branding, Moodboards e Portfolio Premium">
   <meta name="theme-color" content="#0a0a0a">
   <meta name="color-scheme" content="dark">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <!-- SEO -->
+
+  <!-- SEO & Social Meta -->
   <meta name="keywords" content="design studio, websites, landing pages, branding, identidade visual, moodboard, portfolio, Google Ads, Instagram, alta conversao">
   <meta property="og:title" content="Slow Flow Studio — Digital Ecosystems">
-  <meta property="og:description" content="Websites de alta conversao no Google e Instagram. Branding completo: moodboard, identidade visual e portfolio premium.">
+  <meta property="og:description" content="Websites de alta conversao no Google e Instagram. Branding completo: moodboards, identidade visual e portfolio premium.">
 
   <title>Slow Flow — Digital Ecosystems</title>
 
@@ -86,14 +80,22 @@ def render_html(images):
 </head>
 <body style="background:#0a0a0a !important; background-image:none !important;">
 
-  <!-- LIGHTBOX -->
-  <div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.96);z-index:9999;align-items:center;justify-content:center;cursor:pointer;" onclick="closeLightbox()">
-    <img id="lightbox-img" src="" style="max-height:85vh;max-width:95vw;border-radius:6px;box-shadow:0 40px 100px rgba(0,0,0,0.9);object-fit:contain;" />
+  <!-- ═══════════════════════════════════════════════════════════════
+       LIGHTBOX MODAL CINEMATOGRAFICO
+       ═══════════════════════════════════════════════════════════════ -->
+  <div id="lightbox" onclick="closeLightbox(event)">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <button class="lightbox-close" onclick="closeLightbox(event)" title="Fechar (Esc)">&times;</button>
+      <img id="lightbox-img" src="" alt="" onerror="this.onerror=null;this.src='assets/casa-concreto.png';" />
+      <div class="lightbox-caption">
+        <span id="lightbox-niche" class="lightbox-niche">Slow Flow Studio</span>
+        <span id="lightbox-alt" class="lightbox-alt">Visual Experience</span>
+      </div>
+    </div>
   </div>
 
   <!-- ═══════════════════════════════════════════════════════════════
-       HERO — CINEMATIC PENDULUM FLOW
-       {len(images)} cards | Loop: {CARD_DURATION} | Delay: {CARD_DELAY}/card
+       HERO — PENDULUM FLOW 3D
        ═══════════════════════════════════════════════════════════════ -->
   <section class="world-container">
 
@@ -101,7 +103,7 @@ def render_html(images):
       SLOW FLOW STUDIO<br>PREMIUM DESIGN &amp; WEB
     </div>
     <div class="corner-text top-right">
-      S-FLOW // {now}<br>AESTHETICS &amp; CONVERSION
+      S-FLOW // {{YEAR}}<br>AESTHETICS &amp; CONVERSION
     </div>
     <div class="corner-text bottom-left hidden md:block">
       DIGITAL EXPERIENCES<br>BRAND ARCHITECTURE
@@ -112,7 +114,7 @@ def render_html(images):
 
     <div class="world-wrap">
 
-      <!-- LOGO — BOLINHAS BRANCAS ACETINADAS -->
+      <!-- LOGO — BOLINHAS BRANCAS ACETINADAS (3D PEARL) -->
       <div class="center-logo-3d">
         <svg width="100%" height="100%" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -145,7 +147,7 @@ def render_html(images):
         </svg>
       </div>
 
-{cards_html}
+{{CARDS_HTML}}
 
     </div>
   </section>
@@ -171,12 +173,14 @@ def render_html(images):
           </p>
           <a href="https://wa.me/5544991244282" class="btn-light">Iniciar Projeto Web &rarr;</a>
         </div>
-        <div style="aspect-ratio:4/3;background:#111;overflow:hidden;position:relative;">
+        <div style="aspect-ratio:4/3;background:#111;overflow:hidden;position:relative;border-radius:6px;cursor:pointer;border:1px solid rgba(255,255,255,0.08);"
+             onclick="openEditorialLightbox(this)" data-niche="01 // WEBSITES & LANDING PAGES" data-alt="Alta Conversão no Google e Instagram">
           <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop"
             alt="Websites Alta Conversao"
             style="width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.7s,transform 0.7s;"
             onmouseover="this.style.filter='grayscale(0%)';this.style.transform='scale(1.05)';"
-            onmouseout="this.style.filter='grayscale(100%)';this.style.transform='scale(1)';">
+            onmouseout="this.style.filter='grayscale(100%)';this.style.transform='scale(1)';"
+            onerror="this.onerror=null;this.src='assets/casa-concreto.png';">
         </div>
       </div>
     </div>
@@ -188,12 +192,14 @@ def render_html(images):
   <section class="editorial-section alt">
     <div style="max-width:80rem;margin:0 auto;width:100%;padding:0 2rem;">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;">
-        <div style="aspect-ratio:4/3;background:#111;overflow:hidden;position:relative;">
+        <div style="aspect-ratio:4/3;background:#111;overflow:hidden;position:relative;border-radius:6px;cursor:pointer;border:1px solid rgba(255,255,255,0.08);"
+             onclick="openEditorialLightbox(this)" data-niche="02 // BRANDING & IDENTIDADE" data-alt="Moodboards, Identidade Visual e Portfolio Completo">
           <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop"
             alt="Branding Identidade Visual"
             style="width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.7s,transform 0.7s;"
             onmouseover="this.style.filter='grayscale(0%)';this.style.transform='scale(1.05)';"
-            onmouseout="this.style.filter='grayscale(100%)';this.style.transform='scale(1)';">
+            onmouseout="this.style.filter='grayscale(100%)';this.style.transform='scale(1)';"
+            onerror="this.onerror=null;this.src='assets/cozinha-luxo.png';">
         </div>
         <div>
           <span class="editorial-label" style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.12em;display:block;margin-bottom:1.2rem;">
@@ -215,7 +221,7 @@ def render_html(images):
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════
-       EDITORIAL 03 — SERVICOS COMPLETOS
+       EDITORIAL 03 — FULL SERVICE STUDIO
        ═══════════════════════════════════════════════════════════════ -->
   <section class="editorial-section">
     <div style="max-width:80rem;margin:0 auto;width:100%;padding:0 2rem;">
@@ -225,7 +231,7 @@ def render_html(images):
         </span>
         <h2 class="editorial-title" style="font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(2rem,4vw,3.5rem);text-transform:uppercase;letter-spacing:-0.03em;line-height:1;margin-bottom:0;">
           Tudo que sua marca precisa.<br>
-          <span style="color:rgba(255,255,255,0.3);">Em um studio.</span>
+          <span style="color:rgba(255,255,255,0.3);">Em um studio de alta tecnologia.</span>
         </h2>
       </div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;">
@@ -236,7 +242,7 @@ def render_html(images):
         </div>
         <div style="background:#111;padding:2.5rem;border-left:1px solid rgba(255,255,255,0.06);">
           <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1rem;">02</div>
-          <h3 style="color:#f0f0f0;font-weight:700;font-size:1.1rem;margin-bottom:0.8rem;text-transform:uppercase;letter-spacing:-0.01em;">Branding Completo</h3>
+          <h3 style="color:#f0f0f0;font-weight:700;font-size:1.1rem;margin-bottom:0.8rem;text-transform:uppercase;letter-spacing:-0.01em;">Branding &amp; Moodboards</h3>
           <p style="color:rgba(255,255,255,0.5);font-size:0.875rem;line-height:1.7;margin:0;">Logo, moodboard, identidade visual, manual de marca, paleta e tipografia premium.</p>
         </div>
         <div style="background:#111;padding:2.5rem;border-left:1px solid rgba(255,255,255,0.06);">
@@ -256,7 +262,7 @@ def render_html(images):
         </div>
         <div style="background:#111;padding:2.5rem;border-left:1px solid rgba(255,255,255,0.06);">
           <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1rem;">06</div>
-          <h3 style="color:#f0f0f0;font-weight:700;font-size:1.1rem;margin-bottom:0.8rem;text-transform:uppercase;letter-spacing:-0.01em;">Estratégia Digital</h3>
+          <h3 style="color:#f0f0f0;font-weight:700;font-size:1.1rem;margin-bottom:0.8rem;text-transform:uppercase;letter-spacing:-0.01em;">Estratégia &amp; Tráfego</h3>
           <p style="color:rgba(255,255,255,0.5);font-size:0.875rem;line-height:1.7;margin:0;">SEO, Google Ads, Meta Ads e análise de dados. Tráfego qualificado que converte.</p>
         </div>
       </div>
@@ -268,25 +274,68 @@ def render_html(images):
     </div>
   </section>
 
+  <!-- ═══════════════════════════════════════════════════════════════
+       SCRIPTS LIGHTBOX & INTERATIVIDADE
+       ═══════════════════════════════════════════════════════════════ -->
   <script>
-    const lightbox    = document.getElementById("lightbox");
-    const lightboxImg = document.getElementById("lightbox-img");
-    function openImage(el) {{
-      lightboxImg.src = el.querySelector("img").src;
-      lightbox.style.display = "flex";
-    }}
-    function closeLightbox() {{
-      lightbox.style.display = "none";
-      lightboxImg.src = "";
-    }}
-    document.addEventListener("keydown", e => {{ if(e.key === "Escape") closeLightbox(); }});
+    const lightbox     = document.getElementById("lightbox");
+    const lightboxImg  = document.getElementById("lightbox-img");
+    const lightboxNiche= document.getElementById("lightbox-niche");
+    const lightboxAlt  = document.getElementById("lightbox-alt");
+
+    function openLightbox(cardEl) {
+      const img = cardEl.querySelector("img");
+      if (!img) return;
+
+      const src   = img.currentSrc || img.src;
+      const niche = cardEl.getAttribute("data-niche") || "Design Portfolio";
+      const alt   = cardEl.getAttribute("data-alt") || img.alt || "Slow Flow Studio";
+
+      lightboxImg.src = src;
+      lightboxNiche.textContent = niche;
+      lightboxAlt.textContent = alt;
+
+      lightbox.classList.add("show");
+      document.body.classList.add("lightbox-active");
+    }
+
+    function openEditorialLightbox(containerEl) {
+      const img = containerEl.querySelector("img");
+      if (!img) return;
+
+      const src   = img.currentSrc || img.src;
+      const niche = containerEl.getAttribute("data-niche") || "Slow Flow Studio";
+      const alt   = containerEl.getAttribute("data-alt") || img.alt || "Editorial";
+
+      lightboxImg.src = src;
+      lightboxNiche.textContent = niche;
+      lightboxAlt.textContent = alt;
+
+      lightbox.classList.add("show");
+      document.body.classList.add("lightbox-active");
+    }
+
+    function closeLightbox(event) {
+      if (event) event.stopPropagation();
+      lightbox.classList.remove("show");
+      document.body.classList.remove("lightbox-active");
+      setTimeout(() => {
+        if (!lightbox.classList.contains("show")) {
+          lightboxImg.src = "";
+        }
+      }, 200);
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeLightbox();
+    });
   </script>
 </body>
 </html>"""
+    return template.replace("{{CARDS_HTML}}", cards_html).replace("{{YEAR}}", now)
 
-# ── COMPILA TAILWIND CSS ─────────────────────────────────────────────────────
 def build_css():
-    print("  Compilando Tailwind CSS...")
+    print("  Compilando Tailwind CSS com aceleracao GPU...")
     npx_cmd = "npx.cmd" if sys.platform == "win32" else "npx"
     result = subprocess.run(
         [npx_cmd, "tailwindcss", "-i", str(CSS_INPUT), "-o", str(CSS_OUTPUT), "--minify"],
@@ -298,13 +347,12 @@ def build_css():
     print(f"  CSS compilado -> dist/output.css")
     return True
 
-# ── SERVIDOR LOCAL PYTHON ────────────────────────────────────────────────────
 def serve():
-    import http.server, socketserver, threading, webbrowser, time
+    import http.server, socketserver, threading, webbrowser
 
     class Handler(http.server.SimpleHTTPRequestHandler):
         def log_message(self, fmt, *args):
-            pass  # silencia logs repetitivos
+            pass
 
     os.chdir(ROOT)
     with socketserver.TCPServer(("", PORT), Handler) as httpd:
@@ -314,10 +362,9 @@ def serve():
         threading.Timer(1.0, lambda: webbrowser.open(f"http://localhost:{PORT}")).start()
         httpd.serve_forever()
 
-# ── PONTO DE ENTRADA ─────────────────────────────────────────────────────────
 def main():
-    print(f"\n  SLOW FLOW STUDIO — Build System Python")
-    print(f"  {'='*50}")
+    print(f"\n  SLOW FLOW STUDIO — Build System Python (Zero Jank / Full GPU)")
+    print(f"  {'='*55}")
 
     images = load_images()
     print(f"  Imagens carregadas: {len(images)} em {len(set(x['niche'] for x in images))} nichos")
@@ -327,14 +374,12 @@ def main():
     print(f"  HTML gerado: index.html ({len(html):,} bytes)")
 
     css_ok = build_css()
-
-    print(f"\n  Build concluido! Abra index.html no browser.")
-    print(f"  Velocidade: {CARD_DURATION} loop | {CARD_DELAY} entre cards\n")
+    if css_ok:
+        print(f"\n  [OK] Build concluido com sucesso!")
+        print(f"  Loop: {CARD_DURATION} | Delay por frame: {CARD_DELAY}")
 
     if "--serve" in sys.argv:
         serve()
 
 if __name__ == "__main__":
     main()
-
-
