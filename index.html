@@ -91,6 +91,11 @@
       background: #000; overflow: hidden; border-radius: 4px;
       cursor: pointer;
       
+      /* PERFORMANCE OPTIMIZATIONS (Fix lag) */
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+      -webkit-font-smoothing: antialiased;
+      
       /* High-Velocity Pendulum Flow (Faster) */
       animation: halfPipe 4.5s linear infinite;
       /* 15 cards spread perfectly across 4.5s loop (15 * 0.3s = 4.5s) */
@@ -112,6 +117,7 @@
       animation-delay: calc(var(--i) * -0.3s);
       pointer-events: none;
       z-index: 2;
+      will-change: left, opacity;
     }
 
     @keyframes luxuryGlint {
@@ -127,38 +133,38 @@
       /* Spawn completely off-screen left, far back */
       0% {
         transform: translate3d(-100vw, -10vh, -150vw) rotateZ(-30deg) rotateY(60deg) rotateX(20deg) scale(0.4);
-        opacity: 0; filter: blur(12px) brightness(0.2) grayscale(80%);
+        opacity: 0; filter: brightness(0.2) grayscale(80%);
       }
       /* Swooping into view */
       15% {
         transform: translate3d(-60vw, 5vh, -60vw) rotateZ(-20deg) rotateY(45deg) rotateX(15deg) scale(0.7);
-        opacity: 0.5; filter: blur(6px) brightness(0.5) grayscale(40%);
+        opacity: 0.5; filter: brightness(0.5) grayscale(40%);
       }
       /* Approaching center */
       30% {
         transform: translate3d(-30vw, 15vh, 0vw) rotateZ(-10deg) rotateY(25deg) rotateX(10deg) scale(1.1);
-        opacity: 0.9; filter: blur(1px) brightness(0.9) grayscale(10%);
+        opacity: 0.9; filter: brightness(0.9) grayscale(10%);
       }
       /* APEX - Front Center (Lifted up to 20vh to stay 100% visible on screen) */
       50% {
         transform: translate3d(0vw, 20vh, 25vw) rotateZ(0deg) rotateY(0deg) rotateX(0deg) scale(1.5);
-        opacity: 1; filter: blur(0px) brightness(1.2) grayscale(0%);
+        opacity: 1; filter: brightness(1.2) grayscale(0%);
         box-shadow: 0 40px 100px rgba(0,0,0,0.8);
       }
       /* Sweeping right */
       70% {
         transform: translate3d(30vw, 15vh, 0vw) rotateZ(10deg) rotateY(-25deg) rotateX(10deg) scale(1.1);
-        opacity: 0.9; filter: blur(1px) brightness(0.9) grayscale(10%);
+        opacity: 0.9; filter: brightness(0.9) grayscale(10%);
       }
       /* Exiting view */
       85% {
         transform: translate3d(60vw, 5vh, -60vw) rotateZ(20deg) rotateY(-45deg) rotateX(15deg) scale(0.7);
-        opacity: 0.5; filter: blur(6px) brightness(0.5) grayscale(40%);
+        opacity: 0.5; filter: brightness(0.5) grayscale(40%);
       }
       /* Vanish completely off-screen right */
       100% {
         transform: translate3d(100vw, -10vh, -150vw) rotateZ(30deg) rotateY(-60deg) rotateX(20deg) scale(0.4);
-        opacity: 0; filter: blur(12px) brightness(0.2) grayscale(80%);
+        opacity: 0; filter: brightness(0.2) grayscale(80%);
       }
     }
 
@@ -245,24 +251,22 @@
       </div>
 
       <!-- THE 15 CARDS (Following the absolute Half-Pipe track) -->
-      <!-- LOCAL ASSETS -->
-      <div class="halo-card" style="--i:0" onclick="openImage(this)"><img src="assets/casa-concreto.png" alt="Architecture Concrete House"></div>
-      <div class="halo-card" style="--i:1" onclick="openImage(this)"><img src="assets/cozinha-luxo.png" alt="Cozinha de Luxo Dark"></div>
-      <div class="halo-card" style="--i:2" onclick="openImage(this)"><img src="assets/restaurante-madeira.png" alt="Restaurante Arquitetura Madeira"></div>
-      <div class="halo-card" style="--i:3" onclick="openImage(this)"><img src="assets/tok-design-logo.png" alt="Tok Design Logo"></div>
-      <div class="halo-card" style="--i:4" onclick="openImage(this)"><img src="assets/loja-tiradentes.png" alt="Loja Tiradentes"></div>
-      
-      <!-- REMOTE HIGH-END ASSETS (Awaiting Derval) -->
-      <div class="halo-card" style="--i:5" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1510627489930-0c1b0bfb6785?q=70&amp;w=800&amp;auto=format,compress" alt="Brutalist Architecture"></div>
-      <div class="halo-card" style="--i:6" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1606240097721-729ab59218d6?q=70&amp;w=800&amp;auto=format,compress" alt="Luxury Texture"></div>
-      <div class="halo-card" style="--i:7" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=70&amp;w=800&amp;auto=format,compress" alt="Minimalist Dark"></div>
-      <div class="halo-card" style="--i:8" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=70&amp;w=800&amp;auto=format,compress" alt="Modern Art Gallery"></div>
-      <div class="halo-card" style="--i:9" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1503376760366-5a4d344515ee?q=70&amp;w=800&amp;auto=format,compress" alt="Luxury Sports Car"></div>
+      <!-- HYBRID ASSETS (Satto Stores, Coffee, Vivara, and High-End Fillers) -->
+      <div class="halo-card" style="--i:0" onclick="openImage(this)"><img src="assets/tok-design-logo.png" alt="Tok Design Logo"></div>
+      <div class="halo-card" style="--i:1" onclick="openImage(this)"><img src="assets/loja-tiradentes.png" alt="Satto Tiradentes"></div>
+      <div class="halo-card" style="--i:2" onclick="openImage(this)"><img src="assets/loja-solo.png" alt="Satto Solo"></div>
+      <div class="halo-card" style="--i:3" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=70&amp;w=800&amp;auto=format,compress" alt="Café Cremoso"></div>
+      <div class="halo-card" style="--i:4" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=70&amp;w=800&amp;auto=format,compress" alt="Vivara Relógio"></div>
+      <div class="halo-card" style="--i:5" onclick="openImage(this)"><img src="assets/casa-concreto.png" alt="Architecture Concrete House"></div>
+      <div class="halo-card" style="--i:6" onclick="openImage(this)"><img src="assets/cozinha-luxo.png" alt="Cozinha de Luxo Dark"></div>
+      <div class="halo-card" style="--i:7" onclick="openImage(this)"><img src="assets/restaurante-madeira.png" alt="Restaurante Arquitetura Madeira"></div>
+      <div class="halo-card" style="--i:8" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1599643478524-fb66f70a00d7?q=70&amp;w=800&amp;auto=format,compress" alt="Premium Jewelry"></div>
+      <div class="halo-card" style="--i:9" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?q=70&amp;w=800&amp;auto=format,compress" alt="Boutique Coffee"></div>
       <div class="halo-card" style="--i:10" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=70&amp;w=800&amp;auto=format,compress" alt="Resort Lounge"></div>
       <div class="halo-card" style="--i:11" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=70&amp;w=800&amp;auto=format,compress" alt="Cosmetic Bottle Minimalist"></div>
-      <div class="halo-card" style="--i:12" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=70&amp;w=800&amp;auto=format,compress" alt="Coffee Aesthetic"></div>
-      <div class="halo-card" style="--i:13" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=70&amp;w=800&amp;auto=format,compress" alt="Streetwear Studio"></div>
-      <div class="halo-card" style="--i:14" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=70&amp;w=800&amp;auto=format,compress" alt="Luxury Watch"></div>
+      <div class="halo-card" style="--i:12" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=70&amp;w=800&amp;auto=format,compress" alt="Moody Interior"></div>
+      <div class="halo-card" style="--i:13" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=70&amp;w=800&amp;auto=format,compress" alt="Minimalist Dark"></div>
+      <div class="halo-card" style="--i:14" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1510627489930-0c1b0bfb6785?q=70&amp;w=800&amp;auto=format,compress" alt="Brutalist Architecture"></div>
       
     </div>
   </section>
