@@ -1,233 +1,50 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+﻿<!DOCTYPE html>
+<html lang="pt-BR" style="background:#0a0a0a;color-scheme:dark;">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="description" content="Slow Flow Studio — Premium Web & Branding Portfolio">
-  
-  <meta name="theme-color" content="#ffffff">
-  <meta name="color-scheme" content="light only">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="color-scheme" content="dark">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  
+
   <title>Slow Flow — Digital Ecosystems</title>
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-  
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'], },
-        }
-      }
-    }
-  </script>
 
+  <!-- Tailwind CSS compilado (substituicao do CDN) -->
+  <link rel="stylesheet" href="dist/output.css">
+
+  <!-- Camada de seguranca inline — garante dark mesmo sem CSS carregado -->
   <style>
-    /* ── BULLETPROOF WHITE BACKGROUND ── */
-    :root { color-scheme: light; }
-    html, body { 
-      background-color: #fefefe !important; 
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"><rect width="1" height="1" fill="%23ffffff"/></svg>') !important;
-      color: #111111 !important; 
-      margin: 0; overflow-x: hidden; scroll-behavior: smooth; 
-      -webkit-font-smoothing: antialiased;
-      touch-action: manipulation;
+    html, body {
+      background: #0a0a0a !important;
+      background-color: #0a0a0a !important;
+      background-image: none !important;
+      color: #f0f0f0 !important;
+      margin: 0;
     }
-    ::selection { background: #111; color: #fff; }
-
-    /* ── MICRO-TYPOGRAPHY CORNERS ── */
-    .corner-text { 
-      position: absolute; font-family: 'JetBrains Mono', monospace; font-size: 9px; 
-      text-transform: uppercase; letter-spacing: 0.05em; color: #111 !important; z-index: 30; line-height: 1.5;
-    }
-    .top-left { top: 2.5rem; left: 2.5rem; }
-    .top-right { top: 2.5rem; right: 2.5rem; text-align: right; }
-    .bottom-left { bottom: 2.5rem; left: 2.5rem; }
-    .bottom-right { bottom: 2.5rem; right: 2.5rem; text-align: right; }
-
-    /* ── V52: THE PENDULUM FLOW (Skate Track) ── */
-    .world-container {
-      position: relative; width: 100vw; height: 100vh;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden; 
-      perspective: 1200px;
-      background: transparent;
-    }
-
-    /* Stable 3D environment wrapper */
-    .world-wrap {
-      position: absolute; width: 0; height: 0;
-      transform-style: preserve-3d;
-    }
-
-    /* ── THE MASSIVE ANCHORED LOGO ── */
-    /* ── THE MASSIVE ANCHORED LOGO ── */
-    .center-logo-3d {
-      position: absolute;
-      /* Moved to the very top and scaled gracefully to avoid collision */
-      width: 75vw; height: 35vh;
-      left: -37.5vw; top: -42vh;
-      transform-style: preserve-3d;
-      pointer-events: none;
-      animation: fluidText 3s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 1; /* Pushed behind the 3D cards */
-    }
-
-    @keyframes fluidText {
-      0% { transform: translateZ(-30vw) scale(0.97); opacity: 0.9; filter: drop-shadow(0 0 0px rgba(0,0,0,0)); }
-      100% { transform: translateZ(-30vw) scale(1.03); opacity: 1; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.1)); }
-    }
-
-    /* ── THE MASSIVE CARDS ── */
-    .halo-card {
-      position: absolute;
-      width: 32vh; height: 18vh; 
-      margin-top: -9vh; margin-left: -16vh;
-      
-      background: #000; overflow: hidden; border-radius: 4px;
-      cursor: pointer;
-      
-      /* PERFORMANCE OPTIMIZATIONS (Fix lag) */
-      will-change: transform, opacity;
-      backface-visibility: hidden;
-      -webkit-font-smoothing: antialiased;
-      
-      /* High-Velocity Pendulum Flow (Doubled Speed) */
-      animation: halfPipe 2.25s linear infinite;
-      /* 15 cards spread perfectly across 2.25s loop (15 * 0.15s = 2.25s) */
-      animation-delay: calc(var(--i) * -0.15s);
-      
-      transition: box-shadow 0.3s ease;
-      transform-origin: center center;
-      z-index: 5; /* Cards render over the logo naturally */
-    }
-
-    /* ── SUBLIMINAL LUXURY GLINT ── */
-    .halo-card::after {
-      content: '';
-      position: absolute; top: 0; left: -150%; 
-      width: 60%; height: 100%;
-      background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
-      transform: skewX(-20deg);
-      
-      animation: luxuryGlint 2.25s linear infinite;
-      animation-delay: calc(var(--i) * -0.15s);
-      pointer-events: none;
-      z-index: 2;
-      will-change: left, opacity;
-    }
-
-    @keyframes luxuryGlint {
-      0%, 46% { left: -150%; opacity: 0; }
-      47% { opacity: 1; }
-      50% { left: 50%; opacity: 1; }
-      53% { left: 200%; opacity: 1; }
-      54%, 100% { left: 200%; opacity: 0; }
-    }
-
-    /* ── EXACT CARTESIAN HALF-PIPE (Separated from Logo) ── */
-    @keyframes halfPipe {
-      /* Spawn completely off-screen left, far back */
-      0% {
-        transform: translate3d(-100vw, -10vh, -150vw) rotateZ(-30deg) rotateY(60deg) rotateX(20deg) scale(0.4);
-        opacity: 0; filter: brightness(0.2) grayscale(80%);
-      }
-      /* Swooping into view */
-      15% {
-        transform: translate3d(-60vw, 5vh, -60vw) rotateZ(-20deg) rotateY(45deg) rotateX(15deg) scale(0.7);
-        opacity: 0.5; filter: brightness(0.5) grayscale(40%);
-      }
-      /* Approaching center */
-      30% {
-        transform: translate3d(-30vw, 15vh, 0vw) rotateZ(-10deg) rotateY(25deg) rotateX(10deg) scale(1.1);
-        opacity: 0.9; filter: brightness(0.9) grayscale(10%);
-      }
-      /* APEX - Front Center (Pushed down to 28vh so it sweeps cleanly UNDER the logo) */
-      50% {
-        transform: translate3d(0vw, 28vh, 25vw) rotateZ(0deg) rotateY(0deg) rotateX(0deg) scale(1.35);
-        opacity: 1; filter: brightness(1.2) grayscale(0%);
-        box-shadow: 0 40px 100px rgba(0,0,0,0.8);
-      }
-      /* Sweeping right */
-      70% {
-        transform: translate3d(30vw, 15vh, 0vw) rotateZ(10deg) rotateY(-25deg) rotateX(10deg) scale(1.1);
-        opacity: 0.9; filter: brightness(0.9) grayscale(10%);
-      }
-      /* Exiting view */
-      85% {
-        transform: translate3d(60vw, 5vh, -60vw) rotateZ(20deg) rotateY(-45deg) rotateX(15deg) scale(0.7);
-        opacity: 0.5; filter: brightness(0.5) grayscale(40%);
-      }
-      /* Vanish completely off-screen right */
-      100% {
-        transform: translate3d(100vw, -10vh, -150vw) rotateZ(30deg) rotateY(-60deg) rotateX(20deg) scale(0.4);
-        opacity: 0; filter: brightness(0.2) grayscale(80%);
-      }
-    }
-
-    .halo-card img {
-      width: 100%; height: 100%; object-fit: cover; background: #000;
-      pointer-events: none;
-    }
-
-    .world-container:hover .halo-card,
-    .world-container:hover .halo-card::after {
-      animation-play-state: paused;
-    }
-
-    .halo-card:hover {
-      box-shadow: 0 40px 100px rgba(0,0,0,0.9);
-      filter: blur(0px) brightness(1.3) grayscale(0%) !important;
-      z-index: 100;
-    }
-
-    /* ── MOBILE OPTIMIZATIONS (Perfect 9:16 U-Shape) ── */
-    @media (max-width: 1024px) {
-      .halo-card { 
-        width: 48vw; height: 27vw; 
-        margin-top: -13.5vw; margin-left: -24vw; 
-      }
-      .corner-text { font-size: 7px; }
-      .top-left { top: 1.5rem; left: 1.5rem; } .top-right { top: 1.5rem; right: 1.5rem; }
-      .bottom-left { bottom: 1.5rem; left: 1.5rem; } .bottom-right { bottom: 1.5rem; right: 1.5rem; }
-      
-      /* Scale the anchored logo for mobile width */
-      .center-logo-3d svg { width: 100vw !important; height: auto; }
-      .center-logo-3d { left: -50vw; width: 100vw; top: -42vh; }
-    }
-
-    /* ── LIGHTBOX ── */
-    #lightbox { display: none; }
-    #lightbox-img { width: 100%; height: auto; border-radius: 6px; box-shadow: 0 40px 100px rgba(0,0,0,0.5); }
-    @media (max-width: 1024px) { #lightbox-img { aspect-ratio: 16/9; width: 95vw; height: auto; } }
-    @media (min-width: 1025px) { #lightbox-img { aspect-ratio: 16/9; max-height: 85vh; width: auto; } }
-
-    /* ── EDITORIAL CONTENT ── */
-    .editorial-section {
-      min-height: 100vh; display: flex; align-items: center;
-      padding: 8rem 2rem; border-top: 1px solid #f0f0f0; background-color: #ffffff !important;
-    }
+    /* Fallback para quando dist/output.css ainda nao foi compilado */
+    .world-container { background: #0a0a0a !important; }
   </style>
 </head>
-<body>
+<body style="background:#0a0a0a !important; background-image:none !important;">
 
-  <div id="lightbox" class="fixed inset-0 bg-white/95 z-[9999] items-center justify-center cursor-pointer" onclick="closeLightbox()">
-    <img id="lightbox-img" src="" class="object-cover" />
+  <!-- LIGHTBOX DARK -->
+  <div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.96);z-index:9999;align-items:center;justify-content:center;cursor:pointer;" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" style="max-height:85vh;max-width:95vw;border-radius:6px;box-shadow:0 40px 100px rgba(0,0,0,0.9);object-fit:contain;" />
   </div>
 
-  <!-- V52: THE PENDULUM FLOW -->
+  <!-- HERO: THE PENDULUM FLOW -->
   <section class="world-container">
-    
+
     <div class="corner-text top-left hidden md:block">
-      SLOW FLOW STUDIO<br>PREMIUM DESIGN & WEB
+      SLOW FLOW STUDIO<br>PREMIUM DESIGN &amp; WEB
     </div>
     <div class="corner-text top-right">
-      S-FLOW // 2026<br>AESTHETICS & CONVERSION
+      S-FLOW // 2026<br>AESTHETICS &amp; CONVERSION
     </div>
     <div class="corner-text bottom-left hidden md:block">
       DIGITAL EXPERIENCES<br>BRAND ARCHITECTURE
@@ -236,97 +53,130 @@
       FULLY RESPONSIVE<br>DATA-DRIVEN<br>OPTIMIZED PERFORMANCE
     </div>
 
-    <!-- The Stable Cartesian Axis -->
     <div class="world-wrap">
-      
-      <!-- MASSIVE ANCHORED LOGO (Top-Center) -->
+
+      <!-- LOGO COM BOLINHAS BRANCAS ACETINADAS -->
       <div class="center-logo-3d">
         <svg width="100%" height="100%" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <pattern id="dots" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
-              <circle fill="#d1d5db" cx="4" cy="4" r="3.5"></circle>
+            <!-- Gradiente esfera: branco puro no topo-esquerdo -> cinza -> quase preto nas bordas -->
+            <radialGradient id="pearl" cx="32%" cy="28%" r="68%" fx="32%" fy="28%">
+              <stop offset="0%"   stop-color="#ffffff" stop-opacity="1"/>
+              <stop offset="25%"  stop-color="#f0f0f0" stop-opacity="1"/>
+              <stop offset="55%"  stop-color="#c0c0c0" stop-opacity="1"/>
+              <stop offset="80%"  stop-color="#888888" stop-opacity="1"/>
+              <stop offset="100%" stop-color="#444444" stop-opacity="0.9"/>
+            </radialGradient>
+            <!-- Reflexo especular (brilho pequeno branco) -->
+            <radialGradient id="sheen" cx="30%" cy="25%" r="35%">
+              <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.95"/>
+              <stop offset="60%"  stop-color="#ffffff" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+            </radialGradient>
+            <!-- Sombra suave embaixo de cada bolinha -->
+            <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+              <feDropShadow dx="0.4" dy="0.8" stdDeviation="0.8" flood-color="#000000" flood-opacity="0.6"/>
+            </filter>
+            <!-- Padrao de bolinhas acetinadas -->
+            <pattern id="satinDots" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+              <!-- Camada base: esfera com gradiente -->
+              <circle cx="4" cy="4" r="3.6" fill="url(#pearl)" filter="url(#shadow)"/>
+              <!-- Camada superior: reflexo especular -->
+              <circle cx="4" cy="4" r="3.6" fill="url(#sheen)"/>
             </pattern>
           </defs>
-          <text x="50%" y="35%" text-anchor="middle" dominant-baseline="central" font-family="'Inter', sans-serif" font-weight="900" font-size="160" fill="url(#dots)">SLOW</text>
-          <text x="50%" y="85%" text-anchor="middle" dominant-baseline="central" font-family="'Inter', sans-serif" font-weight="900" font-size="160" fill="url(#dots)">FLOW</text>
+          <text
+            x="50%" y="35%"
+            text-anchor="middle"
+            dominant-baseline="central"
+            font-family="'Inter', sans-serif"
+            font-weight="900"
+            font-size="160"
+            fill="url(#satinDots)">SLOW</text>
+          <text
+            x="50%" y="85%"
+            text-anchor="middle"
+            dominant-baseline="central"
+            font-family="'Inter', sans-serif"
+            font-weight="900"
+            font-size="160"
+            fill="url(#satinDots)">FLOW</text>
         </svg>
       </div>
 
-      <!-- THE 15 CARDS (Following the absolute Half-Pipe track) -->
-      <!-- HYBRID ASSETS (Satto Stores, Coffee, Vivara, Clinic, and High-End Fillers) -->
-      <div class="halo-card" style="--i:0" onclick="openImage(this)"><img src="assets/tok-design-logo.png" alt="Tok Design Logo"></div>
-      <div class="halo-card" style="--i:1" onclick="openImage(this)"><img src="assets/loja-tiradentes.png" alt="Satto Tiradentes"></div>
-      <div class="halo-card" style="--i:2" onclick="openImage(this)"><img src="assets/loja-solo.png" alt="Satto Solo"></div>
-      <div class="halo-card" style="--i:3" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=70&amp;w=800&amp;auto=format,compress" alt="Café Cremoso"></div>
-      <div class="halo-card" style="--i:4" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=70&amp;w=800&amp;auto=format,compress" alt="Vivara Relógio"></div>
-      <div class="halo-card" style="--i:5" onclick="openImage(this)"><img src="assets/casa-concreto.png" alt="Architecture Concrete House"></div>
-      <div class="halo-card" style="--i:6" onclick="openImage(this)"><img src="assets/cozinha-luxo.png" alt="Cozinha de Luxo Dark"></div>
-      <div class="halo-card" style="--i:7" onclick="openImage(this)"><img src="assets/restaurante-madeira.png" alt="Restaurante Arquitetura Madeira"></div>
-      <div class="halo-card" style="--i:8" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&amp;w=800&amp;auto=format,compress" alt="Clínica Moderna"></div>
-      <div class="halo-card" style="--i:9" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=70&amp;w=800&amp;auto=format,compress" alt="Resort Lounge"></div>
-      <div class="halo-card" style="--i:10" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&amp;w=800&amp;auto=format,compress" alt="Estética e Saúde"></div>
-      <div class="halo-card" style="--i:11" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=70&amp;w=800&amp;auto=format,compress" alt="Moody Interior"></div>
-      <div class="halo-card" style="--i:12" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=70&amp;w=800&amp;auto=format,compress" alt="Minimalist Dark"></div>
-      <div class="halo-card" style="--i:13" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1510627489930-0c1b0bfb6785?q=70&amp;w=800&amp;auto=format,compress" alt="Brutalist Architecture"></div>
-      <div class="halo-card" style="--i:14" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1551076805-e1869033e561?q=80&amp;w=800&amp;auto=format,compress" alt="Medical Spa"></div>
-      
+      <!-- 15 CARDS HALF-PIPE -->
+      <div class="halo-card" style="--i:0"  onclick="openImage(this)"><img src="assets/tok-design-logo.png"   alt="Tok Design Logo"></div>
+      <div class="halo-card" style="--i:1"  onclick="openImage(this)"><img src="assets/loja-tiradentes.png"   alt="Satto Tiradentes"></div>
+      <div class="halo-card" style="--i:2"  onclick="openImage(this)"><img src="assets/loja-solo.png"         alt="Satto Solo"></div>
+      <div class="halo-card" style="--i:3"  onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=70&w=800&auto=format,compress" alt="Cafe Cremoso"></div>
+      <div class="halo-card" style="--i:4"  onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=70&w=800&auto=format,compress" alt="Vivara Relogio"></div>
+      <div class="halo-card" style="--i:5"  onclick="openImage(this)"><img src="assets/casa-concreto.png"     alt="Architecture Concrete House"></div>
+      <div class="halo-card" style="--i:6"  onclick="openImage(this)"><img src="assets/cozinha-luxo.png"       alt="Cozinha de Luxo Dark"></div>
+      <div class="halo-card" style="--i:7"  onclick="openImage(this)"><img src="assets/restaurante-madeira.png" alt="Restaurante Arquitetura Madeira"></div>
+      <div class="halo-card" style="--i:8"  onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=800&auto=format,compress" alt="Clinica Moderna"></div>
+      <div class="halo-card" style="--i:9"  onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=70&w=800&auto=format,compress" alt="Resort Lounge"></div>
+      <div class="halo-card" style="--i:10" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=800&auto=format,compress" alt="Estetica e Saude"></div>
+      <div class="halo-card" style="--i:11" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=70&w=800&auto=format,compress" alt="Moody Interior"></div>
+      <div class="halo-card" style="--i:12" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=70&w=800&auto=format,compress" alt="Minimalist Dark"></div>
+      <div class="halo-card" style="--i:13" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1510627489930-0c1b0bfb6785?q=70&w=800&auto=format,compress" alt="Brutalist Architecture"></div>
+      <div class="halo-card" style="--i:14" onclick="openImage(this)"><img src="https://images.unsplash.com/photo-1551076805-e1869033e561?q=80&w=800&auto=format,compress" alt="Medical Spa"></div>
+
     </div>
   </section>
 
-  <!-- ── 2. EDITORIAL SERVICE SESSIONS ── -->
+  <!-- EDITORIAL: WEBSITES -->
   <section class="editorial-section">
-    <div class="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center px-4 md:px-0">
-      <div>
-        <span class="font-mono text-gray-500 text-[10px] uppercase tracking-widest block mb-4">01 // Digital Presence</span>
-        <h2 class="font-sans font-bold text-5xl md:text-7xl uppercase tracking-tighter mb-8 leading-none">
-          Websites &<br>Landing Pages.
-        </h2>
-        <p class="font-sans text-lg text-gray-600 mb-10 max-w-md">
-          A estética do seu ecossistema digital determina o valor do seu produto. Projetamos interfaces minimalistas de alta performance focadas em dominar o tráfego e maximizar conversões. Cada pixel é otimizado para o Google e para a mente do seu cliente.
-        </p>
-        <a href="https://wa.me/5544991244282" class="inline-block bg-black text-white font-mono text-[10px] uppercase tracking-widest px-8 py-4 hover:bg-gray-800 transition-colors">
-          Iniciar Projeto Web
-        </a>
-      </div>
-      <div class="w-full aspect-[4/3] bg-gray-100 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="Websites" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105">
+    <div style="max-width:80rem;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr;gap:4rem;align-items:center;padding:0 1rem;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;" class="md-grid">
+        <div>
+          <span class="editorial-label" style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:1rem;">01 // Digital Presence</span>
+          <h2 class="editorial-title" style="font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(2.5rem,6vw,5rem);text-transform:uppercase;letter-spacing:-0.03em;line-height:1;margin-bottom:2rem;">
+            Websites &amp;<br>Landing Pages.
+          </h2>
+          <p class="editorial-body" style="font-size:1.1rem;line-height:1.7;margin-bottom:2.5rem;max-width:420px;">
+            A estética do seu ecossistema digital determina o valor do seu produto. Projetamos interfaces minimalistas de alta performance focadas em dominar o tráfego e maximizar conversões. Cada pixel é otimizado para o Google e para a mente do seu cliente.
+          </p>
+          <a href="https://wa.me/5544991244282" class="btn-light">Iniciar Projeto Web</a>
+        </div>
+        <div style="aspect-ratio:4/3;background:#1a1a1a;overflow:hidden;position:relative;">
+          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="Websites" style="width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.7s,transform 0.7s;" onmouseover="this.style.filter='grayscale(0%)';this.style.transform='scale(1.05)';" onmouseout="this.style.filter='grayscale(100%)';this.style.transform='scale(1)';">
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="editorial-section" style="background-color: #f9fafb !important;">
-    <div class="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center px-4 md:px-0">
-      <div class="order-2 md:order-1 w-full aspect-[4/3] bg-gray-200 overflow-hidden relative group">
-        <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop" alt="Branding" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105">
-      </div>
-      <div class="order-1 md:order-2">
-        <span class="font-mono text-gray-500 text-[10px] uppercase tracking-widest block mb-4">02 // Visual Authority</span>
-        <h2 class="font-sans font-bold text-5xl md:text-7xl uppercase tracking-tighter mb-8 leading-none">
-          Branding &<br>Identidade.
-        </h2>
-        <p class="font-sans text-lg text-gray-600 mb-10 max-w-md">
-          Marcas que lideram mercados não são apenas desenhadas, elas são arquitetadas. Criamos sistemas visuais escaláveis, paletas imponentes e tipografias que posicionam a sua empresa como a única escolha lógica no seu setor.
-        </p>
-        <a href="https://wa.me/5544991244282" class="inline-block bg-black text-white font-mono text-[10px] uppercase tracking-widest px-8 py-4 hover:bg-gray-800 transition-colors">
-          Construir Autoridade
-        </a>
+  <!-- EDITORIAL: BRANDING -->
+  <section class="editorial-section alt">
+    <div style="max-width:80rem;margin:0 auto;width:100%;padding:0 1rem;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;">
+        <div style="aspect-ratio:4/3;background:#1a1a1a;overflow:hidden;position:relative;">
+          <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop" alt="Branding" style="width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.7s,transform 0.7s;" onmouseover="this.style.filter='grayscale(0%)';this.style.transform='scale(1.05)';" onmouseout="this.style.filter='grayscale(100%)';this.style.transform='scale(1)';">
+        </div>
+        <div>
+          <span class="editorial-label" style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:1rem;">02 // Visual Authority</span>
+          <h2 class="editorial-title" style="font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(2.5rem,6vw,5rem);text-transform:uppercase;letter-spacing:-0.03em;line-height:1;margin-bottom:2rem;">
+            Branding &amp;<br>Identidade.
+          </h2>
+          <p class="editorial-body" style="font-size:1.1rem;line-height:1.7;margin-bottom:2.5rem;max-width:420px;">
+            Marcas que lideram mercados não são apenas desenhadas, elas são arquitetadas. Criamos sistemas visuais escaláveis, paletas imponentes e tipografias que posicionam a sua empresa como a única escolha lógica no seu setor.
+          </p>
+          <a href="https://wa.me/5544991244282" class="btn-light">Construir Autoridade</a>
+        </div>
       </div>
     </div>
   </section>
 
   <script>
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    
-    function openImage(element) {
-      const imgUrl = element.querySelector('img').src;
-      lightboxImg.src = imgUrl;
-      lightbox.style.display = 'flex';
+    const lightbox    = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+
+    function openImage(el) {
+      lightboxImg.src = el.querySelector("img").src;
+      lightbox.style.display = "flex";
     }
-    
     function closeLightbox() {
-      lightbox.style.display = 'none';
-      lightboxImg.src = '';
+      lightbox.style.display = "none";
+      lightboxImg.src = "";
     }
   </script>
 </body>
