@@ -34,10 +34,11 @@ def render_cards(images):
     for img in images:
         i, src, alt = img["i"], img["src"], img["alt"]
         niche = img.get("niche", "Design")
+        priority = 'fetchpriority="high"' if i < 15 else 'fetchpriority="low"'
         lines.append(
             f'      <div class="halo-card" style="--i:{i}" onclick="openLightbox(this)" '
             f'data-niche="{niche}" data-alt="{alt}" title="{niche}">'
-            f'<img src="{src}" alt="{alt}" loading="eager" decoding="async" '
+            f'<img src="{src}" alt="{alt}" loading="eager" decoding="async" {priority} '
             f'onerror="this.onerror=null;this.src=\'assets/casa-concreto.png\';"></div>'
         )
     return "\n".join(lines)
@@ -62,6 +63,8 @@ def render_html(images):
 
   <title>Slow Flow — Digital Ecosystems</title>
 
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="dns-prefetch" href="https://images.unsplash.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -313,6 +316,20 @@ def render_html(images):
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeLightbox();
+    });
+
+    // Mobile Acceleration & Instant Paint
+    window.addEventListener('DOMContentLoaded', () => {
+      // Força o navegador a acordar os frames imediatamente
+      const cards = document.querySelectorAll('.halo-card');
+      cards.forEach((card, idx) => {
+        if (idx < 12) {
+          const img = card.querySelector('img');
+          if (img && img.complete) {
+            card.style.opacity = '1';
+          }
+        }
+      });
     });
   </script>
 </body>
