@@ -97,10 +97,10 @@
       backface-visibility: hidden;
       -webkit-font-smoothing: antialiased;
       
-      /* High-Velocity Pendulum Flow (Faster) */
-      animation: halfPipe 4.5s linear infinite;
-      /* 15 cards spread perfectly across 4.5s loop (15 * 0.3s = 4.5s) */
-      animation-delay: calc(var(--i) * -0.3s);
+      /* High-Velocity Pendulum Flow (Doubled Speed) */
+      animation: halfPipe 2.25s linear infinite;
+      /* 15 cards spread perfectly across 2.25s loop (15 * 0.15s = 2.25s) */
+      animation-delay: calc(var(--i) * -0.15s);
       
       transition: box-shadow 0.3s ease;
       transform-origin: center center;
@@ -115,8 +115,8 @@
       background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
       transform: skewX(-20deg);
       
-      animation: luxuryGlint 4.5s linear infinite;
-      animation-delay: calc(var(--i) * -0.3s);
+      animation: luxuryGlint 2.25s linear infinite;
+      animation-delay: calc(var(--i) * -0.15s);
       pointer-events: none;
       z-index: 2;
       will-change: left, opacity;
