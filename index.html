@@ -50,7 +50,7 @@
     .bottom-left { bottom: 2.5rem; left: 2.5rem; }
     .bottom-right { bottom: 2.5rem; right: 2.5rem; text-align: right; }
 
-    /* ── V45/V47: THE TILTED DECK DEAL WORLD ── */
+    /* ── V48: THE S-CURVE VORTEX WATERFALL ── */
     .world-container {
       position: relative; width: 100vw; height: 100vh;
       display: flex; align-items: center; justify-content: center;
@@ -59,7 +59,7 @@
       perspective: 1000px;
     }
 
-    /* The floor plane, tilted extremely back to create the deep deck deal perspective */
+    /* The floor plane, tilted extremely back to create the deep perspective */
     .tilt-plane {
       position: absolute; width: 0; height: 0;
       transform-style: preserve-3d;
@@ -88,54 +88,86 @@
     .spin-ring {
       position: absolute; width: 0; height: 0;
       transform-style: preserve-3d;
-      /* Extreme speed: 4.5 seconds for a full 360 degree loop */
-      animation: hyperSpin 4.5s linear infinite; 
+      /* Extreme speed: 4.5 seconds. Spin POSITIVE so it syncs with the S-Throw math */
+      animation: spinRing 4.5s linear infinite; 
     }
 
-    @keyframes hyperSpin {
+    @keyframes spinRing {
       0% { transform: rotateY(0deg); }
-      100% { transform: rotateY(-360deg); }
+      100% { transform: rotateY(360deg); }
     }
 
-    /* Anchor pushes them out on the flat floor */
+    /* 
+       Anchor pushes them out on the flat floor. 
+       Negative angle to reverse match the positive ring spin. 
+    */
     .card-anchor {
       position: absolute; left: 0; top: 0;
       transform-style: preserve-3d;
-      transform: rotateY(calc(var(--i) * 24deg)) translateZ(40vw); 
+      /* Massive Desktop Radius */
+      transform: rotateY(calc(var(--i) * -24deg)) translateZ(55vw); 
     }
 
+    /* The Massive Cards */
     .halo-card {
       position: absolute;
-      width: 22vh; height: 12.375vh; /* Perfect 16:9 */
-      margin-top: -6.187vh; margin-left: -11vh;
+      /* Increased size by 50% */
+      width: 33vh; height: 18.5vh; 
+      margin-top: -9.25vh; margin-left: -16.5vh;
       
       background: #111; overflow: hidden; border-radius: 4px;
       cursor: pointer;
+      opacity: 1; 
       
-      /* ALL IMAGES 100% VISIBLE */
-      opacity: 0.95; 
+      /* S-Curve Throw Animation linked perfectly to the 4.5s global ring loop */
+      animation: deckThrow 4.5s linear infinite;
       
       /* 
-         Counter-rotate to stand perfectly vertical like a billboard!
-         This ensures they don't lie flat on the floor, but stand up 
-         to face the camera, creating the 'deck deal' sweep effect at the bottom.
+         Delay exactly matches the moment this specific card crosses the 0-deg front axis. 
+         (4.5s / 15 cards = 0.3s per card offset) 
       */
-      transform: rotateX(75deg); 
+      animation-delay: calc(var(--i) * 0.3s);
       
-      /* Floating effect */
-      animation: billboardBob 2.5s infinite ease-in-out alternate;
-      animation-delay: calc(var(--i) * -0.2s);
-      
-      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-      
-      /* Prevent glitching */
+      transition: box-shadow 0.3s ease;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
     }
 
-    @keyframes billboardBob {
-      0% { transform: rotateX(75deg) translateY(-3vh); }
-      100% { transform: rotateX(75deg) translateY(3vh); }
+    /* 
+       THE MATH: At 0%, the ring is exactly at the front-center of the screen.
+       We trigger the 'S' throw off the screen, then instantly reset to orbit the back.
+    */
+    @keyframes deckThrow {
+      /* Front Center - Initiate Throw */
+      0% {
+        transform: rotateX(75deg) translate3d(0, 0, 0) scale(1) rotateZ(0deg);
+        opacity: 1;
+      }
+      /* Swoop Right */
+      2.5% {
+        transform: rotateX(75deg) translate3d(15vw, 25vh, 100px) scale(1.4) rotateZ(-15deg);
+        opacity: 0.95;
+      }
+      /* Swoop Left & Throw Down Off Screen */
+      5% {
+        transform: rotateX(75deg) translate3d(-15vw, 70vh, 200px) scale(1.9) rotateZ(20deg);
+        opacity: 0;
+      }
+      /* Instant Invisible Reset */
+      5.1% {
+        transform: rotateX(75deg) translate3d(0, 0, 0) scale(1) rotateZ(0deg);
+        opacity: 0;
+      }
+      /* Fade back into the vortex on the right edge */
+      8% {
+        transform: rotateX(75deg) translate3d(0, 0, 0) scale(1) rotateZ(0deg);
+        opacity: 1;
+      }
+      /* Solid Orbit around the back */
+      100% {
+        transform: rotateX(75deg) translate3d(0, 0, 0) scale(1) rotateZ(0deg);
+        opacity: 1;
+      }
     }
 
     .halo-card img {
@@ -144,13 +176,12 @@
     }
 
     /* Pause the extreme speed loop on hover */
-    .world-container:hover .spin-ring {
+    .world-container:hover .spin-ring,
+    .world-container:hover .halo-card {
       animation-play-state: paused;
     }
 
     .halo-card:hover {
-      opacity: 1;
-      transform: rotateX(75deg) scale(1.6) translateY(-5vh) !important;
       box-shadow: 0 40px 100px rgba(0,0,0,0.8);
       z-index: 100;
     }
@@ -159,14 +190,14 @@
     @media (max-width: 1024px) {
       .tilt-plane { transform: rotateX(-75deg) scale(1.1); }
       .card-anchor { 
-        /* Massive radius for mobile so the bottom cards deal hugely across the screen */
-        transform: rotateY(calc(var(--i) * 24deg)) translateZ(90vw); 
+        /* Enormous radius for mobile so the cards don't collide */
+        transform: rotateY(calc(var(--i) * -24deg)) translateZ(120vw); 
       }
       
       .halo-card { 
-        /* 16:9 on mobile */
-        width: 32vw; height: 18vw; 
-        margin-top: -9vw; margin-left: -16vw; 
+        /* Massive cards on mobile */
+        width: 48vw; height: 27vw; 
+        margin-top: -13.5vw; margin-left: -24vw; 
       }
       
       .corner-text { font-size: 7px; }
@@ -196,7 +227,7 @@
     <img id="lightbox-img" src="" class="object-cover" />
   </div>
 
-  <!-- V45/V47: THE TILTED DECK WORLD -->
+  <!-- V48: THE S-CURVE VORTEX -->
   <section class="world-container">
     
     <div class="corner-text top-left hidden md:block">
