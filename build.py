@@ -1,4 +1,58 @@
-<!DOCTYPE html>
+﻿#!/usr/bin/env python3
+"""
+=============================================================================
+  SLOW FLOW STUDIO — Python Build System
+  Gera index.html dinamicamente a partir de data/images.json
+  Compila Tailwind CSS e sobe servidor local de preview
+
+  Uso:
+    python build.py          -> gera HTML + compila CSS
+    python build.py --serve  -> gera + compila + sobe servidor na porta 3000
+    python build.py --watch  -> modo dev com Tailwind em modo watch
+=============================================================================
+"""
+
+import json, os, sys, subprocess, shutil
+from pathlib import Path
+from datetime import datetime
+
+# ── CONFIG ──────────────────────────────────────────────────────────────────
+ROOT        = Path(__file__).parent
+DATA_FILE   = ROOT / "data" / "images.json"
+OUTPUT_HTML = ROOT / "index.html"
+CSS_INPUT   = ROOT / "src" / "input.css"
+CSS_OUTPUT  = ROOT / "dist" / "output.css"
+PORT        = 3000
+
+# ── ANIMACAO: EFEITO CINEMATOGRAFICO ────────────────────────────────────────
+# 60 cards x 0.007s de delay = 0.42s de loop total
+# Cada card passa pelo centro em ~7ms = efeito de pelicula em alta velocidade
+CARD_DURATION = "0.42s"   # duracao total do loop halfPipe
+CARD_DELAY    = "0.007s"  # intervalo entre cada card (7ms = pelicula rapida)
+
+# ── CARREGA BASE DE DADOS ────────────────────────────────────────────────────
+def load_images():
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    return data["images"]
+
+# ── GERA BLOCO DE CARDS HTML ─────────────────────────────────────────────────
+def render_cards(images):
+    lines = ["      <!-- ===== 60 CARDS CINEMATOGRAFICOS — gerado por build.py ===== -->"]
+    for img in images:
+        i, src, alt = img["i"], img["src"], img["alt"]
+        niche = img.get("niche", "")
+        lines.append(
+            f'      <div class="halo-card" style="--i:{i}" onclick="openImage(this)" title="{niche}">'
+            f'<img src="{src}" alt="{alt}" loading="lazy"></div>'
+        )
+    return "\n".join(lines)
+
+# ── GERA O HTML COMPLETO ─────────────────────────────────────────────────────
+def render_html(images):
+    cards_html = render_cards(images)
+    now = datetime.now().strftime("%Y")
+    return f"""<!DOCTYPE html>
 <html lang="pt-BR" style="background:#0a0a0a;color-scheme:dark;">
 <head>
   <meta charset="UTF-8">
@@ -20,14 +74,14 @@
   <link rel="stylesheet" href="dist/output.css">
 
   <style>
-    html, body {
+    html, body {{
       background: #0a0a0a !important;
       background-color: #0a0a0a !important;
       background-image: none !important;
       color: #f0f0f0 !important;
       margin: 0;
-    }
-    .world-container { background: #0a0a0a !important; }
+    }}
+    .world-container {{ background: #0a0a0a !important; }}
   </style>
 </head>
 <body style="background:#0a0a0a !important; background-image:none !important;">
@@ -39,7 +93,7 @@
 
   <!-- ═══════════════════════════════════════════════════════════════
        HERO — CINEMATIC PENDULUM FLOW
-       60 cards | Loop: 0.42s | Delay: 0.007s/card
+       {len(images)} cards | Loop: {CARD_DURATION} | Delay: {CARD_DELAY}/card
        ═══════════════════════════════════════════════════════════════ -->
   <section class="world-container">
 
@@ -47,7 +101,7 @@
       SLOW FLOW STUDIO<br>PREMIUM DESIGN &amp; WEB
     </div>
     <div class="corner-text top-right">
-      S-FLOW // 2026<br>AESTHETICS &amp; CONVERSION
+      S-FLOW // {now}<br>AESTHETICS &amp; CONVERSION
     </div>
     <div class="corner-text bottom-left hidden md:block">
       DIGITAL EXPERIENCES<br>BRAND ARCHITECTURE
@@ -91,67 +145,7 @@
         </svg>
       </div>
 
-      <!-- ===== 60 CARDS CINEMATOGRAFICOS — gerado por build.py ===== -->
-      <div class="halo-card" style="--i:0" onclick="openImage(this)" title="Branding"><img src="assets/tok-design-logo.png" alt="Tok Design Identidade Visual" loading="lazy"></div>
-      <div class="halo-card" style="--i:1" onclick="openImage(this)" title="Branding"><img src="assets/loja-tiradentes.png" alt="Satto Tiradentes Retail" loading="lazy"></div>
-      <div class="halo-card" style="--i:2" onclick="openImage(this)" title="Branding"><img src="assets/loja-solo.png" alt="Satto Solo Visual Identity" loading="lazy"></div>
-      <div class="halo-card" style="--i:3" onclick="openImage(this)" title="Gastronomia"><img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=800&auto=format&fit=crop" alt="Cafe Cremoso Artesanal" loading="lazy"></div>
-      <div class="halo-card" style="--i:4" onclick="openImage(this)" title="Gastronomia"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=800&auto=format&fit=crop" alt="Coffee Shop Premium" loading="lazy"></div>
-      <div class="halo-card" style="--i:5" onclick="openImage(this)" title="Gastronomia"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=800&auto=format&fit=crop" alt="Fine Dining Restaurant" loading="lazy"></div>
-      <div class="halo-card" style="--i:6" onclick="openImage(this)" title="Arquitetura"><img src="assets/casa-concreto.png" alt="Architecture Concrete House" loading="lazy"></div>
-      <div class="halo-card" style="--i:7" onclick="openImage(this)" title="Arquitetura"><img src="assets/cozinha-luxo.png" alt="Cozinha de Luxo Dark" loading="lazy"></div>
-      <div class="halo-card" style="--i:8" onclick="openImage(this)" title="Arquitetura"><img src="assets/restaurante-madeira.png" alt="Restaurante Arquitetura" loading="lazy"></div>
-      <div class="halo-card" style="--i:9" onclick="openImage(this)" title="Arquitetura"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800&auto=format&fit=crop" alt="Moody Interior Design" loading="lazy"></div>
-      <div class="halo-card" style="--i:10" onclick="openImage(this)" title="Arquitetura"><img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=800&auto=format&fit=crop" alt="Minimalist Dark Interior" loading="lazy"></div>
-      <div class="halo-card" style="--i:11" onclick="openImage(this)" title="Arquitetura"><img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?q=80&w=800&auto=format&fit=crop" alt="Modern Kitchen Design" loading="lazy"></div>
-      <div class="halo-card" style="--i:12" onclick="openImage(this)" title="Arquitetura"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=800&auto=format&fit=crop" alt="Outdoor Lounge Terrace" loading="lazy"></div>
-      <div class="halo-card" style="--i:13" onclick="openImage(this)" title="Saude"><img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=800&auto=format&fit=crop" alt="Clinica Moderna" loading="lazy"></div>
-      <div class="halo-card" style="--i:14" onclick="openImage(this)" title="Saude"><img src="https://images.unsplash.com/photo-1551076805-e1869033e561?q=80&w=800&auto=format&fit=crop" alt="Medical Spa Premium" loading="lazy"></div>
-      <div class="halo-card" style="--i:15" onclick="openImage(this)" title="Saude"><img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=800&auto=format&fit=crop" alt="Estetica e Saude" loading="lazy"></div>
-      <div class="halo-card" style="--i:16" onclick="openImage(this)" title="Saude"><img src="https://images.unsplash.com/photo-1588776814546-1ffbb172d0c8?q=80&w=800&auto=format&fit=crop" alt="Clinica Odontologica Premium" loading="lazy"></div>
-      <div class="halo-card" style="--i:17" onclick="openImage(this)" title="Saude"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=800&auto=format&fit=crop" alt="Dermatologia Skincare" loading="lazy"></div>
-      <div class="halo-card" style="--i:18" onclick="openImage(this)" title="Hotelaria"><img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=800&auto=format&fit=crop" alt="Resort Lounge" loading="lazy"></div>
-      <div class="halo-card" style="--i:19" onclick="openImage(this)" title="Hotelaria"><img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=800&auto=format&fit=crop" alt="Luxury Hotel Lobby" loading="lazy"></div>
-      <div class="halo-card" style="--i:20" onclick="openImage(this)" title="Hotelaria"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=800&auto=format&fit=crop" alt="Boutique Hotel Room" loading="lazy"></div>
-      <div class="halo-card" style="--i:21" onclick="openImage(this)" title="Hotelaria"><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop" alt="Infinity Pool Luxury" loading="lazy"></div>
-      <div class="halo-card" style="--i:22" onclick="openImage(this)" title="Moda"><img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=800&auto=format&fit=crop" alt="Vivara Relogio Luxo" loading="lazy"></div>
-      <div class="halo-card" style="--i:23" onclick="openImage(this)" title="Moda"><img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop" alt="Joalheria Premium" loading="lazy"></div>
-      <div class="halo-card" style="--i:24" onclick="openImage(this)" title="Moda"><img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=800&auto=format&fit=crop" alt="Luxury Timepiece Collection" loading="lazy"></div>
-      <div class="halo-card" style="--i:25" onclick="openImage(this)" title="Moda"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=800&auto=format&fit=crop" alt="Moda Fashion Brand" loading="lazy"></div>
-      <div class="halo-card" style="--i:26" onclick="openImage(this)" title="Moda"><img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?q=80&w=800&auto=format&fit=crop" alt="Eyewear Luxury Brand" loading="lazy"></div>
-      <div class="halo-card" style="--i:27" onclick="openImage(this)" title="Moda"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop" alt="Streetwear Sneaker Culture" loading="lazy"></div>
-      <div class="halo-card" style="--i:28" onclick="openImage(this)" title="Bebidas"><img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=800&auto=format&fit=crop" alt="Wine Bar Premium" loading="lazy"></div>
-      <div class="halo-card" style="--i:29" onclick="openImage(this)" title="Bebidas"><img src="https://images.unsplash.com/photo-1559526324-593bc073d938?q=80&w=800&auto=format&fit=crop" alt="Craft Brewery Branding" loading="lazy"></div>
-      <div class="halo-card" style="--i:30" onclick="openImage(this)" title="Bebidas"><img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=800&auto=format&fit=crop" alt="Cocktail Bar Luxury" loading="lazy"></div>
-      <div class="halo-card" style="--i:31" onclick="openImage(this)" title="Bebidas"><img src="https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?q=80&w=800&auto=format&fit=crop" alt="Nightlife Club Design" loading="lazy"></div>
-      <div class="halo-card" style="--i:32" onclick="openImage(this)" title="Culinaria"><img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=800&auto=format&fit=crop" alt="Sushi Restaurant Premium" loading="lazy"></div>
-      <div class="halo-card" style="--i:33" onclick="openImage(this)" title="Culinaria"><img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=800&auto=format&fit=crop" alt="Patisserie Confeitaria" loading="lazy"></div>
-      <div class="halo-card" style="--i:34" onclick="openImage(this)" title="Culinaria"><img src="https://images.unsplash.com/photo-1498654896293-37aaa39c8afc?q=80&w=800&auto=format&fit=crop" alt="Healthy Organic Food" loading="lazy"></div>
-      <div class="halo-card" style="--i:35" onclick="openImage(this)" title="Fitness"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop" alt="Fitness Studio Gym" loading="lazy"></div>
-      <div class="halo-card" style="--i:36" onclick="openImage(this)" title="Fitness"><img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=800&auto=format&fit=crop" alt="Yoga Wellness Studio" loading="lazy"></div>
-      <div class="halo-card" style="--i:37" onclick="openImage(this)" title="Beleza"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800&auto=format&fit=crop" alt="Premium Barbershop" loading="lazy"></div>
-      <div class="halo-card" style="--i:38" onclick="openImage(this)" title="Beleza"><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=800&auto=format&fit=crop" alt="Beauty Salon Nail Art" loading="lazy"></div>
-      <div class="halo-card" style="--i:39" onclick="openImage(this)" title="Automotivo"><img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?q=80&w=800&auto=format&fit=crop" alt="Luxury Car Automotive" loading="lazy"></div>
-      <div class="halo-card" style="--i:40" onclick="openImage(this)" title="Automotivo"><img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=800&auto=format&fit=crop" alt="Sports Car Performance" loading="lazy"></div>
-      <div class="halo-card" style="--i:41" onclick="openImage(this)" title="Arte"><img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?q=80&w=800&auto=format&fit=crop" alt="Photography Studio" loading="lazy"></div>
-      <div class="halo-card" style="--i:42" onclick="openImage(this)" title="Arte"><img src="https://images.unsplash.com/photo-1561839561-b13bcfe21fe1?q=80&w=800&auto=format&fit=crop" alt="Art Gallery Exposicao" loading="lazy"></div>
-      <div class="halo-card" style="--i:43" onclick="openImage(this)" title="Arte"><img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=800&auto=format&fit=crop" alt="Music Recording Studio" loading="lazy"></div>
-      <div class="halo-card" style="--i:44" onclick="openImage(this)" title="Arte"><img src="https://images.unsplash.com/photo-1510627489930-0c1b0bfb6785?q=80&w=800&auto=format&fit=crop" alt="Brutalist Architecture" loading="lazy"></div>
-      <div class="halo-card" style="--i:45" onclick="openImage(this)" title="Corporativo"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop" alt="Coworking Space Design" loading="lazy"></div>
-      <div class="halo-card" style="--i:46" onclick="openImage(this)" title="Corporativo"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=800&auto=format&fit=crop" alt="Tech Startup Office" loading="lazy"></div>
-      <div class="halo-card" style="--i:47" onclick="openImage(this)" title="Corporativo"><img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=800&auto=format&fit=crop" alt="Law Firm Advocacia Premium" loading="lazy"></div>
-      <div class="halo-card" style="--i:48" onclick="openImage(this)" title="Corporativo"><img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=800&auto=format&fit=crop" alt="Wealth Management Finance" loading="lazy"></div>
-      <div class="halo-card" style="--i:49" onclick="openImage(this)" title="Tecnologia"><img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=800&auto=format&fit=crop" alt="E-learning Platform" loading="lazy"></div>
-      <div class="halo-card" style="--i:50" onclick="openImage(this)" title="Tecnologia"><img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=800&auto=format&fit=crop" alt="Tech Product App UI" loading="lazy"></div>
-      <div class="halo-card" style="--i:51" onclick="openImage(this)" title="Tecnologia"><img src="https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=800&auto=format&fit=crop" alt="Smart Home Automation" loading="lazy"></div>
-      <div class="halo-card" style="--i:52" onclick="openImage(this)" title="Eventos"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=800&auto=format&fit=crop" alt="Wedding Casamento Luxo" loading="lazy"></div>
-      <div class="halo-card" style="--i:53" onclick="openImage(this)" title="Eventos"><img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop" alt="Event Planning Design" loading="lazy"></div>
-      <div class="halo-card" style="--i:54" onclick="openImage(this)" title="Pets"><img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?q=80&w=800&auto=format&fit=crop" alt="Pet Shop Clinica Vet" loading="lazy"></div>
-      <div class="halo-card" style="--i:55" onclick="openImage(this)" title="Esportes"><img src="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=800&auto=format&fit=crop" alt="Outdoor Adventure Sports" loading="lazy"></div>
-      <div class="halo-card" style="--i:56" onclick="openImage(this)" title="Esportes"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop" alt="Surf Beach Lifestyle" loading="lazy"></div>
-      <div class="halo-card" style="--i:57" onclick="openImage(this)" title="Imoveis"><img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=800&auto=format&fit=crop" alt="Luxury Penthouse Real Estate" loading="lazy"></div>
-      <div class="halo-card" style="--i:58" onclick="openImage(this)" title="Imoveis"><img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?q=80&w=800&auto=format&fit=crop" alt="Industrial Architecture Design" loading="lazy"></div>
-      <div class="halo-card" style="--i:59" onclick="openImage(this)" title="Nautico"><img src="https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?q=80&w=800&auto=format&fit=crop" alt="Luxury Yacht Marine Brand" loading="lazy"></div>
+{cards_html}
 
     </div>
   </section>
@@ -277,15 +271,69 @@
   <script>
     const lightbox    = document.getElementById("lightbox");
     const lightboxImg = document.getElementById("lightbox-img");
-    function openImage(el) {
+    function openImage(el) {{
       lightboxImg.src = el.querySelector("img").src;
       lightbox.style.display = "flex";
-    }
-    function closeLightbox() {
+    }}
+    function closeLightbox() {{
       lightbox.style.display = "none";
       lightboxImg.src = "";
-    }
-    document.addEventListener("keydown", e => { if(e.key === "Escape") closeLightbox(); });
+    }}
+    document.addEventListener("keydown", e => {{ if(e.key === "Escape") closeLightbox(); }});
   </script>
 </body>
-</html>
+</html>"""
+
+# ── COMPILA TAILWIND CSS ─────────────────────────────────────────────────────
+def build_css():
+    print("  Compilando Tailwind CSS...")
+    npx_cmd = "npx.cmd" if sys.platform == "win32" else "npx"
+    result = subprocess.run(
+        [npx_cmd, "tailwindcss", "-i", str(CSS_INPUT), "-o", str(CSS_OUTPUT), "--minify"],
+        capture_output=True, text=True, cwd=str(ROOT)
+    )
+    if result.returncode != 0:
+        print(f"  ERRO CSS: {result.stderr}")
+        return False
+    print(f"  CSS compilado -> dist/output.css")
+    return True
+
+# ── SERVIDOR LOCAL PYTHON ────────────────────────────────────────────────────
+def serve():
+    import http.server, socketserver, threading, webbrowser, time
+
+    class Handler(http.server.SimpleHTTPRequestHandler):
+        def log_message(self, fmt, *args):
+            pass  # silencia logs repetitivos
+
+    os.chdir(ROOT)
+    with socketserver.TCPServer(("", PORT), Handler) as httpd:
+        print(f"\n  Slow Flow Studio — Servidor Python")
+        print(f"  http://localhost:{PORT}")
+        print(f"  Pressione Ctrl+C para parar\n")
+        threading.Timer(1.0, lambda: webbrowser.open(f"http://localhost:{PORT}")).start()
+        httpd.serve_forever()
+
+# ── PONTO DE ENTRADA ─────────────────────────────────────────────────────────
+def main():
+    print(f"\n  SLOW FLOW STUDIO — Build System Python")
+    print(f"  {'='*50}")
+
+    images = load_images()
+    print(f"  Imagens carregadas: {len(images)} em {len(set(x['niche'] for x in images))} nichos")
+
+    html = render_html(images)
+    OUTPUT_HTML.write_text(html, encoding="utf-8")
+    print(f"  HTML gerado: index.html ({len(html):,} bytes)")
+
+    css_ok = build_css()
+
+    print(f"\n  Build concluido! Abra index.html no browser.")
+    print(f"  Velocidade: {CARD_DURATION} loop | {CARD_DELAY} entre cards\n")
+
+    if "--serve" in sys.argv:
+        serve()
+
+if __name__ == "__main__":
+    main()
+

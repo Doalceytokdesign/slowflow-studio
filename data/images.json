@@ -1,0 +1,365 @@
+{
+  "images": [
+    {
+      "i": 0,
+      "src": "assets/tok-design-logo.png",
+      "alt": "Tok Design Identidade Visual",
+      "niche": "Branding"
+    },
+    {
+      "i": 1,
+      "src": "assets/loja-tiradentes.png",
+      "alt": "Satto Tiradentes Retail",
+      "niche": "Branding"
+    },
+    {
+      "i": 2,
+      "src": "assets/loja-solo.png",
+      "alt": "Satto Solo Visual Identity",
+      "niche": "Branding"
+    },
+    {
+      "i": 3,
+      "src": "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=800&auto=format&fit=crop",
+      "alt": "Cafe Cremoso Artesanal",
+      "niche": "Gastronomia"
+    },
+    {
+      "i": 4,
+      "src": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=800&auto=format&fit=crop",
+      "alt": "Coffee Shop Premium",
+      "niche": "Gastronomia"
+    },
+    {
+      "i": 5,
+      "src": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=800&auto=format&fit=crop",
+      "alt": "Fine Dining Restaurant",
+      "niche": "Gastronomia"
+    },
+    {
+      "i": 6,
+      "src": "assets/casa-concreto.png",
+      "alt": "Architecture Concrete House",
+      "niche": "Arquitetura"
+    },
+    {
+      "i": 7,
+      "src": "assets/cozinha-luxo.png",
+      "alt": "Cozinha de Luxo Dark",
+      "niche": "Arquitetura"
+    },
+    {
+      "i": 8,
+      "src": "assets/restaurante-madeira.png",
+      "alt": "Restaurante Arquitetura",
+      "niche": "Arquitetura"
+    },
+    {
+      "i": 9,
+      "src": "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800&auto=format&fit=crop",
+      "alt": "Moody Interior Design",
+      "niche": "Arquitetura"
+    },
+    {
+      "i": 10,
+      "src": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=800&auto=format&fit=crop",
+      "alt": "Minimalist Dark Interior",
+      "niche": "Arquitetura"
+    },
+    {
+      "i": 11,
+      "src": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?q=80&w=800&auto=format&fit=crop",
+      "alt": "Modern Kitchen Design",
+      "niche": "Arquitetura"
+    },
+    {
+      "i": 12,
+      "src": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=800&auto=format&fit=crop",
+      "alt": "Outdoor Lounge Terrace",
+      "niche": "Arquitetura"
+    },
+    {
+      "i": 13,
+      "src": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=800&auto=format&fit=crop",
+      "alt": "Clinica Moderna",
+      "niche": "Saude"
+    },
+    {
+      "i": 14,
+      "src": "https://images.unsplash.com/photo-1551076805-e1869033e561?q=80&w=800&auto=format&fit=crop",
+      "alt": "Medical Spa Premium",
+      "niche": "Saude"
+    },
+    {
+      "i": 15,
+      "src": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=800&auto=format&fit=crop",
+      "alt": "Estetica e Saude",
+      "niche": "Saude"
+    },
+    {
+      "i": 16,
+      "src": "https://images.unsplash.com/photo-1588776814546-1ffbb172d0c8?q=80&w=800&auto=format&fit=crop",
+      "alt": "Clinica Odontologica Premium",
+      "niche": "Saude"
+    },
+    {
+      "i": 17,
+      "src": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=800&auto=format&fit=crop",
+      "alt": "Dermatologia Skincare",
+      "niche": "Saude"
+    },
+    {
+      "i": 18,
+      "src": "https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=800&auto=format&fit=crop",
+      "alt": "Resort Lounge",
+      "niche": "Hotelaria"
+    },
+    {
+      "i": 19,
+      "src": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=800&auto=format&fit=crop",
+      "alt": "Luxury Hotel Lobby",
+      "niche": "Hotelaria"
+    },
+    {
+      "i": 20,
+      "src": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=800&auto=format&fit=crop",
+      "alt": "Boutique Hotel Room",
+      "niche": "Hotelaria"
+    },
+    {
+      "i": 21,
+      "src": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop",
+      "alt": "Infinity Pool Luxury",
+      "niche": "Hotelaria"
+    },
+    {
+      "i": 22,
+      "src": "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=800&auto=format&fit=crop",
+      "alt": "Vivara Relogio Luxo",
+      "niche": "Moda"
+    },
+    {
+      "i": 23,
+      "src": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop",
+      "alt": "Joalheria Premium",
+      "niche": "Moda"
+    },
+    {
+      "i": 24,
+      "src": "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=800&auto=format&fit=crop",
+      "alt": "Luxury Timepiece Collection",
+      "niche": "Moda"
+    },
+    {
+      "i": 25,
+      "src": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=800&auto=format&fit=crop",
+      "alt": "Moda Fashion Brand",
+      "niche": "Moda"
+    },
+    {
+      "i": 26,
+      "src": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?q=80&w=800&auto=format&fit=crop",
+      "alt": "Eyewear Luxury Brand",
+      "niche": "Moda"
+    },
+    {
+      "i": 27,
+      "src": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop",
+      "alt": "Streetwear Sneaker Culture",
+      "niche": "Moda"
+    },
+    {
+      "i": 28,
+      "src": "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=800&auto=format&fit=crop",
+      "alt": "Wine Bar Premium",
+      "niche": "Bebidas"
+    },
+    {
+      "i": 29,
+      "src": "https://images.unsplash.com/photo-1559526324-593bc073d938?q=80&w=800&auto=format&fit=crop",
+      "alt": "Craft Brewery Branding",
+      "niche": "Bebidas"
+    },
+    {
+      "i": 30,
+      "src": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=800&auto=format&fit=crop",
+      "alt": "Cocktail Bar Luxury",
+      "niche": "Bebidas"
+    },
+    {
+      "i": 31,
+      "src": "https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?q=80&w=800&auto=format&fit=crop",
+      "alt": "Nightlife Club Design",
+      "niche": "Bebidas"
+    },
+    {
+      "i": 32,
+      "src": "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=800&auto=format&fit=crop",
+      "alt": "Sushi Restaurant Premium",
+      "niche": "Culinaria"
+    },
+    {
+      "i": 33,
+      "src": "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=800&auto=format&fit=crop",
+      "alt": "Patisserie Confeitaria",
+      "niche": "Culinaria"
+    },
+    {
+      "i": 34,
+      "src": "https://images.unsplash.com/photo-1498654896293-37aaa39c8afc?q=80&w=800&auto=format&fit=crop",
+      "alt": "Healthy Organic Food",
+      "niche": "Culinaria"
+    },
+    {
+      "i": 35,
+      "src": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop",
+      "alt": "Fitness Studio Gym",
+      "niche": "Fitness"
+    },
+    {
+      "i": 36,
+      "src": "https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=800&auto=format&fit=crop",
+      "alt": "Yoga Wellness Studio",
+      "niche": "Fitness"
+    },
+    {
+      "i": 37,
+      "src": "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800&auto=format&fit=crop",
+      "alt": "Premium Barbershop",
+      "niche": "Beleza"
+    },
+    {
+      "i": 38,
+      "src": "https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=800&auto=format&fit=crop",
+      "alt": "Beauty Salon Nail Art",
+      "niche": "Beleza"
+    },
+    {
+      "i": 39,
+      "src": "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?q=80&w=800&auto=format&fit=crop",
+      "alt": "Luxury Car Automotive",
+      "niche": "Automotivo"
+    },
+    {
+      "i": 40,
+      "src": "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=800&auto=format&fit=crop",
+      "alt": "Sports Car Performance",
+      "niche": "Automotivo"
+    },
+    {
+      "i": 41,
+      "src": "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?q=80&w=800&auto=format&fit=crop",
+      "alt": "Photography Studio",
+      "niche": "Arte"
+    },
+    {
+      "i": 42,
+      "src": "https://images.unsplash.com/photo-1561839561-b13bcfe21fe1?q=80&w=800&auto=format&fit=crop",
+      "alt": "Art Gallery Exposicao",
+      "niche": "Arte"
+    },
+    {
+      "i": 43,
+      "src": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=800&auto=format&fit=crop",
+      "alt": "Music Recording Studio",
+      "niche": "Arte"
+    },
+    {
+      "i": 44,
+      "src": "https://images.unsplash.com/photo-1510627489930-0c1b0bfb6785?q=80&w=800&auto=format&fit=crop",
+      "alt": "Brutalist Architecture",
+      "niche": "Arte"
+    },
+    {
+      "i": 45,
+      "src": "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop",
+      "alt": "Coworking Space Design",
+      "niche": "Corporativo"
+    },
+    {
+      "i": 46,
+      "src": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=800&auto=format&fit=crop",
+      "alt": "Tech Startup Office",
+      "niche": "Corporativo"
+    },
+    {
+      "i": 47,
+      "src": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=800&auto=format&fit=crop",
+      "alt": "Law Firm Advocacia Premium",
+      "niche": "Corporativo"
+    },
+    {
+      "i": 48,
+      "src": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=800&auto=format&fit=crop",
+      "alt": "Wealth Management Finance",
+      "niche": "Corporativo"
+    },
+    {
+      "i": 49,
+      "src": "https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=800&auto=format&fit=crop",
+      "alt": "E-learning Platform",
+      "niche": "Tecnologia"
+    },
+    {
+      "i": 50,
+      "src": "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=800&auto=format&fit=crop",
+      "alt": "Tech Product App UI",
+      "niche": "Tecnologia"
+    },
+    {
+      "i": 51,
+      "src": "https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=800&auto=format&fit=crop",
+      "alt": "Smart Home Automation",
+      "niche": "Tecnologia"
+    },
+    {
+      "i": 52,
+      "src": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=800&auto=format&fit=crop",
+      "alt": "Wedding Casamento Luxo",
+      "niche": "Eventos"
+    },
+    {
+      "i": 53,
+      "src": "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop",
+      "alt": "Event Planning Design",
+      "niche": "Eventos"
+    },
+    {
+      "i": 54,
+      "src": "https://images.unsplash.com/photo-1587300003388-59208cc962cb?q=80&w=800&auto=format&fit=crop",
+      "alt": "Pet Shop Clinica Vet",
+      "niche": "Pets"
+    },
+    {
+      "i": 55,
+      "src": "https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=800&auto=format&fit=crop",
+      "alt": "Outdoor Adventure Sports",
+      "niche": "Esportes"
+    },
+    {
+      "i": 56,
+      "src": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop",
+      "alt": "Surf Beach Lifestyle",
+      "niche": "Esportes"
+    },
+    {
+      "i": 57,
+      "src": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=800&auto=format&fit=crop",
+      "alt": "Luxury Penthouse Real Estate",
+      "niche": "Imoveis"
+    },
+    {
+      "i": 58,
+      "src": "https://images.unsplash.com/photo-1486325212027-8081e485255e?q=80&w=800&auto=format&fit=crop",
+      "alt": "Industrial Architecture Design",
+      "niche": "Imoveis"
+    },
+    {
+      "i": 59,
+      "src": "https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?q=80&w=800&auto=format&fit=crop",
+      "alt": "Luxury Yacht Marine Brand",
+      "niche": "Nautico"
+    }
+  ],
+  "total": 60
+}
