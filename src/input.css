@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 /* ================================================================
    SLOW FLOW STUDIO — DARK MODE FOUNDATION (Tailwind v4)
@@ -119,7 +119,7 @@ body {
   will-change: transform, opacity;
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
-  animation: halfPipe 2.25s linear infinite;
+  animation: 9s linear infinite halfPipe;
   animation-delay: calc(var(--i) * -0.15s);
   transition: box-shadow 0.3s ease;
   transform-origin: center center;
@@ -141,7 +141,7 @@ body {
     rgba(255,255,255,0) 100%
   );
   transform: skewX(-20deg);
-  animation: luxuryGlint 2.25s linear infinite;
+  animation: 9s linear infinite luxuryGlint;
   animation-delay: calc(var(--i) * -0.15s);
   pointer-events: none;
   z-index: 2;
