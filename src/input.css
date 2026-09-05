@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 /* ================================================================
    SLOW FLOW STUDIO — ULTRA PERFORMANCE GPU DARK MODE (Tailwind v4)
@@ -352,19 +352,72 @@ body.lightbox-active .halo-card::after {
   transform: translateY(-2px);
 }
 
-/* ── MOBILE ── */
+/* ── EDITORIAL GRIDS ── */
+.editorial-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+}
+
+.editorial-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+/* ── MOBILE / 9:16 APP FORMAT OPTIMIZATIONS ── */
 @media (max-width: 1024px) {
-  .halo-card {
-    width: 48vw;
-    height: 27vw;
-    margin-top: -13.5vw;
-    margin-left: -24vw;
+  .world-container {
+    perspective: 900px;
   }
-  .corner-text { font-size: 7px; }
-  .top-left    { top: 1.5rem; left: 1.5rem; }
-  .top-right   { top: 1.5rem; right: 1.5rem; }
-  .bottom-left { bottom: 1.5rem; left: 1.5rem; }
-  .bottom-right{ bottom: 1.5rem; right: 1.5rem; }
-  .center-logo-3d { left: -50vw; width: 100vw; top: -42vh; }
-  .center-logo-3d svg { width: 100vw !important; height: auto; }
+
+  /* 9:16 vertical mobile: card perfeitamente centralizado no eixo X */
+  .halo-card {
+    width: 62vw;
+    height: 35vw;
+    margin-top: -17.5vw;
+    margin-left: -31vw;
+    border-radius: 8px;
+  }
+
+  .corner-text { font-size: 7.5px; }
+  .top-left    { top: 1.2rem; left: 1.2rem; }
+  .top-right   { top: 1.2rem; right: 1.2rem; }
+  .bottom-left { bottom: 1.2rem; left: 1.2rem; }
+  .bottom-right{ bottom: 1.2rem; right: 1.2rem; }
+
+  .center-logo-3d {
+    left: -50vw;
+    width: 100vw;
+    top: -30vh;
+  }
+  .center-logo-3d svg {
+    width: 92vw !important;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+  }
+
+  /* Ajuste responsivo dos textos e grids editoriais */
+  .editorial-section {
+    padding: 5rem 1.5rem !important;
+    min-height: auto;
+  }
+
+  .editorial-grid-2 {
+    grid-template-columns: 1fr !important;
+    gap: 3rem !important;
+  }
+
+  .editorial-grid-3 {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .editorial-grid-3 > div {
+    border-left: none !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 2rem 1.5rem !important;
+  }
 }
