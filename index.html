@@ -68,12 +68,11 @@
     /* ── THE MASSIVE ANCHORED LOGO ── */
     .center-logo-3d {
       position: absolute;
-      width: 80vw; height: 40vh;
-      /* Anchored top-center as requested in the sketch */
-      left: -40vw; top: -35vh;
+      width: 90vw; height: 45vh;
+      /* Enlarged and shifted down slightly to balance negative space */
+      left: -45vw; top: -25vh;
       transform-style: preserve-3d;
       pointer-events: none;
-      /* Subliminal Heartbeat Pulse */
       animation: fluidText 3s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 10;
     }
@@ -92,10 +91,10 @@
       background: #000; overflow: hidden; border-radius: 4px;
       cursor: pointer;
       
-      /* The continuous Skate Track Pendulum Flow */
-      animation: halfPipe 6s linear infinite;
-      /* Spread 15 cards perfectly evenly across the 6s loop (15 * 0.4s = 6s) */
-      animation-delay: calc(var(--i) * -0.4s);
+      /* High-Velocity Pendulum Flow (Faster) */
+      animation: halfPipe 4.5s linear infinite;
+      /* 15 cards spread perfectly across 4.5s loop (15 * 0.3s = 4.5s) */
+      animation-delay: calc(var(--i) * -0.3s);
       
       transition: box-shadow 0.3s ease;
       transform-origin: center center;
@@ -109,13 +108,12 @@
       background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
       transform: skewX(-20deg);
       
-      animation: luxuryGlint 6s linear infinite;
-      animation-delay: calc(var(--i) * -0.4s);
+      animation: luxuryGlint 4.5s linear infinite;
+      animation-delay: calc(var(--i) * -0.3s);
       pointer-events: none;
       z-index: 2;
     }
 
-    /* Glint strikes exactly at 50% (Apex of the track) */
     @keyframes luxuryGlint {
       0%, 46% { left: -150%; opacity: 0; }
       47% { opacity: 1; }
@@ -124,47 +122,42 @@
       54%, 100% { left: 200%; opacity: 0; }
     }
 
-    /* ── EXACT CARTESIAN HALF-PIPE (THE RED SKETCH) ── */
-    /* 
-       0%: Vanish Top-Left
-       50%: Climax Bottom-Center
-       100%: Vanish Top-Right
-    */
+    /* ── EXACT CARTESIAN HALF-PIPE (Lifted and Widened) ── */
     @keyframes halfPipe {
-      /* Spawn Top Left (Vanishing Point) */
+      /* Spawn completely off-screen left, far back */
       0% {
-        transform: translate3d(-70vw, -30vh, -100vw) rotateZ(-30deg) rotateY(60deg) rotateX(20deg) scale(0.4);
+        transform: translate3d(-100vw, -10vh, -150vw) rotateZ(-30deg) rotateY(60deg) rotateX(20deg) scale(0.4);
         opacity: 0; filter: blur(12px) brightness(0.2) grayscale(80%);
       }
-      /* Dropping into the track */
+      /* Swooping into view */
       15% {
-        transform: translate3d(-55vw, -10vh, -60vw) rotateZ(-20deg) rotateY(45deg) rotateX(15deg) scale(0.65);
-        opacity: 0.4; filter: blur(6px) brightness(0.5) grayscale(50%);
+        transform: translate3d(-60vw, 5vh, -60vw) rotateZ(-20deg) rotateY(45deg) rotateX(15deg) scale(0.7);
+        opacity: 0.5; filter: blur(6px) brightness(0.5) grayscale(40%);
       }
-      /* Accelerating downwards */
+      /* Approaching center */
       30% {
-        transform: translate3d(-35vw, 15vh, -20vw) rotateZ(-10deg) rotateY(25deg) rotateX(10deg) scale(1);
-        opacity: 0.8; filter: blur(2px) brightness(0.8) grayscale(20%);
+        transform: translate3d(-30vw, 15vh, 0vw) rotateZ(-10deg) rotateY(25deg) rotateX(10deg) scale(1.1);
+        opacity: 0.9; filter: blur(1px) brightness(0.9) grayscale(10%);
       }
-      /* APEX - Front Center (Massive, High Res, Zero Blur) */
+      /* APEX - Front Center (Lifted up to 20vh to stay 100% visible on screen) */
       50% {
-        transform: translate3d(0vw, 35vh, 25vw) rotateZ(0deg) rotateY(0deg) rotateX(0deg) scale(1.6);
+        transform: translate3d(0vw, 20vh, 25vw) rotateZ(0deg) rotateY(0deg) rotateX(0deg) scale(1.5);
         opacity: 1; filter: blur(0px) brightness(1.2) grayscale(0%);
         box-shadow: 0 40px 100px rgba(0,0,0,0.8);
       }
-      /* Climbing the right wall */
+      /* Sweeping right */
       70% {
-        transform: translate3d(35vw, 15vh, -20vw) rotateZ(10deg) rotateY(-25deg) rotateX(10deg) scale(1);
-        opacity: 0.8; filter: blur(2px) brightness(0.8) grayscale(20%);
+        transform: translate3d(30vw, 15vh, 0vw) rotateZ(10deg) rotateY(-25deg) rotateX(10deg) scale(1.1);
+        opacity: 0.9; filter: blur(1px) brightness(0.9) grayscale(10%);
       }
-      /* Fading towards exit */
+      /* Exiting view */
       85% {
-        transform: translate3d(55vw, -10vh, -60vw) rotateZ(20deg) rotateY(-45deg) rotateX(15deg) scale(0.65);
-        opacity: 0.4; filter: blur(6px) brightness(0.5) grayscale(50%);
+        transform: translate3d(60vw, 5vh, -60vw) rotateZ(20deg) rotateY(-45deg) rotateX(15deg) scale(0.7);
+        opacity: 0.5; filter: blur(6px) brightness(0.5) grayscale(40%);
       }
-      /* Vanish Top Right (Vanishing Point) */
+      /* Vanish completely off-screen right */
       100% {
-        transform: translate3d(70vw, -30vh, -100vw) rotateZ(30deg) rotateY(-60deg) rotateX(20deg) scale(0.4);
+        transform: translate3d(100vw, -10vh, -150vw) rotateZ(30deg) rotateY(-60deg) rotateX(20deg) scale(0.4);
         opacity: 0; filter: blur(12px) brightness(0.2) grayscale(80%);
       }
     }
@@ -196,8 +189,8 @@
       .bottom-left { bottom: 1.5rem; left: 1.5rem; } .bottom-right { bottom: 1.5rem; right: 1.5rem; }
       
       /* Scale the anchored logo for mobile width */
-      .center-logo-3d svg { width: 95vw !important; height: auto; }
-      .center-logo-3d { left: -47.5vw; width: 95vw; top: -30vh; }
+      .center-logo-3d svg { width: 100vw !important; height: auto; }
+      .center-logo-3d { left: -50vw; width: 100vw; top: -20vh; }
     }
 
     /* ── LIGHTBOX ── */
