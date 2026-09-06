@@ -124,9 +124,9 @@ body {
   -webkit-backface-visibility: hidden;
   contain: layout paint;
 
-  /* 60 cards em loop cinematografico com inclinacao 3D */
-  animation: 0.6s linear infinite halfPipe;
-  animation-delay: calc(var(--i) * -0.01s);
+  /* 60 cards em loop cinematografico ultra-rapido com close-up */
+  animation: 0.42s linear infinite halfPipe;
+  animation-delay: calc(var(--i) * -0.007s);
   transform-origin: center center;
   z-index: 5;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -153,61 +153,67 @@ body {
     rgba(255,255,255,0) 100%
   );
   transform: translate3d(-150%, 0, 0) skewX(-20deg);
-  animation: 0.6s linear infinite luxuryGlint;
-  animation-delay: calc(var(--i) * -0.01s);
+  animation: 0.42s linear infinite luxuryGlint;
+  animation-delay: calc(var(--i) * -0.007s);
   pointer-events: none;
   z-index: 2;
   will-change: transform, opacity;
 }
 
 @keyframes luxuryGlint {
-  0%, 46% {
+  0%, 44% {
     transform: translate3d(-150%, 0, 0) skewX(-20deg);
     opacity: 0;
   }
-  47% { opacity: 0.7; }
+  48% { opacity: 0.75; }
   50% {
     transform: translate3d(100%, 0, 0) skewX(-20deg);
     opacity: 0.95;
   }
-  53% { opacity: 0.7; }
-  54%, 100% {
+  52% { opacity: 0.75; }
+  56%, 100% {
     transform: translate3d(250%, 0, 0) skewX(-20deg);
     opacity: 0;
   }
 }
 
-/* ── TRACK 3D — VINDO DO FUNDO LA COM INCLINACAO TOTAL ── */
+/* ── TRACK 3D — VINDO DO FUNDO LA COM INCLINACAO TOTAL E CLOSE-UP COM SOBREPOSICAO ── */
 @keyframes halfPipe {
   0% {
-    transform: translate3d(-100vw, -10vh, -150vw) rotateZ(-30deg) rotateY(60deg) rotateX(20deg) scale(0.4);
+    transform: translate3d(-100vw, -12vh, -150vw) rotateZ(-32deg) rotateY(60deg) rotateX(20deg) scale(0.35);
     opacity: 0;
+    z-index: 1;
   }
-  15% {
-    transform: translate3d(-60vw, 5vh, -60vw) rotateZ(-20deg) rotateY(45deg) rotateX(15deg) scale(0.7);
-    opacity: 0.6;
+  18% {
+    transform: translate3d(-62vw, 3vh, -65vw) rotateZ(-22deg) rotateY(45deg) rotateX(15deg) scale(0.68);
+    opacity: 0.65;
+    z-index: 5;
   }
-  30% {
-    transform: translate3d(-30vw, 15vh, 0vw) rotateZ(-10deg) rotateY(25deg) rotateX(10deg) scale(1.05);
-    opacity: 0.9;
+  34% {
+    transform: translate3d(-30vw, 13vh, -12vw) rotateZ(-12deg) rotateY(24deg) rotateX(10deg) scale(1.1);
+    opacity: 0.88;
+    z-index: 15;
   }
   50% {
-    transform: translate3d(0vw, 28vh, 25vw) rotateZ(0deg) rotateY(0deg) rotateX(0deg) scale(1.35);
+    /* CLOSE-UP EM PRIMEIRO PLANO: Salta na frente sobrepondo os outros cards com efeito */
+    transform: translate3d(0vw, 22vh, 45vw) rotateZ(0deg) rotateY(0deg) rotateX(0deg) scale(1.75);
     opacity: 1;
-    filter: brightness(1.2);
-    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9);
+    z-index: 60;
   }
-  70% {
-    transform: translate3d(30vw, 15vh, 0vw) rotateZ(10deg) rotateY(-25deg) rotateX(10deg) scale(1.05);
-    opacity: 0.9;
+  66% {
+    transform: translate3d(30vw, 13vh, -12vw) rotateZ(12deg) rotateY(-24deg) rotateX(10deg) scale(1.1);
+    opacity: 0.88;
+    z-index: 15;
   }
-  85% {
-    transform: translate3d(60vw, 5vh, -60vw) rotateZ(20deg) rotateY(-45deg) rotateX(15deg) scale(0.7);
-    opacity: 0.6;
+  82% {
+    transform: translate3d(62vw, 3vh, -65vw) rotateZ(22deg) rotateY(-45deg) rotateX(15deg) scale(0.68);
+    opacity: 0.65;
+    z-index: 5;
   }
   100% {
-    transform: translate3d(100vw, -10vh, -150vw) rotateZ(30deg) rotateY(-60deg) rotateX(20deg) scale(0.4);
+    transform: translate3d(100vw, -12vh, -150vw) rotateZ(32deg) rotateY(-60deg) rotateX(20deg) scale(0.35);
     opacity: 0;
+    z-index: 1;
   }
 }
 
@@ -382,22 +388,61 @@ body.lightbox-active .halo-card::after {
     contain: strict;
   }
 
+  @keyframes halfPipeMobile {
+    0% {
+      transform: translate3d(-90vw, -8vh, -120vw) rotateZ(-28deg) rotateY(55deg) rotateX(18deg) scale(0.4);
+      opacity: 0;
+      z-index: 1;
+    }
+    18% {
+      transform: translate3d(-55vw, 4vh, -50vw) rotateZ(-18deg) rotateY(40deg) rotateX(12deg) scale(0.7);
+      opacity: 0.7;
+      z-index: 5;
+    }
+    34% {
+      transform: translate3d(-26vw, 14vh, -8vw) rotateZ(-9deg) rotateY(20deg) rotateX(8deg) scale(1.1);
+      opacity: 0.9;
+      z-index: 15;
+    }
+    50% {
+      /* CLOSE-UP CINEMATOGRAFICO MOBILE: Salta na frente sobrepondo com efeito */
+      transform: translate3d(0vw, 22vh, 32vw) rotateZ(0deg) rotateY(0deg) rotateX(0deg) scale(1.55);
+      opacity: 1;
+      z-index: 60;
+    }
+    66% {
+      transform: translate3d(26vw, 14vh, -8vw) rotateZ(9deg) rotateY(-20deg) rotateX(8deg) scale(1.1);
+      opacity: 0.9;
+      z-index: 15;
+    }
+    82% {
+      transform: translate3d(55vw, 4vh, -50vw) rotateZ(18deg) rotateY(-40deg) rotateX(12deg) scale(0.7);
+      opacity: 0.7;
+      z-index: 5;
+    }
+    100% {
+      transform: translate3d(90vw, -8vh, -120vw) rotateZ(28deg) rotateY(-55deg) rotateX(18deg) scale(0.4);
+      opacity: 0;
+      z-index: 1;
+    }
+  }
+
   /* 9:16 vertical mobile: 60 cards perfeitamente sincronizados na GPU */
   .halo-card {
-    animation: 0.6s linear infinite halfPipe !important;
-    animation-delay: calc(var(--i) * -0.01s) !important;
-    width: 58vw;
-    height: 33vw;
-    margin-top: -16.5vw;
-    margin-left: -29vw;
+    animation: 0.42s linear infinite halfPipeMobile !important;
+    animation-delay: calc(var(--i) * -0.007s) !important;
+    width: 52vw;
+    height: 30vw;
+    margin-top: -15vw;
+    margin-left: -26vw;
     border-radius: 8px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6) !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7) !important;
     border: 1px solid rgba(255, 255, 255, 0.16) !important;
   }
 
   .halo-card::after {
-    animation: 0.6s linear infinite luxuryGlint !important;
-    animation-delay: calc(var(--i) * -0.01s) !important;
+    animation: 0.42s linear infinite luxuryGlint !important;
+    animation-delay: calc(var(--i) * -0.007s) !important;
   }
 
   .corner-text { font-size: 7.5px; }

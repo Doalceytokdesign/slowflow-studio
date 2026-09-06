@@ -21,8 +21,8 @@ PORT        = 3000
 # ── CALIBRACAO DE VELOCIDADE FLASH CINEMATOGRAFICA ─────────────────────────
 # 60 cards x 0.01s (10ms por frame) = 0.6s por ciclo completo
 # 60 frames com profundidade 3D, inclinacao e glint estroboscopico
-CARD_DURATION = "0.6s"
-CARD_DELAY    = "0.01s"
+CARD_DURATION = "0.42s"
+CARD_DELAY    = "0.007s"
 
 def load_images():
     with open(DATA_FILE, "r", encoding="utf-8") as f:
