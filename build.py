@@ -52,7 +52,7 @@ def render_cards(images):
         )
     return "\n".join(lines)
 
-def render_html(images):
+def render_html(images, inline_css=""):
     cards_html = render_cards(images)
     now = datetime.now().strftime("%Y")
     template = """<!DOCTYPE html>
@@ -72,22 +72,20 @@ def render_html(images):
 
   <title>Slow Flow — Digital Ecosystems</title>
 
-  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-  <link rel="dns-prefetch" href="https://images.unsplash.com">
+  <!-- Preload dos primeiros 3 frames para abertura em 0ms no celular -->
+  <link rel="preload" as="image" href="assets/cards/card_00.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/cards/card_01.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/cards/card_02.webp" type="image/webp" fetchpriority="high">
+
+  <!-- Fontes assincronas nao-bloqueadoras -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="dist/output.css">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" media="print" onload="this.media='all'">
 
+  <!-- CSS Inlinado com Zero Round-trip HTTP: Abre no primeiro clique -->
   <style>
-    html, body {
-      background: #0a0a0a !important;
-      background-color: #0a0a0a !important;
-      background-image: none !important;
-      color: #f0f0f0 !important;
-      margin: 0;
-    }
-    .world-container { background: #0a0a0a !important; }
+{{INLINE_CSS}}
   </style>
 </head>
 <body style="background:#0a0a0a !important; background-image:none !important;">
@@ -348,7 +346,7 @@ def render_html(images):
   </script>
 </body>
 </html>"""
-    return template.replace("{{CARDS_HTML}}", cards_html).replace("{{YEAR}}", now)
+    return template.replace("{{CARDS_HTML}}", cards_html).replace("{{YEAR}}", now).replace("{{INLINE_CSS}}", inline_css)
 
 def build_css():
     print("  Compilando Tailwind CSS com aceleracao GPU...")
@@ -385,11 +383,15 @@ def main():
     images = load_images()
     print(f"  Imagens carregadas: {len(images)} em {len(set(x['niche'] for x in images))} nichos")
 
-    html = render_html(images)
-    OUTPUT_HTML.write_text(html, encoding="utf-8")
-    print(f"  HTML gerado: index.html ({len(html):,} bytes)")
-
     css_ok = build_css()
+    inline_css = ""
+    if css_ok and CSS_OUTPUT.exists():
+        inline_css = CSS_OUTPUT.read_text(encoding="utf-8")
+
+    html = render_html(images, inline_css)
+    OUTPUT_HTML.write_text(html, encoding="utf-8")
+    print(f"  HTML gerado com CSS Inlinado: index.html ({len(html):,} bytes)")
+
     if css_ok:
         print(f"\n  [OK] Build concluido com sucesso!")
         print(f"  Loop: {CARD_DURATION} | Delay por frame: {CARD_DELAY}")
