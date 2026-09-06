@@ -2,19 +2,19 @@
   "images": [
     {
       "i": 0,
-      "src": "assets/tok-design-logo.png",
+      "src": "assets/tok-design-logo.webp",
       "alt": "Tok Design Identidade Visual",
       "niche": "Branding"
     },
     {
       "i": 1,
-      "src": "assets/loja-tiradentes.png",
+      "src": "assets/loja-tiradentes.webp",
       "alt": "Satto Tiradentes Retail",
       "niche": "Branding"
     },
     {
       "i": 2,
-      "src": "assets/loja-solo.png",
+      "src": "assets/loja-solo.webp",
       "alt": "Satto Solo Visual Identity",
       "niche": "Branding"
     },
@@ -38,19 +38,19 @@
     },
     {
       "i": 6,
-      "src": "assets/casa-concreto.png",
+      "src": "assets/casa-concreto.webp",
       "alt": "Architecture Concrete House",
       "niche": "Arquitetura"
     },
     {
       "i": 7,
-      "src": "assets/cozinha-luxo.png",
+      "src": "assets/cozinha-luxo.webp",
       "alt": "Cozinha de Luxo Dark",
       "niche": "Arquitetura"
     },
     {
       "i": 8,
-      "src": "assets/restaurante-madeira.png",
+      "src": "assets/restaurante-madeira.webp",
       "alt": "Restaurante Arquitetura",
       "niche": "Arquitetura"
     },

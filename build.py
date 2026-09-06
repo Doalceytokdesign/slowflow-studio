@@ -30,16 +30,25 @@ def load_images():
     return data["images"]
 
 def render_cards(images):
-    lines = ["      <!-- ===== 60 CARDS CINEMATOGRAFICOS (100% GPU COMPOSITED) ===== -->"]
+    lines = ["      <!-- ===== 60 CARDS CINEMATOGRAFICOS (ULTRA INSTANT HYDRATION) ===== -->"]
     for img in images:
         i, src, alt = img["i"], img["src"], img["alt"]
         niche = img.get("niche", "Design")
-        priority = 'fetchpriority="high"' if i < 15 else 'fetchpriority="low"'
+        if i < 15:
+            # Primeiros 15 frames baixados imediatamente para inicializacao instantanea
+            img_tag = (
+                f'<img src="{src}" alt="{alt}" loading="eager" decoding="async" fetchpriority="high" '
+                f'onerror="this.onerror=null;this.src=\'assets/casa-concreto.webp\';">'
+            )
+        else:
+            # Frames 15-59 hidratados em segundo plano apos o primeiro frame renderizar
+            img_tag = (
+                f'<img src="" data-src="{src}" alt="{alt}" loading="lazy" decoding="async" '
+                f'onerror="this.onerror=null;this.src=\'assets/casa-concreto.webp\';">'
+            )
         lines.append(
             f'      <div class="halo-card" style="--i:{i}" onclick="openLightbox(this)" '
-            f'data-niche="{niche}" data-alt="{alt}" title="{niche}">'
-            f'<img src="{src}" alt="{alt}" loading="eager" decoding="async" {priority} '
-            f'onerror="this.onerror=null;this.src=\'assets/casa-concreto.png\';"></div>'
+            f'data-niche="{niche}" data-alt="{alt}" title="{niche}">{img_tag}</div>'
         )
     return "\n".join(lines)
 
@@ -182,7 +191,7 @@ def render_html(images):
             style="width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.7s,transform 0.7s;"
             onmouseover="this.style.filter='grayscale(0%)';this.style.transform='scale(1.05)';"
             onmouseout="this.style.filter='grayscale(100%)';this.style.transform='scale(1)';"
-            onerror="this.onerror=null;this.src='assets/casa-concreto.png';">
+            onerror="this.onerror=null;this.src='assets/casa-concreto.webp';">
         </div>
       </div>
     </div>
@@ -201,7 +210,7 @@ def render_html(images):
             style="width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.7s,transform 0.7s;"
             onmouseover="this.style.filter='grayscale(0%)';this.style.transform='scale(1.05)';"
             onmouseout="this.style.filter='grayscale(100%)';this.style.transform='scale(1)';"
-            onerror="this.onerror=null;this.src='assets/cozinha-luxo.png';">
+            onerror="this.onerror=null;this.src='assets/cozinha-luxo.webp';">
         </div>
         <div>
           <span class="editorial-label" style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.12em;display:block;margin-bottom:1.2rem;">
@@ -317,18 +326,24 @@ def render_html(images):
       if (e.key === "Escape") closeLightbox();
     });
 
-    // Mobile Acceleration & Instant Paint
+    // Ultra Instant Mobile Hydration Engine
     window.addEventListener('DOMContentLoaded', () => {
-      // Força o navegador a acordar os frames imediatamente
-      const cards = document.querySelectorAll('.halo-card');
-      cards.forEach((card, idx) => {
-        if (idx < 12) {
-          const img = card.querySelector('img');
-          if (img && img.complete) {
-            card.style.opacity = '1';
-          }
-        }
-      });
+      const deferred = document.querySelectorAll('.halo-card img[data-src]');
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => {
+          deferred.forEach(img => {
+            const src = img.getAttribute('data-src');
+            if (src) img.src = src;
+          });
+        }, { timeout: 600 });
+      } else {
+        setTimeout(() => {
+          deferred.forEach(img => {
+            const src = img.getAttribute('data-src');
+            if (src) img.src = src;
+          });
+        }, 200);
+      }
     });
   </script>
 </body>
