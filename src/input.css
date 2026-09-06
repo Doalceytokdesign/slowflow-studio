@@ -103,124 +103,174 @@ body {
   100% { transform: translateZ(-30vw) scale(1.03); opacity: 1; }
 }
 
-/* ── 12 HALO CARDS CINEMATOGRAFICOS (PERFEITA DEFINICAO SEM SOBREPOSICAO) ── */
+/* ── HERO FLASH STAGE (ZERO SOBREPOSIÇÃO • FLASH EM LOOP FRAME-A-FRAME) ── */
+.hero-flash-stage {
+  position: absolute;
+  width: 520px;
+  height: 292px;
+  left: -260px;
+  top: 7vh;
+  transform-style: preserve-3d;
+  z-index: 15;
+}
+
 .halo-card {
   position: absolute;
-  width: 34vh;
-  height: 19vh;
-  margin-top: -9.5vh;
-  margin-left: -17vh;
-  background: linear-gradient(135deg, #1c1c1c 0%, #0d0d0d 100%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #181818 0%, #0d0d0d 100%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   overflow: hidden;
   border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75);
-
-  /* Aceleracao de hardware 100% GPU sem re-rasterizacao */
-  will-change: transform, opacity;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  contain: layout paint;
-
-  /* Flash loop stroboscopico sincronizado de alta definicao */
-  animation: 1.8s linear infinite halfPipe;
-  animation-delay: calc(var(--i) * -0.15s);
-  transform-origin: center center;
-  z-index: 5;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-/* Garante apenas 12 cards ativos no loop estroboscopico para eliminar sobreposicao */
-.halo-card:nth-child(n+13) {
-  display: none !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: scale(0.97) translateZ(0);
+  transition: opacity 0.12s ease-out, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s;
+  will-change: opacity, transform, filter;
+  z-index: 1;
 }
 
 .halo-card:hover {
   border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 35px 80px rgba(0, 0, 0, 0.95);
 }
 
-/* Glint de luxo acelerado por transform na GPU — efeito flash no centro */
-.halo-card::after {
+.halo-card.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: scale(1) translateZ(10px);
+  z-index: 10;
+  animation: flashStrobe 0.35s ease-out;
+}
+
+@keyframes flashStrobe {
+  0% {
+    filter: brightness(1.65) contrast(1.1);
+    transform: scale(1.025);
+  }
+  25% {
+    filter: brightness(1.2);
+  }
+  100% {
+    filter: brightness(1);
+    transform: scale(1);
+  }
+}
+
+/* Glint de luxo no instante do flash entre frames */
+.halo-card.active::after {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
-  width: 60%;
+  width: 100%;
   height: 100%;
   background: linear-gradient(
-    to right,
-    rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0.7) 50%,
-    rgba(255,255,255,0) 100%
+    105deg,
+    transparent 15%,
+    rgba(255, 255, 255, 0.7) 50%,
+    transparent 85%
   );
-  transform: translate3d(-150%, 0, 0) skewX(-20deg);
-  animation: 1.8s linear infinite luxuryGlint;
-  animation-delay: calc(var(--i) * -0.15s);
+  transform: translate3d(-100%, 0, 0);
+  animation: glintSwipe 0.32s ease-out forwards;
   pointer-events: none;
-  z-index: 2;
-  will-change: transform, opacity;
+  z-index: 3;
 }
 
-@keyframes luxuryGlint {
-  0%, 46% {
-    transform: translate3d(-150%, 0, 0) skewX(-20deg);
-    opacity: 0;
-  }
-  47% { opacity: 0.7; }
-  50% {
-    transform: translate3d(100%, 0, 0) skewX(-20deg);
-    opacity: 0.9;
-  }
-  53% { opacity: 0.7; }
-  54%, 100% {
-    transform: translate3d(250%, 0, 0) skewX(-20deg);
-    opacity: 0;
-  }
+@keyframes glintSwipe {
+  0%   { transform: translate3d(-100%, 0, 0); opacity: 0; }
+  25%  { opacity: 0.95; }
+  100% { transform: translate3d(100%, 0, 0); opacity: 0; }
 }
 
-/* ── TRACK 3D — DEFINICAO ESTROBOSCOPICA FRAME-A-FRAME SEM SOBREPOSICAO ── */
-@keyframes halfPipe {
-  0% {
-    transform: translate3d(-85vw, -6vh, -100vw) rotateZ(-22deg) rotateY(45deg) scale(0.4);
-    opacity: 0;
-  }
-  28% {
-    transform: translate3d(-50vw, 4vh, -50vw) rotateZ(-14deg) rotateY(30deg) scale(0.7);
-    opacity: 0;
-  }
-  36% {
-    opacity: 0.45;
-  }
-  44% {
-    transform: translate3d(-22vw, 15vh, -15vw) rotateZ(-6deg) rotateY(15deg) scale(1.0);
-    opacity: 0.85;
-  }
-  50% {
-    /* HERO MOMENT: Frame em destaque maximo, 100% nitido no centro */
-    transform: translate3d(0vw, 24vh, 22vw) rotateZ(0deg) rotateY(0deg) scale(1.35);
-    opacity: 1;
-    filter: brightness(1.15);
-    z-index: 50;
-  }
-  56% {
-    transform: translate3d(22vw, 15vh, -15vw) rotateZ(6deg) rotateY(-15deg) scale(1.0);
-    opacity: 0.85;
-    z-index: 10;
-  }
-  64% {
-    opacity: 0.45;
-  }
-  72% {
-    transform: translate3d(50vw, 4vh, -50vw) rotateZ(14deg) rotateY(-30deg) scale(0.7);
-    opacity: 0;
-  }
-  100% {
-    transform: translate3d(85vw, -6vh, -100vw) rotateZ(22deg) rotateY(-45deg) scale(0.4);
-    opacity: 0;
-  }
+.halo-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  background: #111;
+}
+
+/* Badge de informacao cinematografica em cada frame */
+.card-meta {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.75rem;
+  background: rgba(10, 10, 10, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.card-meta-niche {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #fff;
+}
+
+.card-meta-title {
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.75);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 65%;
+}
+
+/* Indicador e contador de frames */
+.flash-indicator {
+  position: absolute;
+  bottom: -2.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.1em;
+  user-select: none;
+  pointer-events: none;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+.flash-dots {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.flash-dot {
+  width: 14px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 1px;
+  transition: background 0.2s, width 0.2s;
+}
+
+.flash-dot.active {
+  background: #ffffff;
+  width: 24px;
 }
 
 .halo-card img {
@@ -389,28 +439,41 @@ body.lightbox-active .halo-card::after {
     contain: strict;
   }
 
-  /* 9:16 vertical mobile: 12 cards perfeitamente sincronizados no ciclo de 1.8s (0.15s delay) */
-  .halo-card {
-    animation: 1.8s linear infinite halfPipe !important;
-    animation-delay: calc(var(--i) * -0.15s) !important;
-    width: 62vw;
-    height: 35vw;
-    margin-top: -17.5vw;
-    margin-left: -31vw;
-    border-radius: 8px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6) !important;
-    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  /* 9:16 vertical mobile: Palco centralizado com proporcao 16:9 em tela cheia */
+  .hero-flash-stage {
+    width: 86vw;
+    height: 48.375vw;
+    left: -43vw;
+    top: 5vh;
   }
 
-  /* Desativa os cards 13 a 60 no mobile: reducao instantanea de 80% do peso de GPU */
-  .halo-card:nth-child(n+13) {
-    display: none !important;
+  .card-meta {
+    bottom: 0.5rem;
+    left: 0.5rem;
+    right: 0.5rem;
+    padding: 0.35rem 0.6rem;
   }
 
-  /* Glint sincronizado no celular para o flash do frame central */
-  .halo-card::after {
-    animation: 1.8s linear infinite luxuryGlint !important;
-    animation-delay: calc(var(--i) * -0.15s) !important;
+  .card-meta-niche {
+    font-size: 8px;
+  }
+
+  .card-meta-title {
+    font-size: 9.5px;
+    max-width: 60%;
+  }
+
+  .flash-indicator {
+    bottom: -1.8rem;
+    font-size: 9px;
+  }
+
+  .flash-dot {
+    width: 10px;
+  }
+
+  .flash-dot.active {
+    width: 16px;
   }
 
   .corner-text { font-size: 7.5px; }

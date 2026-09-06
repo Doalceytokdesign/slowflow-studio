@@ -30,18 +30,30 @@ def load_images():
     return data["images"]
 
 def render_cards(images):
-    lines = ["      <!-- ===== 12 CARDS CINEMATOGRAFICOS (FLASH LOOP FRAME-A-FRAME) ===== -->"]
+    lines = [
+        '      <!-- ===== FLASH LOOP FRAME-A-FRAME (ZERO SOBREPOSIÇÃO • DEFINIÇÃO MÁXIMA) ===== -->',
+        '      <div class="hero-flash-stage" id="hero-stage">'
+    ]
     for img in images[:12]:
         i, src, alt = img["i"], img["src"], img["alt"]
         niche = img.get("niche", "Design")
-        img_tag = (
+        active_cls = " active" if i == 0 else ""
+        lines.append(
+            f'        <div class="halo-card{active_cls}" data-i="{i}" onclick="openLightbox(this)" '
+            f'data-niche="{niche}" data-alt="{alt}" title="{niche}">'
             f'<img src="{src}" alt="{alt}" loading="eager" decoding="async" fetchpriority="high" '
             f'onerror="this.onerror=null;this.src=\'assets/editorial-web.webp\';">'
+            f'<div class="card-meta">'
+            f'<span class="card-meta-niche">{niche}</span>'
+            f'<span class="card-meta-title">{alt}</span>'
+            f'</div>'
+            f'</div>'
         )
-        lines.append(
-            f'      <div class="halo-card" style="--i:{i}" onclick="openLightbox(this)" '
-            f'data-niche="{niche}" data-alt="{alt}" title="{niche}">{img_tag}</div>'
-        )
+    lines.append('        <div class="flash-indicator">')
+    lines.append('          <span id="flash-counter">01 / 12</span>')
+    lines.append('          <div class="flash-dots" id="flash-dots"></div>')
+    lines.append('        </div>')
+    lines.append('      </div>')
     return "\n".join(lines)
 
 def render_html(images, inline_css=""):
@@ -327,9 +339,59 @@ def render_html(images, inline_css=""):
       if (e.key === "Escape") closeLightbox();
     });
 
-    // Loop cinematografico 100% pre-carregado em memoria para resposta instantanea
+    // ── FLASH LOOP FRAME-A-FRAME CONTROLLER (ZERO SOBREPOSIÇÃO • DEFINIÇÃO MÁXIMA) ──
+    const cards = Array.from(document.querySelectorAll(".hero-flash-stage .halo-card"));
+    const flashCounter = document.getElementById("flash-counter");
+    const flashDotsContainer = document.getElementById("flash-dots");
+
+    if (flashDotsContainer && cards.length > 0) {
+      flashDotsContainer.innerHTML = cards
+        .map((_, i) => `<span class="flash-dot ${i === 0 ? "active" : ""}"></span>`)
+        .join("");
+    }
+    const flashDots = Array.from(document.querySelectorAll(".flash-dot"));
+
+    let currentFrame = 0;
+    let isPaused = false;
+    const FRAME_DURATION = 420; // 420ms por frame para cadencia estroboscopica de alta definicao
+
+    function setFrame(idx) {
+      cards.forEach((c, i) => {
+        if (i === idx) {
+          c.classList.add("active");
+        } else {
+          c.classList.remove("active");
+        }
+      });
+      if (flashCounter) {
+        const num = String(idx + 1).padStart(2, "0");
+        flashCounter.textContent = `${num} / ${String(cards.length).padStart(2, "0")}`;
+      }
+      flashDots.forEach((d, i) => {
+        d.classList.toggle("active", i === idx);
+      });
+    }
+
+    setFrame(0);
+
+    let flashTimer = setInterval(() => {
+      if (!isPaused && !document.body.classList.contains("lightbox-active")) {
+        currentFrame = (currentFrame + 1) % cards.length;
+        setFrame(currentFrame);
+      }
+    }, FRAME_DURATION);
+
+    const stageEl = document.getElementById("hero-stage");
+    if (stageEl) {
+      stageEl.addEventListener("mouseenter", () => { isPaused = true; });
+      stageEl.addEventListener("mouseleave", () => { isPaused = false; });
+      stageEl.addEventListener("touchstart", () => { isPaused = true; }, { passive: true });
+      stageEl.addEventListener("touchend", () => {
+        setTimeout(() => { isPaused = false; }, 1500);
+      }, { passive: true });
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
-      // 12 frames ativos hidratados e acelerados por hardware nativo
       document.body.classList.add('ready');
     });
   </script>
