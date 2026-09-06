@@ -133,11 +133,10 @@ def render_html(images):
               <stop offset="60%"  stop-color="#ffffff" stop-opacity="0.2"/>
               <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
             </radialGradient>
-            <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
-              <feDropShadow dx="0.4" dy="0.8" stdDeviation="0.8" flood-color="#000000" flood-opacity="0.6"/>
-            </filter>
+            <!-- Sombra vetorizada de alto desempenho: zero processamento de filtro -->
             <pattern id="satinDots" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
-              <circle cx="4" cy="4" r="3.6" fill="url(#pearl)" filter="url(#shadow)"/>
+              <circle cx="4.6" cy="4.8" r="3.6" fill="#000000" opacity="0.45"/>
+              <circle cx="4" cy="4" r="3.6" fill="url(#pearl)"/>
               <circle cx="4" cy="4" r="3.6" fill="url(#sheen)"/>
             </pattern>
           </defs>

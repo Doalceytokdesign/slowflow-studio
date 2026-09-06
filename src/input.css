@@ -366,10 +366,11 @@ body.lightbox-active .halo-card::after {
   gap: 2px;
 }
 
-/* ── MOBILE / 9:16 APP FORMAT OPTIMIZATIONS ── */
+/* ── MOBILE / 9:16 APP FORMAT HIGH-PERFORMANCE ENGINE ── */
 @media (max-width: 1024px) {
   .world-container {
-    perspective: 900px;
+    perspective: 800px;
+    contain: strict;
   }
 
   /* 9:16 vertical mobile: card perfeitamente centralizado no eixo X */
@@ -379,6 +380,13 @@ body.lightbox-active .halo-card::after {
     margin-top: -17.5vw;
     margin-left: -31vw;
     border-radius: 8px;
+    box-shadow: none !important; /* Zero calculo de drop-shadow na GPU movel */
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  }
+
+  /* Desativa pseudo-elemento glint no celular para eliminar overdraw de 120 camadas */
+  .halo-card::after {
+    display: none !important;
   }
 
   .corner-text { font-size: 7.5px; }
@@ -387,10 +395,13 @@ body.lightbox-active .halo-card::after {
   .bottom-left { bottom: 1.2rem; left: 1.2rem; }
   .bottom-right{ bottom: 1.2rem; right: 1.2rem; }
 
+  /* Logo fixado no mobile: libera 100% da GPU para o fluxo dos cards */
   .center-logo-3d {
     left: -50vw;
     width: 100vw;
     top: -30vh;
+    animation: none !important;
+    transform: translateZ(-15vw) !important;
   }
   .center-logo-3d svg {
     width: 92vw !important;
@@ -399,10 +410,12 @@ body.lightbox-active .halo-card::after {
     display: block;
   }
 
-  /* Ajuste responsivo dos textos e grids editoriais */
+  /* Content-visibility auto: o celular nao gasta CPU com o que esta abaixo da dobra */
   .editorial-section {
     padding: 5rem 1.5rem !important;
     min-height: auto;
+    content-visibility: auto;
+    contain-intrinsic-size: 600px;
   }
 
   .editorial-grid-2 {
