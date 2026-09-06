@@ -1,4 +1,4 @@
-﻿const http = require("http");
+const http = require("http");
 const fs   = require("fs");
 const path = require("path");
 
@@ -13,6 +13,7 @@ const MIME = {
   ".jpeg": "image/jpeg",
   ".svg" : "image/svg+xml",
   ".ico" : "image/x-icon",
+  ".webp": "image/webp",
   ".woff2": "font/woff2",
 };
 

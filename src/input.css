@@ -103,19 +103,19 @@ body {
   100% { transform: translateZ(-30vw) scale(1.03); opacity: 1; }
 }
 
-/* ── 60 HALO CARDS (HIGH-PERFORMANCE COMPOSITOR) ── */
+/* ── 12 HALO CARDS CINEMATOGRAFICOS (PERFEITA DEFINICAO SEM SOBREPOSICAO) ── */
 .halo-card {
   position: absolute;
-  width: 32vh;
-  height: 18vh;
-  margin-top: -9vh;
-  margin-left: -16vh;
+  width: 34vh;
+  height: 19vh;
+  margin-top: -9.5vh;
+  margin-left: -17vh;
   background: linear-gradient(135deg, #1c1c1c 0%, #0d0d0d 100%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   overflow: hidden;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75);
 
   /* Aceleracao de hardware 100% GPU sem re-rasterizacao */
   will-change: transform, opacity;
@@ -124,12 +124,17 @@ body {
   -webkit-backface-visibility: hidden;
   contain: layout paint;
 
-  /* Loop cinematografico fluido */
-  animation: 1.2s linear infinite halfPipe;
-  animation-delay: calc(var(--i) * -0.02s);
+  /* Flash loop stroboscopico sincronizado de alta definicao */
+  animation: 1.8s linear infinite halfPipe;
+  animation-delay: calc(var(--i) * -0.15s);
   transform-origin: center center;
   z-index: 5;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Garante apenas 12 cards ativos no loop estroboscopico para eliminar sobreposicao */
+.halo-card:nth-child(n+13) {
+  display: none !important;
 }
 
 .halo-card:hover {
@@ -137,7 +142,7 @@ body {
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9);
 }
 
-/* Glint de luxo acelerado por transform na GPU */
+/* Glint de luxo acelerado por transform na GPU — efeito flash no centro */
 .halo-card::after {
   content: "";
   position: absolute;
@@ -152,8 +157,8 @@ body {
     rgba(255,255,255,0) 100%
   );
   transform: translate3d(-150%, 0, 0) skewX(-20deg);
-  animation: 1.2s linear infinite luxuryGlint;
-  animation-delay: calc(var(--i) * -0.02s);
+  animation: 1.8s linear infinite luxuryGlint;
+  animation-delay: calc(var(--i) * -0.15s);
   pointer-events: none;
   z-index: 2;
   will-change: transform, opacity;
@@ -176,34 +181,44 @@ body {
   }
 }
 
-/* ── TRACK 3D — SOMENTE TRANSFORM E OPACITY PARA ZERO LAG ── */
+/* ── TRACK 3D — DEFINICAO ESTROBOSCOPICA FRAME-A-FRAME SEM SOBREPOSICAO ── */
 @keyframes halfPipe {
   0% {
-    transform: translate3d(-100vw, -10vh, -150vw) rotateZ(-30deg) rotateY(60deg) rotateX(20deg) scale(0.4);
+    transform: translate3d(-85vw, -6vh, -100vw) rotateZ(-22deg) rotateY(45deg) scale(0.4);
     opacity: 0;
   }
-  15% {
-    transform: translate3d(-60vw, 5vh, -60vw) rotateZ(-20deg) rotateY(45deg) rotateX(15deg) scale(0.7);
-    opacity: 0.6;
+  28% {
+    transform: translate3d(-50vw, 4vh, -50vw) rotateZ(-14deg) rotateY(30deg) scale(0.7);
+    opacity: 0;
   }
-  30% {
-    transform: translate3d(-30vw, 15vh, 0vw) rotateZ(-10deg) rotateY(25deg) rotateX(10deg) scale(1.05);
-    opacity: 0.9;
+  36% {
+    opacity: 0.45;
+  }
+  44% {
+    transform: translate3d(-22vw, 15vh, -15vw) rotateZ(-6deg) rotateY(15deg) scale(1.0);
+    opacity: 0.85;
   }
   50% {
-    transform: translate3d(0vw, 28vh, 25vw) rotateZ(0deg) rotateY(0deg) rotateX(0deg) scale(1.35);
+    /* HERO MOMENT: Frame em destaque maximo, 100% nitido no centro */
+    transform: translate3d(0vw, 24vh, 22vw) rotateZ(0deg) rotateY(0deg) scale(1.35);
     opacity: 1;
+    filter: brightness(1.15);
+    z-index: 50;
   }
-  70% {
-    transform: translate3d(30vw, 15vh, 0vw) rotateZ(10deg) rotateY(-25deg) rotateX(10deg) scale(1.05);
-    opacity: 0.9;
+  56% {
+    transform: translate3d(22vw, 15vh, -15vw) rotateZ(6deg) rotateY(-15deg) scale(1.0);
+    opacity: 0.85;
+    z-index: 10;
   }
-  85% {
-    transform: translate3d(60vw, 5vh, -60vw) rotateZ(20deg) rotateY(-45deg) rotateX(15deg) scale(0.7);
-    opacity: 0.6;
+  64% {
+    opacity: 0.45;
+  }
+  72% {
+    transform: translate3d(50vw, 4vh, -50vw) rotateZ(14deg) rotateY(-30deg) scale(0.7);
+    opacity: 0;
   }
   100% {
-    transform: translate3d(100vw, -10vh, -150vw) rotateZ(30deg) rotateY(-60deg) rotateX(20deg) scale(0.4);
+    transform: translate3d(85vw, -6vh, -100vw) rotateZ(22deg) rotateY(-45deg) scale(0.4);
     opacity: 0;
   }
 }
@@ -374,16 +389,16 @@ body.lightbox-active .halo-card::after {
     contain: strict;
   }
 
-  /* 9:16 vertical mobile: 12 cards perfeitamente sincronizados no ciclo de 1.2s (0.1s delay) */
+  /* 9:16 vertical mobile: 12 cards perfeitamente sincronizados no ciclo de 1.8s (0.15s delay) */
   .halo-card {
-    animation: 1.2s linear infinite halfPipe !important;
-    animation-delay: calc(var(--i) * -0.1s) !important;
+    animation: 1.8s linear infinite halfPipe !important;
+    animation-delay: calc(var(--i) * -0.15s) !important;
     width: 62vw;
     height: 35vw;
     margin-top: -17.5vw;
     margin-left: -31vw;
     border-radius: 8px;
-    box-shadow: none !important; /* Zero calculo de drop-shadow na GPU movel */
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6) !important;
     border: 1px solid rgba(255, 255, 255, 0.16) !important;
   }
 
@@ -392,9 +407,10 @@ body.lightbox-active .halo-card::after {
     display: none !important;
   }
 
-  /* Desativa pseudo-elemento glint no celular para eliminar overdraw de 120 camadas */
+  /* Glint sincronizado no celular para o flash do frame central */
   .halo-card::after {
-    display: none !important;
+    animation: 1.8s linear infinite luxuryGlint !important;
+    animation-delay: calc(var(--i) * -0.15s) !important;
   }
 
   .corner-text { font-size: 7.5px; }

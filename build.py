@@ -19,10 +19,10 @@ CSS_OUTPUT  = ROOT / "dist" / "output.css"
 PORT        = 3000
 
 # ── CALIBRACAO DE VELOCIDADE FLASH CINEMATOGRAFICA ─────────────────────────
-# 60 cards x 0.02s (20ms por imagem) = 1.2s por ciclo completo
-# 50 fps estroboscopicos estaveis e perfeitamente sincronizados com telas 60Hz/120Hz
-CARD_DURATION = "1.2s"
-CARD_DELAY    = "0.02s"
+# 12 frames perfeitamente sincronizados no ciclo de 1.8s (150ms por frame)
+# Efeito flash stroboscopico frame-a-frame de alta definicao sem sobreposicao
+CARD_DURATION = "1.8s"
+CARD_DELAY    = "0.15s"
 
 def load_images():
     with open(DATA_FILE, "r", encoding="utf-8") as f:
@@ -30,22 +30,14 @@ def load_images():
     return data["images"]
 
 def render_cards(images):
-    lines = ["      <!-- ===== 60 CARDS CINEMATOGRAFICOS (ULTRA INSTANT HYDRATION) ===== -->"]
-    for img in images:
+    lines = ["      <!-- ===== 12 CARDS CINEMATOGRAFICOS (FLASH LOOP FRAME-A-FRAME) ===== -->"]
+    for img in images[:12]:
         i, src, alt = img["i"], img["src"], img["alt"]
         niche = img.get("niche", "Design")
-        if i < 12:
-            # Primeiros 12 frames baixados imediatamente para inicializacao instantanea
-            img_tag = (
-                f'<img src="{src}" alt="{alt}" loading="eager" decoding="async" fetchpriority="high" '
-                f'onerror="this.onerror=null;this.src=\'assets/casa-concreto.webp\';">'
-            )
-        else:
-            # Frames 12-59 hidratados em segundo plano no desktop
-            img_tag = (
-                f'<img src="" data-src="{src}" alt="{alt}" loading="lazy" decoding="async" '
-                f'onerror="this.onerror=null;this.src=\'assets/casa-concreto.webp\';">'
-            )
+        img_tag = (
+            f'<img src="{src}" alt="{alt}" loading="eager" decoding="async" fetchpriority="high" '
+            f'onerror="this.onerror=null;this.src=\'assets/editorial-web.webp\';">'
+        )
         lines.append(
             f'      <div class="halo-card" style="--i:{i}" onclick="openLightbox(this)" '
             f'data-niche="{niche}" data-alt="{alt}" title="{niche}">{img_tag}</div>'
@@ -72,11 +64,19 @@ def render_html(images, inline_css=""):
 
   <title>Slow Flow — Digital Ecosystems</title>
 
-  <!-- Preload dos primeiros frames para abertura em 0ms no celular -->
+  <!-- Preload dos 12 frames para flash instantaneo em 0ms no celular e web -->
   <link rel="preload" as="image" href="assets/cards/card_00.webp" type="image/webp" fetchpriority="high">
   <link rel="preload" as="image" href="assets/cards/card_01.webp" type="image/webp" fetchpriority="high">
   <link rel="preload" as="image" href="assets/cards/card_02.webp" type="image/webp" fetchpriority="high">
   <link rel="preload" as="image" href="assets/cards/card_03.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/cards/card_04.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/cards/card_05.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/cards/card_06.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/cards/card_07.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/cards/card_08.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/cards/card_09.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/cards/card_10.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/cards/card_11.webp" type="image/webp" fetchpriority="high">
 
   <!-- Fontes assincronas nao-bloqueadoras -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -327,33 +327,10 @@ def render_html(images, inline_css=""):
       if (e.key === "Escape") closeLightbox();
     });
 
-    // Engine de Hidratacao Inteligente: Celulares nunca baixam cards ocultos
+    // Loop cinematografico 100% pre-carregado em memoria para resposta instantanea
     window.addEventListener('DOMContentLoaded', () => {
-      // No celular (<= 1024px), apenas os 12 cards ativos rodam; zero CPU ou dados gastos com cards ocultos.
-      // No desktop (> 1024px), hidrata os frames 12-59 em lotes suaves sem travar a thread da GPU.
-      if (window.innerWidth > 1024) {
-        const deferred = Array.from(document.querySelectorAll('.halo-card img[data-src]'));
-        let idx = 0;
-        function loadBatch() {
-          const batch = deferred.slice(idx, idx + 10);
-          batch.forEach(img => {
-            const src = img.getAttribute('data-src');
-            if (src) {
-              img.src = src;
-              img.removeAttribute('data-src');
-            }
-          });
-          idx += 10;
-          if (idx < deferred.length) {
-            setTimeout(loadBatch, 80);
-          }
-        }
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(loadBatch, { timeout: 800 });
-        } else {
-          setTimeout(loadBatch, 300);
-        }
-      }
+      // 12 frames ativos hidratados e acelerados por hardware nativo
+      document.body.classList.add('ready');
     });
   </script>
 </body>
