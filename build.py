@@ -185,13 +185,13 @@ def render_html(images, inline_css=""):
         </div>
         <div style="aspect-ratio:4/3;background:#111;overflow:hidden;position:relative;border-radius:6px;cursor:pointer;border:1px solid rgba(255,255,255,0.08);"
              onclick="openEditorialLightbox(this)" data-niche="01 // WEBSITES & LANDING PAGES" data-alt="Alta Conversão no Google e Instagram">
-          <img src="assets/casa-concreto.webp"
+          <img src="assets/editorial-web.webp"
             alt="Websites Alta Conversao"
             loading="lazy" decoding="async"
             style="width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.7s,transform 0.7s;"
             onmouseover="this.style.filter='grayscale(0%)';this.style.transform='scale(1.05)';"
             onmouseout="this.style.filter='grayscale(100%)';this.style.transform='scale(1)';"
-            onerror="this.onerror=null;this.src='assets/casa-concreto.webp';">
+            onerror="this.onerror=null;this.src='assets/editorial-web.webp';">
         </div>
       </div>
     </div>
@@ -205,13 +205,13 @@ def render_html(images, inline_css=""):
       <div class="editorial-grid-2">
         <div style="aspect-ratio:4/3;background:#111;overflow:hidden;position:relative;border-radius:6px;cursor:pointer;border:1px solid rgba(255,255,255,0.08);"
              onclick="openEditorialLightbox(this)" data-niche="02 // BRANDING & IDENTIDADE" data-alt="Moodboards, Identidade Visual e Portfolio Completo">
-          <img src="assets/cozinha-luxo.webp"
+          <img src="assets/editorial-branding.webp"
             alt="Branding Identidade Visual"
             loading="lazy" decoding="async"
             style="width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.7s,transform 0.7s;"
             onmouseover="this.style.filter='grayscale(0%)';this.style.transform='scale(1.05)';"
             onmouseout="this.style.filter='grayscale(100%)';this.style.transform='scale(1)';"
-            onerror="this.onerror=null;this.src='assets/cozinha-luxo.webp';">
+            onerror="this.onerror=null;this.src='assets/editorial-branding.webp';">
         </div>
         <div>
           <span class="editorial-label" style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.12em;display:block;margin-bottom:1.2rem;">

@@ -21,56 +21,56 @@
     {
       "i": 3,
       "src": "assets/cards/card_03.webp",
-      "alt": "Cafe Cremoso Artesanal",
-      "niche": "Gastronomia"
+      "alt": "High-Tech Dashboard & UI Interface",
+      "niche": "Web Design"
     },
     {
       "i": 4,
       "src": "assets/cards/card_04.webp",
-      "alt": "Coffee Shop Premium",
-      "niche": "Gastronomia"
+      "alt": "Web Studio Workstation & Code",
+      "niche": "Creative Tech"
     },
     {
       "i": 5,
       "src": "assets/cards/card_05.webp",
-      "alt": "Fine Dining Restaurant",
-      "niche": "Gastronomia"
+      "alt": "Minimalist Brand Architecture & Stationery",
+      "niche": "Branding"
     },
     {
       "i": 6,
       "src": "assets/cards/card_06.webp",
-      "alt": "Architecture Concrete House",
-      "niche": "Arquitetura"
+      "alt": "Digital Product & Mobile App Prototyping",
+      "niche": "UI/UX Design"
     },
     {
       "i": 7,
       "src": "assets/cards/card_07.webp",
-      "alt": "Cozinha de Luxo Dark",
-      "niche": "Arquitetura"
+      "alt": "3D Fluid Pearl & Digital Assets",
+      "niche": "3D & Motion"
     },
     {
       "i": 8,
       "src": "assets/cards/card_08.webp",
-      "alt": "Restaurante Arquitetura",
-      "niche": "Arquitetura"
+      "alt": "Responsive Web Ecosystem & Devices",
+      "niche": "Websites"
     },
     {
       "i": 9,
       "src": "assets/cards/card_09.webp",
-      "alt": "Moody Interior Design",
-      "niche": "Arquitetura"
+      "alt": "Creative Studio Moodboard & Color System",
+      "niche": "Branding"
     },
     {
       "i": 10,
       "src": "assets/cards/card_10.webp",
-      "alt": "Minimalist Dark Interior",
-      "niche": "Arquitetura"
+      "alt": "Conversion Rate & Growth Metrics",
+      "niche": "Performance"
     },
     {
       "i": 11,
       "src": "assets/cards/card_11.webp",
-      "alt": "Modern Kitchen Design",
-      "niche": "Arquitetura"
+      "alt": "Creative Coding & Interactive Web Systems",
+      "niche": "Development"
     },
     {
       "i": 12,
