@@ -68,6 +68,7 @@ body {
   position: relative;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -373,8 +374,10 @@ body.lightbox-active .halo-card::after {
     contain: strict;
   }
 
-  /* 9:16 vertical mobile: card perfeitamente centralizado no eixo X */
+  /* 9:16 vertical mobile: 12 cards perfeitamente sincronizados no ciclo de 1.2s (0.1s delay) */
   .halo-card {
+    animation: 1.2s linear infinite halfPipe !important;
+    animation-delay: calc(var(--i) * -0.1s) !important;
     width: 62vw;
     height: 35vw;
     margin-top: -17.5vw;
@@ -382,6 +385,11 @@ body.lightbox-active .halo-card::after {
     border-radius: 8px;
     box-shadow: none !important; /* Zero calculo de drop-shadow na GPU movel */
     border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  }
+
+  /* Desativa os cards 13 a 60 no mobile: reducao instantanea de 80% do peso de GPU */
+  .halo-card:nth-child(n+13) {
+    display: none !important;
   }
 
   /* Desativa pseudo-elemento glint no celular para eliminar overdraw de 120 camadas */

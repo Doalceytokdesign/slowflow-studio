@@ -34,14 +34,14 @@ def render_cards(images):
     for img in images:
         i, src, alt = img["i"], img["src"], img["alt"]
         niche = img.get("niche", "Design")
-        if i < 15:
-            # Primeiros 15 frames baixados imediatamente para inicializacao instantanea
+        if i < 12:
+            # Primeiros 12 frames baixados imediatamente para inicializacao instantanea
             img_tag = (
                 f'<img src="{src}" alt="{alt}" loading="eager" decoding="async" fetchpriority="high" '
                 f'onerror="this.onerror=null;this.src=\'assets/casa-concreto.webp\';">'
             )
         else:
-            # Frames 15-59 hidratados em segundo plano apos o primeiro frame renderizar
+            # Frames 12-59 hidratados em segundo plano no desktop
             img_tag = (
                 f'<img src="" data-src="{src}" alt="{alt}" loading="lazy" decoding="async" '
                 f'onerror="this.onerror=null;this.src=\'assets/casa-concreto.webp\';">'
@@ -72,10 +72,11 @@ def render_html(images, inline_css=""):
 
   <title>Slow Flow — Digital Ecosystems</title>
 
-  <!-- Preload dos primeiros 3 frames para abertura em 0ms no celular -->
+  <!-- Preload dos primeiros frames para abertura em 0ms no celular -->
   <link rel="preload" as="image" href="assets/cards/card_00.webp" type="image/webp" fetchpriority="high">
   <link rel="preload" as="image" href="assets/cards/card_01.webp" type="image/webp" fetchpriority="high">
   <link rel="preload" as="image" href="assets/cards/card_02.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/cards/card_03.webp" type="image/webp" fetchpriority="high">
 
   <!-- Fontes assincronas nao-bloqueadoras -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -184,8 +185,9 @@ def render_html(images, inline_css=""):
         </div>
         <div style="aspect-ratio:4/3;background:#111;overflow:hidden;position:relative;border-radius:6px;cursor:pointer;border:1px solid rgba(255,255,255,0.08);"
              onclick="openEditorialLightbox(this)" data-niche="01 // WEBSITES & LANDING PAGES" data-alt="Alta Conversão no Google e Instagram">
-          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop"
+          <img src="assets/casa-concreto.webp"
             alt="Websites Alta Conversao"
+            loading="lazy" decoding="async"
             style="width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.7s,transform 0.7s;"
             onmouseover="this.style.filter='grayscale(0%)';this.style.transform='scale(1.05)';"
             onmouseout="this.style.filter='grayscale(100%)';this.style.transform='scale(1)';"
@@ -203,8 +205,9 @@ def render_html(images, inline_css=""):
       <div class="editorial-grid-2">
         <div style="aspect-ratio:4/3;background:#111;overflow:hidden;position:relative;border-radius:6px;cursor:pointer;border:1px solid rgba(255,255,255,0.08);"
              onclick="openEditorialLightbox(this)" data-niche="02 // BRANDING & IDENTIDADE" data-alt="Moodboards, Identidade Visual e Portfolio Completo">
-          <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop"
+          <img src="assets/cozinha-luxo.webp"
             alt="Branding Identidade Visual"
+            loading="lazy" decoding="async"
             style="width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.7s,transform 0.7s;"
             onmouseover="this.style.filter='grayscale(0%)';this.style.transform='scale(1.05)';"
             onmouseout="this.style.filter='grayscale(100%)';this.style.transform='scale(1)';"
@@ -324,23 +327,32 @@ def render_html(images, inline_css=""):
       if (e.key === "Escape") closeLightbox();
     });
 
-    // Ultra Instant Mobile Hydration Engine
+    // Engine de Hidratacao Inteligente: Celulares nunca baixam cards ocultos
     window.addEventListener('DOMContentLoaded', () => {
-      const deferred = document.querySelectorAll('.halo-card img[data-src]');
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(() => {
-          deferred.forEach(img => {
+      // No celular (<= 1024px), apenas os 12 cards ativos rodam; zero CPU ou dados gastos com cards ocultos.
+      // No desktop (> 1024px), hidrata os frames 12-59 em lotes suaves sem travar a thread da GPU.
+      if (window.innerWidth > 1024) {
+        const deferred = Array.from(document.querySelectorAll('.halo-card img[data-src]'));
+        let idx = 0;
+        function loadBatch() {
+          const batch = deferred.slice(idx, idx + 10);
+          batch.forEach(img => {
             const src = img.getAttribute('data-src');
-            if (src) img.src = src;
+            if (src) {
+              img.src = src;
+              img.removeAttribute('data-src');
+            }
           });
-        }, { timeout: 600 });
-      } else {
-        setTimeout(() => {
-          deferred.forEach(img => {
-            const src = img.getAttribute('data-src');
-            if (src) img.src = src;
-          });
-        }, 200);
+          idx += 10;
+          if (idx < deferred.length) {
+            setTimeout(loadBatch, 80);
+          }
+        }
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadBatch, { timeout: 800 });
+        } else {
+          setTimeout(loadBatch, 300);
+        }
       }
     });
   </script>
