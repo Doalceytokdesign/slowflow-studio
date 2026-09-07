@@ -61,7 +61,7 @@ body {
 .top-left    { top: 2.5rem; left: 2.5rem; }
 .top-right   { top: 2.5rem; right: 2.5rem; text-align: right; }
 .bottom-left { bottom: 2.5rem; left: 2.5rem; }
-.bottom-right{ bottom: 2.5rem; right: 2.5rem; text-align: right; }
+.bottom-right{ bottom: 5.5rem; right: 2.5rem; text-align: right; }
 
 /* ── WORLD CONTAINER ── */
 .world-container {
@@ -224,9 +224,11 @@ body {
   transition: opacity 0.2s ease;
 }
 
-/* Pausa cards somente quando lightbox estiver ativo */
+/* Pausa cards quando lightbox ou QR modal estiver ativo */
 body.lightbox-active .halo-card,
-body.lightbox-active .halo-card::after {
+body.lightbox-active .halo-card::after,
+body.qr-modal-active .halo-card,
+body.qr-modal-active .halo-card::after {
   animation-play-state: paused !important;
 }
 
@@ -312,6 +314,235 @@ body.lightbox-active .halo-card::after {
 .lightbox-close:hover {
   background: rgba(255, 255, 255, 0.3);
   transform: scale(1.1);
+}
+
+/* ── BOTÃO DISCRETO QR CODE (APRESENTAÇÕES) ── */
+.qr-pill-btn {
+  display: none;
+  position: fixed;
+  bottom: 2rem;
+  right: 2.5rem;
+  z-index: 80;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(14, 14, 14, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 0.55rem 1.1rem;
+  border-radius: 9999px;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 768px) {
+  .qr-pill-btn {
+    display: inline-flex;
+  }
+}
+
+.qr-pill-btn:hover {
+  background: rgba(28, 28, 28, 0.95);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.9);
+}
+
+.qr-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #00ff88;
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.7);
+}
+
+/* ── MODAL QR CODE DE APRESENTAÇÃO ── */
+#qr-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 5, 5, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+#qr-modal.show {
+  display: flex;
+  opacity: 1;
+}
+
+.qr-modal-card {
+  position: relative;
+  background: linear-gradient(180deg, #161616 0%, #0d0d0d 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  padding: 2.75rem 2.25rem 2.25rem;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  transform: scale(0.95);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#qr-modal.show .qr-modal-card {
+  transform: scale(1);
+}
+
+.qr-modal-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-family: "JetBrains Mono", monospace;
+  transition: all 0.2s ease;
+}
+
+.qr-modal-close:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.qr-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 1rem;
+}
+
+.qr-live-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00ff88;
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.8);
+}
+
+.qr-modal-title {
+  font-family: "Inter", sans-serif;
+  font-weight: 900;
+  font-size: 1.45rem;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.4rem 0;
+  text-transform: uppercase;
+}
+
+.qr-modal-desc {
+  font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.5;
+  margin: 0 0 1.5rem 0;
+}
+
+.qr-code-wrapper {
+  background: #000;
+  padding: 1.15rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+}
+
+.qr-code-wrapper img {
+  display: block;
+  width: 200px;
+  height: 200px;
+  border-radius: 6px;
+}
+
+.qr-footer-url a {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
+  padding-bottom: 2px;
+  transition: all 0.2s ease;
+}
+
+.qr-footer-url a:hover {
+  color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+
+/* ── BLOCO QR CODE EDITORIAL (SEÇÃO 03) ── */
+.editorial-qr-box {
+  margin-top: 5rem;
+  padding: 2.5rem 2rem;
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .editorial-qr-box {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+    padding: 2rem 1.5rem;
+  }
+}
+
+.editorial-qr-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.75rem;
+}
+
+.editorial-qr-img-wrap {
+  background: #000;
+  padding: 0.85rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  flex-shrink: 0;
+}
+
+.editorial-qr-img-wrap img {
+  display: block;
+  border-radius: 4px;
 }
 
 /* ── EDITORIAL SECTIONS ── */

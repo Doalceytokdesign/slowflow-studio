@@ -123,6 +123,47 @@ def render_html(images, inline_css=""):
   </div>
 
   <!-- ═══════════════════════════════════════════════════════════════
+       MODAL QR CODE DE APRESENTAÇÃO
+       ═══════════════════════════════════════════════════════════════ -->
+  <div id="qr-modal" onclick="closeQrModal(event)">
+    <div class="qr-modal-card" onclick="event.stopPropagation()">
+      <button class="qr-modal-close" onclick="closeQrModal(event)" title="Fechar (Esc)">&times;</button>
+      
+      <div class="qr-header-badge">
+        <span class="qr-live-indicator"></span>
+        <span>PRESENTATION // LIVE MOBILE DEMO</span>
+      </div>
+
+      <h3 class="qr-modal-title">Escaneie para Acessar</h3>
+      <p class="qr-modal-desc">Aponte a câmera do seu smartphone para navegar na esteira 3D e conferir os projetos ao vivo.</p>
+
+      <div class="qr-code-wrapper">
+        <img src="assets/qrcode.png" alt="QR Code Slow Flow Studio" width="200" height="200" />
+      </div>
+
+      <div class="qr-footer-url">
+        <a href="https://slowflow-studio.vercel.app" target="_blank" rel="noopener">
+          slowflow-studio.vercel.app &nearr;
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       FLOATING QR CODE BUTTON (APRESENTAÇÕES & LIVE DEMO)
+       ═══════════════════════════════════════════════════════════════ -->
+  <button id="qr-pill-btn" onclick="openQrModal()" class="qr-pill-btn" title="Apresentação Mobile // QR Code" aria-label="Abrir QR Code">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="7" height="7"></rect>
+      <rect x="14" y="3" width="7" height="7"></rect>
+      <rect x="14" y="14" width="7" height="7"></rect>
+      <rect x="3" y="14" width="7" height="7"></rect>
+    </svg>
+    <span>QR MOBILE</span>
+    <span class="qr-dot"></span>
+  </button>
+
+  <!-- ═══════════════════════════════════════════════════════════════
        HERO — PENDULUM FLOW 3D
        ═══════════════════════════════════════════════════════════════ -->
   <section class="world-container">
@@ -285,6 +326,28 @@ def render_html(images, inline_css=""):
           Falar com um Especialista &rarr;
         </a>
       </div>
+
+      <!-- QR CODE PRESENTATION SECTION -->
+      <div class="editorial-qr-box">
+        <div class="editorial-qr-img-wrap">
+          <img src="assets/qrcode.png" alt="QR Code Slow Flow Studio" width="130" height="130" loading="lazy" />
+        </div>
+        <div>
+          <div class="editorial-qr-badge">
+            <span class="qr-live-indicator"></span>
+            <span>Acesso Mobile Instantâneo // Apresentação</span>
+          </div>
+          <h4 style="font-family:'Inter',sans-serif; font-size:1.15rem; font-weight:700; color:#f0f0f0; margin:0 0 0.5rem 0; text-transform:uppercase; letter-spacing:-0.01em;">
+            Experimente no Smartphone
+          </h4>
+          <p style="font-family:'Inter',sans-serif; font-size:0.875rem; color:rgba(255,255,255,0.5); line-height:1.6; margin:0 0 0.85rem 0; max-width:420px;">
+            Acesse a interface fluida de alta conversão diretamente no celular durante apresentações ou reuniões com clientes.
+          </p>
+          <a href="https://slowflow-studio.vercel.app" target="_blank" rel="noopener" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#fff; text-decoration:underline; text-underline-offset:4px;">
+            slowflow-studio.vercel.app &nearr;
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -340,8 +403,26 @@ def render_html(images, inline_css=""):
       }, 200);
     }
 
+    function openQrModal() {
+      const modal = document.getElementById("qr-modal");
+      if (!modal) return;
+      modal.classList.add("show");
+      document.body.classList.add("qr-modal-active");
+    }
+
+    function closeQrModal(event) {
+      if (event) event.stopPropagation();
+      const modal = document.getElementById("qr-modal");
+      if (!modal) return;
+      modal.classList.remove("show");
+      document.body.classList.remove("qr-modal-active");
+    }
+
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeLightbox();
+      if (e.key === "Escape") {
+        closeLightbox();
+        closeQrModal();
+      }
     });
 
     window.addEventListener('DOMContentLoaded', () => {
