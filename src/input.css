@@ -124,9 +124,9 @@ body {
   -webkit-backface-visibility: hidden;
   contain: layout paint;
 
-  /* 60 cards em loop cinematografico ultra-rapido com close-up */
-  animation: 0.42s linear infinite halfPipe;
-  animation-delay: calc(var(--i) * -0.007s);
+  /* Loop cinematografico fluido de alta velocidade — identico ao video da pasta */
+  animation: 1.2s linear infinite halfPipe;
+  animation-delay: calc(var(--i) * -0.02s);
   transform-origin: center center;
   z-index: 5;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -138,7 +138,7 @@ body {
   z-index: 100;
 }
 
-/* Glint de luxo estroboscopico na GPU */
+/* Glint de luxo acelerado por transform na GPU */
 .halo-card::after {
   content: "";
   position: absolute;
@@ -149,71 +149,63 @@ body {
   background: linear-gradient(
     to right,
     rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0.75) 50%,
+    rgba(255,255,255,0.7) 50%,
     rgba(255,255,255,0) 100%
   );
   transform: translate3d(-150%, 0, 0) skewX(-20deg);
-  animation: 0.42s linear infinite luxuryGlint;
-  animation-delay: calc(var(--i) * -0.007s);
+  animation: 1.2s linear infinite luxuryGlint;
+  animation-delay: calc(var(--i) * -0.02s);
   pointer-events: none;
   z-index: 2;
   will-change: transform, opacity;
 }
 
 @keyframes luxuryGlint {
-  0%, 44% {
+  0%, 46% {
     transform: translate3d(-150%, 0, 0) skewX(-20deg);
     opacity: 0;
   }
-  48% { opacity: 0.75; }
+  47% { opacity: 0.7; }
   50% {
     transform: translate3d(100%, 0, 0) skewX(-20deg);
     opacity: 0.95;
   }
-  52% { opacity: 0.75; }
-  56%, 100% {
+  53% { opacity: 0.7; }
+  54%, 100% {
     transform: translate3d(250%, 0, 0) skewX(-20deg);
     opacity: 0;
   }
 }
 
-/* ── TRACK 3D — VINDO DO FUNDO LA COM INCLINACAO TOTAL E CLOSE-UP COM SOBREPOSICAO ── */
+/* ── TRACK 3D — SOMENTE TRANSFORM E OPACITY PARA ZERO LAG (EXATO DO VIDEO) ── */
 @keyframes halfPipe {
   0% {
-    transform: translate3d(-100vw, -12vh, -150vw) rotateZ(-32deg) rotateY(60deg) rotateX(20deg) scale(0.35);
+    transform: translate3d(-100vw, -10vh, -150vw) rotateZ(-30deg) rotateY(60deg) rotateX(20deg) scale(0.4);
     opacity: 0;
-    z-index: 1;
   }
-  18% {
-    transform: translate3d(-62vw, 3vh, -65vw) rotateZ(-22deg) rotateY(45deg) rotateX(15deg) scale(0.68);
-    opacity: 0.65;
-    z-index: 5;
+  15% {
+    transform: translate3d(-60vw, 5vh, -60vw) rotateZ(-20deg) rotateY(45deg) rotateX(15deg) scale(0.7);
+    opacity: 0.6;
   }
-  34% {
-    transform: translate3d(-30vw, 13vh, -12vw) rotateZ(-12deg) rotateY(24deg) rotateX(10deg) scale(1.1);
-    opacity: 0.88;
-    z-index: 15;
+  30% {
+    transform: translate3d(-30vw, 15vh, 0vw) rotateZ(-10deg) rotateY(25deg) rotateX(10deg) scale(1.05);
+    opacity: 0.9;
   }
   50% {
-    /* CLOSE-UP EM PRIMEIRO PLANO: Salta na frente sobrepondo os outros cards com efeito */
-    transform: translate3d(0vw, 22vh, 45vw) rotateZ(0deg) rotateY(0deg) rotateX(0deg) scale(1.75);
+    transform: translate3d(0vw, 28vh, 25vw) rotateZ(0deg) rotateY(0deg) rotateX(0deg) scale(1.35);
     opacity: 1;
-    z-index: 60;
   }
-  66% {
-    transform: translate3d(30vw, 13vh, -12vw) rotateZ(12deg) rotateY(-24deg) rotateX(10deg) scale(1.1);
-    opacity: 0.88;
-    z-index: 15;
+  70% {
+    transform: translate3d(30vw, 15vh, 0vw) rotateZ(10deg) rotateY(-25deg) rotateX(10deg) scale(1.05);
+    opacity: 0.9;
   }
-  82% {
-    transform: translate3d(62vw, 3vh, -65vw) rotateZ(22deg) rotateY(-45deg) rotateX(15deg) scale(0.68);
-    opacity: 0.65;
-    z-index: 5;
+  85% {
+    transform: translate3d(60vw, 5vh, -60vw) rotateZ(20deg) rotateY(-45deg) rotateX(15deg) scale(0.7);
+    opacity: 0.6;
   }
   100% {
-    transform: translate3d(100vw, -12vh, -150vw) rotateZ(32deg) rotateY(-60deg) rotateX(20deg) scale(0.35);
+    transform: translate3d(100vw, -10vh, -150vw) rotateZ(30deg) rotateY(-60deg) rotateX(20deg) scale(0.4);
     opacity: 0;
-    z-index: 1;
   }
 }
 
@@ -384,65 +376,24 @@ body.lightbox-active .halo-card::after {
 /* ── MOBILE / 9:16 APP FORMAT HIGH-PERFORMANCE ENGINE ── */
 @media (max-width: 1024px) {
   .world-container {
-    perspective: 800px;
+    perspective: 900px;
     contain: strict;
   }
 
-  @keyframes halfPipeMobile {
-    0% {
-      transform: translate3d(-90vw, -8vh, -120vw) rotateZ(-28deg) rotateY(55deg) rotateX(18deg) scale(0.4);
-      opacity: 0;
-      z-index: 1;
-    }
-    18% {
-      transform: translate3d(-55vw, 4vh, -50vw) rotateZ(-18deg) rotateY(40deg) rotateX(12deg) scale(0.7);
-      opacity: 0.7;
-      z-index: 5;
-    }
-    34% {
-      transform: translate3d(-26vw, 14vh, -8vw) rotateZ(-9deg) rotateY(20deg) rotateX(8deg) scale(1.1);
-      opacity: 0.9;
-      z-index: 15;
-    }
-    50% {
-      /* CLOSE-UP CINEMATOGRAFICO MOBILE: Salta na frente sobrepondo com efeito */
-      transform: translate3d(0vw, 22vh, 32vw) rotateZ(0deg) rotateY(0deg) rotateX(0deg) scale(1.55);
-      opacity: 1;
-      z-index: 60;
-    }
-    66% {
-      transform: translate3d(26vw, 14vh, -8vw) rotateZ(9deg) rotateY(-20deg) rotateX(8deg) scale(1.1);
-      opacity: 0.9;
-      z-index: 15;
-    }
-    82% {
-      transform: translate3d(55vw, 4vh, -50vw) rotateZ(18deg) rotateY(-40deg) rotateX(12deg) scale(0.7);
-      opacity: 0.7;
-      z-index: 5;
-    }
-    100% {
-      transform: translate3d(90vw, -8vh, -120vw) rotateZ(28deg) rotateY(-55deg) rotateX(18deg) scale(0.4);
-      opacity: 0;
-      z-index: 1;
-    }
-  }
-
-  /* 9:16 vertical mobile: 60 cards perfeitamente sincronizados na GPU */
+  /* 9:16 vertical mobile: card perfeitamente centralizado no eixo X — identico ao video */
   .halo-card {
-    animation: 0.42s linear infinite halfPipeMobile !important;
-    animation-delay: calc(var(--i) * -0.007s) !important;
-    width: 52vw;
-    height: 30vw;
-    margin-top: -15vw;
-    margin-left: -26vw;
+    width: 62vw;
+    height: 35vw;
+    margin-top: -17.5vw;
+    margin-left: -31vw;
     border-radius: 8px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7) !important;
-    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    animation: 1.2s linear infinite halfPipe !important;
+    animation-delay: calc(var(--i) * -0.02s) !important;
   }
 
   .halo-card::after {
-    animation: 0.42s linear infinite luxuryGlint !important;
-    animation-delay: calc(var(--i) * -0.007s) !important;
+    animation: 1.2s linear infinite luxuryGlint !important;
+    animation-delay: calc(var(--i) * -0.02s) !important;
   }
 
   .corner-text { font-size: 7.5px; }
