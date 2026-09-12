@@ -1,0 +1,221 @@
+{
+  "name": "Slow Flow Studio // Instagram AI Agent",
+  "nodes": [
+    {
+      "id": "webhook-challenge-get",
+      "name": "Webhook - Verificacao Meta (GET)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -160,
+        -80
+      ],
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "instagram",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "webhookId": "slowflow-meta-verify"
+    },
+    {
+      "id": "respond-challenge",
+      "name": "Responder Hub Challenge (Meta)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        100,
+        -80
+      ],
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.query[\"hub.challenge\"] }}",
+        "options": {
+          "responseCode": 200
+        }
+      }
+    },
+    {
+      "id": "webhook-events-post",
+      "name": "Webhook - Mensagens Instagram (POST)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -160,
+        180
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "instagram",
+        "responseMode": "onReceived",
+        "responseData": "Workflow got started.",
+        "options": {}
+      },
+      "webhookId": "slowflow-instagram-events"
+    },
+    {
+      "id": "extract-message-code",
+      "name": "Filtrar e Extrair Mensagem",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        100,
+        180
+      ],
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const body = $input.item.json.body || $input.item.json;\nconst entry = body.entry?.[0];\nconst messaging = entry?.messaging?.[0];\n\nif (!messaging) return [];\nif (messaging.message?.is_echo) return [];\n\nconst senderId = messaging.sender?.id;\nconst messageText = messaging.message?.text;\n\nif (!senderId || !messageText) return [];\n\nreturn [{\n  json: {\n    senderId,\n    messageText,\n    timestamp: messaging.timestamp\n  }\n}];"
+      }
+    },
+    {
+      "id": "ai-agent-slowflow",
+      "name": "Agente IA - Slow Flow Studio",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        360,
+        180
+      ],
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.messageText }}",
+        "options": {
+          "systemMessage": "Voce e o Consultor Especialista e Atendente de IA da Slow Flow Studio (Tok Design).\nSua missao e atender clientes que enviam mensagens no Instagram oficial (@slowflowdesing).\n\n# SOBRE A SLOW FLOW STUDIO:\nSomos um estudio boutique de tecnologia e design minimalista focado em alta performance e autoridade visual:\n1. Websites & Landing Pages de Alta Conversao:\n   - Interfaces minimalistas, ultrarrapidas, com estetica de luxo e otimizadas para Google e Instagram Ads.\n2. Branding & Identidade Visual Completa:\n   - Moodboards, identidade visual, manual de marca, paleta de cores, tipografia e ecossistemas digitais.\n3. Portfolios Digitais & Projetos 3D:\n   - Plataforma interativa 3D e solucoes sob medida para empresas e profissionais que buscam liderar seu setor.\n\n# DIRETRIZES DE ATENDIMENTO:\n- Responda sempre em portugues do Brasil de forma concisa, elegante, sofisticada e humana (sem jargoes vazios).\n- Demonstre interesse genuino no negocio do cliente: pergunte brevemente qual o segmento ou objetivo dele.\n- Para orcamentos, prazos ou falar diretamente com o especialista, informe que nosso WhatsApp est\u00e1 em atualizacao e pe\u00e7a para continuar o atendimento via Direct.\n- Nunca invente valores fixos; reforce que cada projeto e arquitetado sob medida para as metas do cliente."
+        }
+      }
+    },
+    {
+      "id": "gemini-model",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        360,
+        380
+      ],
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash",
+        "options": {
+          "temperature": 0.7
+        }
+      }
+    },
+    {
+      "id": "memory-buffer",
+      "name": "Memoria da Conversa",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        500,
+        380
+      ],
+      "parameters": {
+        "sessionKey": "={{ $(\"Filtrar e Extrair Mensagem\").item.json.senderId }}",
+        "contextWindowLength": 10
+      }
+    },
+    {
+      "id": "send-instagram-dm",
+      "name": "Enviar Resposta no Instagram DM",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        720,
+        180
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v21.0/me/messages",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"recipient\": { \"id\": \"{{ $('Filtrar e Extrair Mensagem').item.json.senderId }}\" },\n  \"message\": { \"text\": \"{{ $json.output }}\" }\n}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer COLE_SEU_PAGE_ACCESS_TOKEN_AQUI"
+            }
+          ]
+        },
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Webhook - Verificacao Meta (GET)": {
+      "main": [
+        [
+          {
+            "node": "Responder Hub Challenge (Meta)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - Mensagens Instagram (POST)": {
+      "main": [
+        [
+          {
+            "node": "Filtrar e Extrair Mensagem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrar e Extrair Mensagem": {
+      "main": [
+        [
+          {
+            "node": "Agente IA - Slow Flow Studio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agente IA - Slow Flow Studio",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Memoria da Conversa": {
+      "ai_memory": [
+        [
+          {
+            "node": "Agente IA - Slow Flow Studio",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agente IA - Slow Flow Studio": {
+      "main": [
+        [
+          {
+            "node": "Enviar Resposta no Instagram DM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": true
+  }
+}

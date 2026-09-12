@@ -239,7 +239,7 @@ def render_html(images, inline_css=""):
           <p class="editorial-body" style="font-size:1.05rem;line-height:1.75;margin-bottom:2.5rem;max-width:440px;">
             Arquitetamos ecossistemas digitais completos: landing pages, e-commerces, hotsites e sistemas web integrados ao seu CRM e métricas de negócio.
           </p>
-          <a href="https://wa.me/5544991244282" target="_blank" rel="noopener" onclick="trackWhatsAppLead(event, '01 // Iniciar Projeto Web')" class="btn-light">Iniciar Projeto Web &rarr;</a>
+          <a href="#" target="_blank" rel="noopener" onclick="trackWhatsAppLead(event, '01 // Iniciar Projeto Web')" class="btn-light">Iniciar Projeto Web &rarr;</a>
         </div>
         <div style="aspect-ratio:4/3;background:#111;overflow:hidden;position:relative;border-radius:6px;cursor:pointer;border:1px solid rgba(255,255,255,0.08);"
              onclick="openEditorialLightbox(this)" data-niche="01 // WEBSITES & LANDING PAGES" data-alt="Alta Conversão no Google e Instagram">
@@ -284,7 +284,7 @@ def render_html(images, inline_css=""):
           <p class="editorial-body" style="font-size:1.05rem;line-height:1.75;margin-bottom:2.5rem;max-width:440px;">
             Marcas que lideram mercados são arquitetadas, não apenas desenhadas. Criamos sistemas visuais escaláveis que posicionam a sua empresa como a escolha óbvia do setor.
           </p>
-          <a href="https://wa.me/5544991244282" target="_blank" rel="noopener" onclick="trackWhatsAppLead(event, '02 // Construir Minha Marca')" class="btn-light">Construir Minha Marca &rarr;</a>
+          <a href="#" target="_blank" rel="noopener" onclick="trackWhatsAppLead(event, '02 // Construir Minha Marca')" class="btn-light">Construir Minha Marca &rarr;</a>
         </div>
       </div>
     </div>
@@ -322,7 +322,7 @@ def render_html(images, inline_css=""):
         </div>
       </div>
       <div style="margin-top:4rem;text-align:center;">
-        <a href="https://wa.me/5544991244282" target="_blank" rel="noopener" onclick="trackWhatsAppLead(event, '03 // Falar com um Especialista')" class="btn-light" style="font-size:11px;padding:1.2rem 3rem;">
+        <a href="#" target="_blank" rel="noopener" onclick="trackWhatsAppLead(event, '03 // Falar com um Especialista')" class="btn-light" style="font-size:11px;padding:1.2rem 3rem;">
           Falar com um Especialista &rarr;
         </a>
       </div>
@@ -376,7 +376,7 @@ def render_html(images, inline_css=""):
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
           <span>Instagram</span>
         </a>
-        <a href="https://wa.me/5544991244282" target="_blank" rel="noopener" onclick="trackWhatsAppLead(event, 'Footer // WhatsApp Direct')" class="footer-social-link" title="WhatsApp Oficial">
+        <a href="#" target="_blank" rel="noopener" onclick="trackWhatsAppLead(event, 'Footer // WhatsApp Direct')" class="footer-social-link" title="WhatsApp Oficial">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
           <span>WhatsApp</span>
         </a>
@@ -472,7 +472,7 @@ def render_html(images, inline_css=""):
         const payload = {
           event: "lead_whatsapp_click",
           cta_label: ctaSource || "WhatsApp CTA",
-          target_whatsapp: "5544991244282",
+          target_whatsapp: "",
           page_url: window.location.href,
           page_title: document.title,
           referrer: document.referrer || "direct",
